@@ -1,0 +1,12 @@
+# Binaries built by `go run`/`go build` at the repo root.
+/smoketest
+/spapi-go
+
+# OS + editor noise
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Local openapi-generator cache (npx puts its download here)
+/node_modules/
