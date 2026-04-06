@@ -12,6 +12,8 @@ package services
 
 import (
 	"encoding/json"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the Buyer type satisfies the MappedNullable interface at compile time
@@ -26,7 +28,7 @@ type Buyer struct {
 	// The phone number of the buyer.
 	Phone *string `json:"phone,omitempty"`
 	// When true, the service is for an Amazon Prime buyer.
-	IsPrimeMember *bool `json:"isPrimeMember,omitempty"`
+	IsPrimeMember *flexbool.FlexBool `json:"isPrimeMember,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -151,12 +153,12 @@ func (o *Buyer) GetIsPrimeMember() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsPrimeMember
+	return bool(*o.IsPrimeMember)
 }
 
 // GetIsPrimeMemberOk returns a tuple with the IsPrimeMember field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Buyer) GetIsPrimeMemberOk() (*bool, bool) {
+func (o *Buyer) GetIsPrimeMemberOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsPrimeMember) {
 		return nil, false
 	}
@@ -174,7 +176,7 @@ func (o *Buyer) HasIsPrimeMember() bool {
 
 // SetIsPrimeMember gets a reference to the given bool and assigns it to the IsPrimeMember field.
 func (o *Buyer) SetIsPrimeMember(v bool) {
-	o.IsPrimeMember = &v
+	o.IsPrimeMember = flexbool.PtrFlexBool(v)
 }
 
 func (o Buyer) MarshalJSON() ([]byte, error) {

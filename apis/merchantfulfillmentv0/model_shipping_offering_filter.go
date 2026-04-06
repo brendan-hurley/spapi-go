@@ -12,6 +12,8 @@ package merchantfulfillmentv0
 
 import (
 	"encoding/json"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the ShippingOfferingFilter type satisfies the MappedNullable interface at compile time
@@ -20,9 +22,9 @@ var _ MappedNullable = &ShippingOfferingFilter{}
 // ShippingOfferingFilter Filter for use when requesting eligible shipping services.
 type ShippingOfferingFilter struct {
 	// When true, include a packing slip with the label.
-	IncludePackingSlipWithLabel *bool `json:"IncludePackingSlipWithLabel,omitempty"`
+	IncludePackingSlipWithLabel *flexbool.FlexBool `json:"IncludePackingSlipWithLabel,omitempty"`
 	// When true, include complex shipping options.
-	IncludeComplexShippingOptions *bool `json:"IncludeComplexShippingOptions,omitempty"`
+	IncludeComplexShippingOptions *flexbool.FlexBool `json:"IncludeComplexShippingOptions,omitempty"`
 	CarrierWillPickUp *CarrierWillPickUpOption `json:"CarrierWillPickUp,omitempty"`
 	DeliveryExperience *DeliveryExperienceOption `json:"DeliveryExperience,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -53,12 +55,12 @@ func (o *ShippingOfferingFilter) GetIncludePackingSlipWithLabel() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IncludePackingSlipWithLabel
+	return bool(*o.IncludePackingSlipWithLabel)
 }
 
 // GetIncludePackingSlipWithLabelOk returns a tuple with the IncludePackingSlipWithLabel field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ShippingOfferingFilter) GetIncludePackingSlipWithLabelOk() (*bool, bool) {
+func (o *ShippingOfferingFilter) GetIncludePackingSlipWithLabelOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IncludePackingSlipWithLabel) {
 		return nil, false
 	}
@@ -76,7 +78,7 @@ func (o *ShippingOfferingFilter) HasIncludePackingSlipWithLabel() bool {
 
 // SetIncludePackingSlipWithLabel gets a reference to the given bool and assigns it to the IncludePackingSlipWithLabel field.
 func (o *ShippingOfferingFilter) SetIncludePackingSlipWithLabel(v bool) {
-	o.IncludePackingSlipWithLabel = &v
+	o.IncludePackingSlipWithLabel = flexbool.PtrFlexBool(v)
 }
 
 // GetIncludeComplexShippingOptions returns the IncludeComplexShippingOptions field value if set, zero value otherwise.
@@ -85,12 +87,12 @@ func (o *ShippingOfferingFilter) GetIncludeComplexShippingOptions() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IncludeComplexShippingOptions
+	return bool(*o.IncludeComplexShippingOptions)
 }
 
 // GetIncludeComplexShippingOptionsOk returns a tuple with the IncludeComplexShippingOptions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ShippingOfferingFilter) GetIncludeComplexShippingOptionsOk() (*bool, bool) {
+func (o *ShippingOfferingFilter) GetIncludeComplexShippingOptionsOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IncludeComplexShippingOptions) {
 		return nil, false
 	}
@@ -108,7 +110,7 @@ func (o *ShippingOfferingFilter) HasIncludeComplexShippingOptions() bool {
 
 // SetIncludeComplexShippingOptions gets a reference to the given bool and assigns it to the IncludeComplexShippingOptions field.
 func (o *ShippingOfferingFilter) SetIncludeComplexShippingOptions(v bool) {
-	o.IncludeComplexShippingOptions = &v
+	o.IncludeComplexShippingOptions = flexbool.PtrFlexBool(v)
 }
 
 // GetCarrierWillPickUp returns the CarrierWillPickUp field value if set, zero value otherwise.

@@ -13,6 +13,8 @@ package merchantfulfillmentv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the ShippingServiceOptions type satisfies the MappedNullable interface at compile time
@@ -23,7 +25,7 @@ type ShippingServiceOptions struct {
 	DeliveryExperience DeliveryExperienceType `json:"DeliveryExperience"`
 	DeclaredValue *CurrencyAmount `json:"DeclaredValue,omitempty"`
 	// When true, the carrier will pick up the package. Note: Scheduled carrier pickup is available only using Dynamex (US), DPD (UK), and Royal Mail (UK).
-	CarrierWillPickUp bool `json:"CarrierWillPickUp"`
+	CarrierWillPickUp flexbool.FlexBool `json:"CarrierWillPickUp"`
 	CarrierWillPickUpOption *CarrierWillPickUpOption `json:"CarrierWillPickUpOption,omitempty"`
 	LabelFormat *LabelFormat `json:"LabelFormat,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -38,7 +40,7 @@ type _ShippingServiceOptions ShippingServiceOptions
 func NewShippingServiceOptions(deliveryExperience DeliveryExperienceType, carrierWillPickUp bool) *ShippingServiceOptions {
 	this := ShippingServiceOptions{}
 	this.DeliveryExperience = deliveryExperience
-	this.CarrierWillPickUp = carrierWillPickUp
+	this.CarrierWillPickUp = flexbool.FlexBool(carrierWillPickUp)
 	return &this
 }
 
@@ -113,12 +115,12 @@ func (o *ShippingServiceOptions) GetCarrierWillPickUp() bool {
 		return ret
 	}
 
-	return o.CarrierWillPickUp
+	return bool(o.CarrierWillPickUp)
 }
 
 // GetCarrierWillPickUpOk returns a tuple with the CarrierWillPickUp field value
 // and a boolean to check if the value has been set.
-func (o *ShippingServiceOptions) GetCarrierWillPickUpOk() (*bool, bool) {
+func (o *ShippingServiceOptions) GetCarrierWillPickUpOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -127,7 +129,7 @@ func (o *ShippingServiceOptions) GetCarrierWillPickUpOk() (*bool, bool) {
 
 // SetCarrierWillPickUp sets field value
 func (o *ShippingServiceOptions) SetCarrierWillPickUp(v bool) {
-	o.CarrierWillPickUp = v
+	o.CarrierWillPickUp = flexbool.FlexBool(v)
 }
 
 // GetCarrierWillPickUpOption returns the CarrierWillPickUpOption field value if set, zero value otherwise.

@@ -14,6 +14,8 @@ package shippingv2
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the Rate type satisfies the MappedNullable interface at compile time
@@ -39,7 +41,7 @@ type Rate struct {
 	// A list of value-added services available for a shipping service offering.
 	AvailableValueAddedServiceGroups []AvailableValueAddedServiceGroup `json:"availableValueAddedServiceGroups,omitempty"`
 	// When true, indicates that additional inputs are required to purchase this shipment service. You must then call the getAdditionalInputs operation to return the JSON schema to use when providing the additional inputs to the purchaseShipment operation.
-	RequiresAdditionalInputs bool `json:"requiresAdditionalInputs"`
+	RequiresAdditionalInputs flexbool.FlexBool `json:"requiresAdditionalInputs"`
 	// A list of RateItem
 	RateItemList []RateItem `json:"rateItemList,omitempty"`
 	PaymentType *PaymentType `json:"paymentType,omitempty"`
@@ -63,7 +65,7 @@ func NewRate(rateId string, carrierId string, carrierName string, serviceId stri
 	this.TotalCharge = totalCharge
 	this.Promise = promise
 	this.SupportedDocumentSpecifications = supportedDocumentSpecifications
-	this.RequiresAdditionalInputs = requiresAdditionalInputs
+	this.RequiresAdditionalInputs = flexbool.FlexBool(requiresAdditionalInputs)
 	return &this
 }
 
@@ -338,12 +340,12 @@ func (o *Rate) GetRequiresAdditionalInputs() bool {
 		return ret
 	}
 
-	return o.RequiresAdditionalInputs
+	return bool(o.RequiresAdditionalInputs)
 }
 
 // GetRequiresAdditionalInputsOk returns a tuple with the RequiresAdditionalInputs field value
 // and a boolean to check if the value has been set.
-func (o *Rate) GetRequiresAdditionalInputsOk() (*bool, bool) {
+func (o *Rate) GetRequiresAdditionalInputsOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -352,7 +354,7 @@ func (o *Rate) GetRequiresAdditionalInputsOk() (*bool, bool) {
 
 // SetRequiresAdditionalInputs sets field value
 func (o *Rate) SetRequiresAdditionalInputs(v bool) {
-	o.RequiresAdditionalInputs = v
+	o.RequiresAdditionalInputs = flexbool.FlexBool(v)
 }
 
 // GetRateItemList returns the RateItemList field value if set, zero value otherwise.

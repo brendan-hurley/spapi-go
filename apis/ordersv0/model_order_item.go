@@ -13,6 +13,8 @@ package ordersv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the OrderItem type satisfies the MappedNullable interface at compile time
@@ -64,9 +66,9 @@ type OrderItem struct {
 	PriceDesignation *string `json:"PriceDesignation,omitempty"`
 	TaxCollection *TaxCollection `json:"TaxCollection,omitempty"`
 	// When true, the product type for this item has a serial number.   Only returned for Amazon Easy Ship orders.
-	SerialNumberRequired *bool `json:"SerialNumberRequired,omitempty"`
+	SerialNumberRequired *flexbool.FlexBool `json:"SerialNumberRequired,omitempty"`
 	// When true, the ASIN is enrolled in Transparency. The Transparency serial number that you must submit is determined by:  **1D or 2D Barcode:** This has a **T** logo. Submit either the 29-character alpha-numeric identifier beginning with **AZ** or **ZA**, or the 38-character Serialized Global Trade Item Number (SGTIN). **2D Barcode SN:** Submit the 7- to 20-character serial number barcode, which likely has the prefix **SN**. The serial number is applied to the same side of the packaging as the GTIN (UPC/EAN/ISBN) barcode. **QR code SN:** Submit the URL that the QR code generates.
-	IsTransparency *bool `json:"IsTransparency,omitempty"`
+	IsTransparency *flexbool.FlexBool `json:"IsTransparency,omitempty"`
 	// The IOSS number of the marketplace. Sellers shipping to the EU from outside the EU must provide this IOSS number to their carrier when Amazon has collected the VAT on the sale.
 	IossNumber *string `json:"IossNumber,omitempty"`
 	// The store chain store identifier. Linked to a specific store in a store chain.
@@ -984,12 +986,12 @@ func (o *OrderItem) GetSerialNumberRequired() bool {
 		var ret bool
 		return ret
 	}
-	return *o.SerialNumberRequired
+	return bool(*o.SerialNumberRequired)
 }
 
 // GetSerialNumberRequiredOk returns a tuple with the SerialNumberRequired field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrderItem) GetSerialNumberRequiredOk() (*bool, bool) {
+func (o *OrderItem) GetSerialNumberRequiredOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.SerialNumberRequired) {
 		return nil, false
 	}
@@ -1007,7 +1009,7 @@ func (o *OrderItem) HasSerialNumberRequired() bool {
 
 // SetSerialNumberRequired gets a reference to the given bool and assigns it to the SerialNumberRequired field.
 func (o *OrderItem) SetSerialNumberRequired(v bool) {
-	o.SerialNumberRequired = &v
+	o.SerialNumberRequired = flexbool.PtrFlexBool(v)
 }
 
 // GetIsTransparency returns the IsTransparency field value if set, zero value otherwise.
@@ -1016,12 +1018,12 @@ func (o *OrderItem) GetIsTransparency() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsTransparency
+	return bool(*o.IsTransparency)
 }
 
 // GetIsTransparencyOk returns a tuple with the IsTransparency field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrderItem) GetIsTransparencyOk() (*bool, bool) {
+func (o *OrderItem) GetIsTransparencyOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsTransparency) {
 		return nil, false
 	}
@@ -1039,7 +1041,7 @@ func (o *OrderItem) HasIsTransparency() bool {
 
 // SetIsTransparency gets a reference to the given bool and assigns it to the IsTransparency field.
 func (o *OrderItem) SetIsTransparency(v bool) {
-	o.IsTransparency = &v
+	o.IsTransparency = flexbool.PtrFlexBool(v)
 }
 
 // GetIossNumber returns the IossNumber field value if set, zero value otherwise.

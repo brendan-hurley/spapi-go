@@ -13,6 +13,8 @@ package ordersv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the RegulatedOrderVerificationStatus type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ var _ MappedNullable = &RegulatedOrderVerificationStatus{}
 type RegulatedOrderVerificationStatus struct {
 	Status VerificationStatus `json:"Status"`
 	// When true, the regulated information provided in the order requires a review by the merchant.
-	RequiresMerchantAction bool `json:"RequiresMerchantAction"`
+	RequiresMerchantAction flexbool.FlexBool `json:"RequiresMerchantAction"`
 	// A list of valid rejection reasons that may be used to reject the order's regulated information.
 	ValidRejectionReasons []RejectionReason `json:"ValidRejectionReasons"`
 	RejectionReason *RejectionReason `json:"RejectionReason,omitempty"`
@@ -44,7 +46,7 @@ type _RegulatedOrderVerificationStatus RegulatedOrderVerificationStatus
 func NewRegulatedOrderVerificationStatus(status VerificationStatus, requiresMerchantAction bool, validRejectionReasons []RejectionReason) *RegulatedOrderVerificationStatus {
 	this := RegulatedOrderVerificationStatus{}
 	this.Status = status
-	this.RequiresMerchantAction = requiresMerchantAction
+	this.RequiresMerchantAction = flexbool.FlexBool(requiresMerchantAction)
 	this.ValidRejectionReasons = validRejectionReasons
 	return &this
 }
@@ -88,12 +90,12 @@ func (o *RegulatedOrderVerificationStatus) GetRequiresMerchantAction() bool {
 		return ret
 	}
 
-	return o.RequiresMerchantAction
+	return bool(o.RequiresMerchantAction)
 }
 
 // GetRequiresMerchantActionOk returns a tuple with the RequiresMerchantAction field value
 // and a boolean to check if the value has been set.
-func (o *RegulatedOrderVerificationStatus) GetRequiresMerchantActionOk() (*bool, bool) {
+func (o *RegulatedOrderVerificationStatus) GetRequiresMerchantActionOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -102,7 +104,7 @@ func (o *RegulatedOrderVerificationStatus) GetRequiresMerchantActionOk() (*bool,
 
 // SetRequiresMerchantAction sets field value
 func (o *RegulatedOrderVerificationStatus) SetRequiresMerchantAction(v bool) {
-	o.RequiresMerchantAction = v
+	o.RequiresMerchantAction = flexbool.FlexBool(v)
 }
 
 // GetValidRejectionReasons returns the ValidRejectionReasons field value

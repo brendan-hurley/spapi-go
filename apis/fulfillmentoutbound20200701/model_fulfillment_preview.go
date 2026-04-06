@@ -13,6 +13,8 @@ package fulfillmentoutbound20200701
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the FulfillmentPreview type satisfies the MappedNullable interface at compile time
@@ -23,9 +25,9 @@ type FulfillmentPreview struct {
 	ShippingSpeedCategory ShippingSpeedCategory `json:"shippingSpeedCategory"`
 	ScheduledDeliveryInfo *ScheduledDeliveryInfo `json:"scheduledDeliveryInfo,omitempty"`
 	// When true, this fulfillment order preview is fulfillable.
-	IsFulfillable bool `json:"isFulfillable"`
+	IsFulfillable flexbool.FlexBool `json:"isFulfillable"`
 	// When true, this fulfillment order preview is for COD (Cash On Delivery).
-	IsCODCapable bool `json:"isCODCapable"`
+	IsCODCapable flexbool.FlexBool `json:"isCODCapable"`
 	EstimatedShippingWeight *Weight `json:"estimatedShippingWeight,omitempty"`
 	// An array of fee type and cost pairs.
 	EstimatedFees []Fee `json:"estimatedFees,omitempty"`
@@ -51,8 +53,8 @@ type _FulfillmentPreview FulfillmentPreview
 func NewFulfillmentPreview(shippingSpeedCategory ShippingSpeedCategory, isFulfillable bool, isCODCapable bool, marketplaceId string) *FulfillmentPreview {
 	this := FulfillmentPreview{}
 	this.ShippingSpeedCategory = shippingSpeedCategory
-	this.IsFulfillable = isFulfillable
-	this.IsCODCapable = isCODCapable
+	this.IsFulfillable = flexbool.FlexBool(isFulfillable)
+	this.IsCODCapable = flexbool.FlexBool(isCODCapable)
 	this.MarketplaceId = marketplaceId
 	return &this
 }
@@ -128,12 +130,12 @@ func (o *FulfillmentPreview) GetIsFulfillable() bool {
 		return ret
 	}
 
-	return o.IsFulfillable
+	return bool(o.IsFulfillable)
 }
 
 // GetIsFulfillableOk returns a tuple with the IsFulfillable field value
 // and a boolean to check if the value has been set.
-func (o *FulfillmentPreview) GetIsFulfillableOk() (*bool, bool) {
+func (o *FulfillmentPreview) GetIsFulfillableOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -142,7 +144,7 @@ func (o *FulfillmentPreview) GetIsFulfillableOk() (*bool, bool) {
 
 // SetIsFulfillable sets field value
 func (o *FulfillmentPreview) SetIsFulfillable(v bool) {
-	o.IsFulfillable = v
+	o.IsFulfillable = flexbool.FlexBool(v)
 }
 
 // GetIsCODCapable returns the IsCODCapable field value
@@ -152,12 +154,12 @@ func (o *FulfillmentPreview) GetIsCODCapable() bool {
 		return ret
 	}
 
-	return o.IsCODCapable
+	return bool(o.IsCODCapable)
 }
 
 // GetIsCODCapableOk returns a tuple with the IsCODCapable field value
 // and a boolean to check if the value has been set.
-func (o *FulfillmentPreview) GetIsCODCapableOk() (*bool, bool) {
+func (o *FulfillmentPreview) GetIsCODCapableOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -166,7 +168,7 @@ func (o *FulfillmentPreview) GetIsCODCapableOk() (*bool, bool) {
 
 // SetIsCODCapable sets field value
 func (o *FulfillmentPreview) SetIsCODCapable(v bool) {
-	o.IsCODCapable = v
+	o.IsCODCapable = flexbool.FlexBool(v)
 }
 
 // GetEstimatedShippingWeight returns the EstimatedShippingWeight field value if set, zero value otherwise.

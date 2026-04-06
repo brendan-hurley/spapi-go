@@ -13,6 +13,8 @@ package vendororders
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the OrderItem type satisfies the MappedNullable interface at compile time
@@ -28,7 +30,7 @@ type OrderItem struct {
 	VendorProductIdentifier *string `json:"vendorProductIdentifier,omitempty"`
 	OrderedQuantity ItemQuantity `json:"orderedQuantity"`
 	// When true, we will accept backorder confirmations for this item.
-	IsBackOrderAllowed bool `json:"isBackOrderAllowed"`
+	IsBackOrderAllowed flexbool.FlexBool `json:"isBackOrderAllowed"`
 	NetCost *Money `json:"netCost,omitempty"`
 	ListPrice *Money `json:"listPrice,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -44,7 +46,7 @@ func NewOrderItem(itemSequenceNumber string, orderedQuantity ItemQuantity, isBac
 	this := OrderItem{}
 	this.ItemSequenceNumber = itemSequenceNumber
 	this.OrderedQuantity = orderedQuantity
-	this.IsBackOrderAllowed = isBackOrderAllowed
+	this.IsBackOrderAllowed = flexbool.FlexBool(isBackOrderAllowed)
 	return &this
 }
 
@@ -175,12 +177,12 @@ func (o *OrderItem) GetIsBackOrderAllowed() bool {
 		return ret
 	}
 
-	return o.IsBackOrderAllowed
+	return bool(o.IsBackOrderAllowed)
 }
 
 // GetIsBackOrderAllowedOk returns a tuple with the IsBackOrderAllowed field value
 // and a boolean to check if the value has been set.
-func (o *OrderItem) GetIsBackOrderAllowedOk() (*bool, bool) {
+func (o *OrderItem) GetIsBackOrderAllowedOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -189,7 +191,7 @@ func (o *OrderItem) GetIsBackOrderAllowedOk() (*bool, bool) {
 
 // SetIsBackOrderAllowed sets field value
 func (o *OrderItem) SetIsBackOrderAllowed(v bool) {
-	o.IsBackOrderAllowed = v
+	o.IsBackOrderAllowed = flexbool.FlexBool(v)
 }
 
 // GetNetCost returns the NetCost field value if set, zero value otherwise.

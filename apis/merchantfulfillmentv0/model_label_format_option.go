@@ -12,6 +12,8 @@ package merchantfulfillmentv0
 
 import (
 	"encoding/json"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the LabelFormatOption type satisfies the MappedNullable interface at compile time
@@ -20,7 +22,7 @@ var _ MappedNullable = &LabelFormatOption{}
 // LabelFormatOption The label format details and whether to include a packing slip.
 type LabelFormatOption struct {
 	// When true, include a packing slip with the label.
-	IncludePackingSlipWithLabel *bool `json:"IncludePackingSlipWithLabel,omitempty"`
+	IncludePackingSlipWithLabel *flexbool.FlexBool `json:"IncludePackingSlipWithLabel,omitempty"`
 	LabelFormat *LabelFormat `json:"LabelFormat,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -50,12 +52,12 @@ func (o *LabelFormatOption) GetIncludePackingSlipWithLabel() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IncludePackingSlipWithLabel
+	return bool(*o.IncludePackingSlipWithLabel)
 }
 
 // GetIncludePackingSlipWithLabelOk returns a tuple with the IncludePackingSlipWithLabel field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *LabelFormatOption) GetIncludePackingSlipWithLabelOk() (*bool, bool) {
+func (o *LabelFormatOption) GetIncludePackingSlipWithLabelOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IncludePackingSlipWithLabel) {
 		return nil, false
 	}
@@ -73,7 +75,7 @@ func (o *LabelFormatOption) HasIncludePackingSlipWithLabel() bool {
 
 // SetIncludePackingSlipWithLabel gets a reference to the given bool and assigns it to the IncludePackingSlipWithLabel field.
 func (o *LabelFormatOption) SetIncludePackingSlipWithLabel(v bool) {
-	o.IncludePackingSlipWithLabel = &v
+	o.IncludePackingSlipWithLabel = flexbool.PtrFlexBool(v)
 }
 
 // GetLabelFormat returns the LabelFormat field value if set, zero value otherwise.

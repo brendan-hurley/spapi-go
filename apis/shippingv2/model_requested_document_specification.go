@@ -14,6 +14,8 @@ package shippingv2
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the RequestedDocumentSpecification type satisfies the MappedNullable interface at compile time
@@ -28,7 +30,7 @@ type RequestedDocumentSpecification struct {
 	// Indicates the position of the label on the paper. Should be the same value as returned in getRates response.
 	PageLayout *string `json:"pageLayout,omitempty"`
 	// When true, files should be stitched together. Otherwise, files should be returned separately. Defaults to false.
-	NeedFileJoining bool `json:"needFileJoining"`
+	NeedFileJoining flexbool.FlexBool `json:"needFileJoining"`
 	// A list of the document types requested.
 	RequestedDocumentTypes []DocumentType `json:"requestedDocumentTypes"`
 	RequestedLabelCustomization *RequestedLabelCustomization `json:"requestedLabelCustomization,omitempty"`
@@ -45,7 +47,7 @@ func NewRequestedDocumentSpecification(format DocumentFormat, size DocumentSize,
 	this := RequestedDocumentSpecification{}
 	this.Format = format
 	this.Size = size
-	this.NeedFileJoining = needFileJoining
+	this.NeedFileJoining = flexbool.FlexBool(needFileJoining)
 	this.RequestedDocumentTypes = requestedDocumentTypes
 	return &this
 }
@@ -177,12 +179,12 @@ func (o *RequestedDocumentSpecification) GetNeedFileJoining() bool {
 		return ret
 	}
 
-	return o.NeedFileJoining
+	return bool(o.NeedFileJoining)
 }
 
 // GetNeedFileJoiningOk returns a tuple with the NeedFileJoining field value
 // and a boolean to check if the value has been set.
-func (o *RequestedDocumentSpecification) GetNeedFileJoiningOk() (*bool, bool) {
+func (o *RequestedDocumentSpecification) GetNeedFileJoiningOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -191,7 +193,7 @@ func (o *RequestedDocumentSpecification) GetNeedFileJoiningOk() (*bool, bool) {
 
 // SetNeedFileJoining sets field value
 func (o *RequestedDocumentSpecification) SetNeedFileJoining(v bool) {
-	o.NeedFileJoining = v
+	o.NeedFileJoining = flexbool.FlexBool(v)
 }
 
 // GetRequestedDocumentTypes returns the RequestedDocumentTypes field value

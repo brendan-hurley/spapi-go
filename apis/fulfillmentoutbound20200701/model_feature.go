@@ -13,6 +13,8 @@ package fulfillmentoutbound20200701
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the Feature type satisfies the MappedNullable interface at compile time
@@ -25,7 +27,7 @@ type Feature struct {
 	// The feature description.
 	FeatureDescription string `json:"featureDescription"`
 	// When true, indicates that the seller is eligible to use the feature.
-	SellerEligible *bool `json:"sellerEligible,omitempty"`
+	SellerEligible *flexbool.FlexBool `json:"sellerEligible,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -104,12 +106,12 @@ func (o *Feature) GetSellerEligible() bool {
 		var ret bool
 		return ret
 	}
-	return *o.SellerEligible
+	return bool(*o.SellerEligible)
 }
 
 // GetSellerEligibleOk returns a tuple with the SellerEligible field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Feature) GetSellerEligibleOk() (*bool, bool) {
+func (o *Feature) GetSellerEligibleOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.SellerEligible) {
 		return nil, false
 	}
@@ -127,7 +129,7 @@ func (o *Feature) HasSellerEligible() bool {
 
 // SetSellerEligible gets a reference to the given bool and assigns it to the SellerEligible field.
 func (o *Feature) SetSellerEligible(v bool) {
-	o.SellerEligible = &v
+	o.SellerEligible = flexbool.PtrFlexBool(v)
 }
 
 func (o Feature) MarshalJSON() ([]byte, error) {

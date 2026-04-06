@@ -12,6 +12,8 @@ package supplysources20200701
 
 import (
 	"encoding/json"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the PickupChannel type satisfies the MappedNullable interface at compile time
@@ -20,7 +22,7 @@ var _ MappedNullable = &PickupChannel{}
 // PickupChannel The pick up channel of a supply source.
 type PickupChannel struct {
 	InventoryHoldPeriod *Duration `json:"inventoryHoldPeriod,omitempty"`
-	IsSupported *bool `json:"isSupported,omitempty"`
+	IsSupported *flexbool.FlexBool `json:"isSupported,omitempty"`
 	OperationalConfiguration *OperationalConfiguration `json:"operationalConfiguration,omitempty"`
 	InStorePickupConfiguration *InStorePickupConfiguration `json:"inStorePickupConfiguration,omitempty"`
 	CurbsidePickupConfiguration *CurbsidePickupConfiguration `json:"curbsidePickupConfiguration,omitempty"`
@@ -84,12 +86,12 @@ func (o *PickupChannel) GetIsSupported() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsSupported
+	return bool(*o.IsSupported)
 }
 
 // GetIsSupportedOk returns a tuple with the IsSupported field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PickupChannel) GetIsSupportedOk() (*bool, bool) {
+func (o *PickupChannel) GetIsSupportedOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsSupported) {
 		return nil, false
 	}
@@ -107,7 +109,7 @@ func (o *PickupChannel) HasIsSupported() bool {
 
 // SetIsSupported gets a reference to the given bool and assigns it to the IsSupported field.
 func (o *PickupChannel) SetIsSupported(v bool) {
-	o.IsSupported = &v
+	o.IsSupported = flexbool.PtrFlexBool(v)
 }
 
 // GetOperationalConfiguration returns the OperationalConfiguration field value if set, zero value otherwise.

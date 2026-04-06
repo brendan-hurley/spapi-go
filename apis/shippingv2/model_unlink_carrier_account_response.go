@@ -13,6 +13,8 @@ package shippingv2
 
 import (
 	"encoding/json"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the UnlinkCarrierAccountResponse type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &UnlinkCarrierAccountResponse{}
 // UnlinkCarrierAccountResponse The Response  for the UnlinkCarrierAccountResponse operation.
 type UnlinkCarrierAccountResponse struct {
 	// Is Carrier unlinked from Merchant
-	IsUnlinked *bool `json:"isUnlinked,omitempty"`
+	IsUnlinked *flexbool.FlexBool `json:"isUnlinked,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -50,12 +52,12 @@ func (o *UnlinkCarrierAccountResponse) GetIsUnlinked() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsUnlinked
+	return bool(*o.IsUnlinked)
 }
 
 // GetIsUnlinkedOk returns a tuple with the IsUnlinked field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UnlinkCarrierAccountResponse) GetIsUnlinkedOk() (*bool, bool) {
+func (o *UnlinkCarrierAccountResponse) GetIsUnlinkedOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsUnlinked) {
 		return nil, false
 	}
@@ -73,7 +75,7 @@ func (o *UnlinkCarrierAccountResponse) HasIsUnlinked() bool {
 
 // SetIsUnlinked gets a reference to the given bool and assigns it to the IsUnlinked field.
 func (o *UnlinkCarrierAccountResponse) SetIsUnlinked(v bool) {
-	o.IsUnlinked = &v
+	o.IsUnlinked = flexbool.PtrFlexBool(v)
 }
 
 func (o UnlinkCarrierAccountResponse) MarshalJSON() ([]byte, error) {

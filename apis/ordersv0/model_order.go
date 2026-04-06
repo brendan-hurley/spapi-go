@@ -13,6 +13,8 @@ package ordersv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the Order type satisfies the MappedNullable interface at compile time
@@ -67,34 +69,34 @@ type Order struct {
 	// The end of the time period within which you have committed to fulfill the order. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date time format. Only returned for seller-fulfilled orders that do not have a `PendingAvailability`, `Pending`, or `Canceled` status.
 	LatestDeliveryDate *string `json:"LatestDeliveryDate,omitempty"`
 	// When true, the order is an Amazon Business order. An Amazon Business order is an order where the buyer is a Verified Business Buyer.
-	IsBusinessOrder *bool `json:"IsBusinessOrder,omitempty"`
+	IsBusinessOrder *flexbool.FlexBool `json:"IsBusinessOrder,omitempty"`
 	// When true, the order is a seller-fulfilled Amazon Prime order.
-	IsPrime *bool `json:"IsPrime,omitempty"`
+	IsPrime *flexbool.FlexBool `json:"IsPrime,omitempty"`
 	// When true, the order has a Premium Shipping Service Level Agreement. For more information about Premium Shipping orders, refer to \"Premium Shipping Options\" in the Seller Central Help for your marketplace.
-	IsPremiumOrder *bool `json:"IsPremiumOrder,omitempty"`
+	IsPremiumOrder *flexbool.FlexBool `json:"IsPremiumOrder,omitempty"`
 	// When true, the order is a `GlobalExpress` order.
-	IsGlobalExpressEnabled *bool `json:"IsGlobalExpressEnabled,omitempty"`
+	IsGlobalExpressEnabled *flexbool.FlexBool `json:"IsGlobalExpressEnabled,omitempty"`
 	// The order ID value for the order that is being replaced. Returned only if IsReplacementOrder = true.
 	ReplacedOrderId *string `json:"ReplacedOrderId,omitempty"`
 	// When true, this is a replacement order.
-	IsReplacementOrder *bool `json:"IsReplacementOrder,omitempty"`
+	IsReplacementOrder *flexbool.FlexBool `json:"IsReplacementOrder,omitempty"`
 	// Indicates the date by which the seller must respond to the buyer with an estimated ship date. Only returned for Sourcing on Demand orders.
 	PromiseResponseDueDate *string `json:"PromiseResponseDueDate,omitempty"`
 	// When true, the estimated ship date is set for the order. Only returned for Sourcing on Demand orders.
-	IsEstimatedShipDateSet *bool `json:"IsEstimatedShipDateSet,omitempty"`
+	IsEstimatedShipDateSet *flexbool.FlexBool `json:"IsEstimatedShipDateSet,omitempty"`
 	// When true, the item within this order was bought and re-sold by Amazon Business EU SARL (ABEU). By buying and instantly re-selling your items, ABEU becomes the seller of record, making your inventory available for sale to customers who would not otherwise purchase from a third-party seller.
-	IsSoldByAB *bool `json:"IsSoldByAB,omitempty"`
+	IsSoldByAB *flexbool.FlexBool `json:"IsSoldByAB,omitempty"`
 	// When true, the item within this order was bought and re-sold by Amazon Business EU SARL (ABEU). By buying and instantly re-selling your items, ABEU becomes the seller of record, making your inventory available for sale to customers who would not otherwise purchase from a third-party seller.
-	IsIBA *bool `json:"IsIBA,omitempty"`
+	IsIBA *flexbool.FlexBool `json:"IsIBA,omitempty"`
 	DefaultShipFromLocationAddress *Address `json:"DefaultShipFromLocationAddress,omitempty"`
 	// The buyer's invoicing preference. Sellers can use this data to issue electronic invoices for orders in Turkey.  **Note**: This attribute is only available in the Turkey marketplace.
 	BuyerInvoicePreference *string `json:"BuyerInvoicePreference,omitempty"`
 	BuyerTaxInformation *BuyerTaxInformation `json:"BuyerTaxInformation,omitempty"`
 	FulfillmentInstruction *FulfillmentInstruction `json:"FulfillmentInstruction,omitempty"`
 	// When true, this order is marked to be picked up from a store rather than delivered.
-	IsISPU *bool `json:"IsISPU,omitempty"`
+	IsISPU *flexbool.FlexBool `json:"IsISPU,omitempty"`
 	// When true, this order is marked to be delivered to an Access Point. The access location is chosen by the customer. Access Points include Amazon Hub Lockers, Amazon Hub Counters, and pickup points operated by carriers.
-	IsAccessPointOrder *bool `json:"IsAccessPointOrder,omitempty"`
+	IsAccessPointOrder *flexbool.FlexBool `json:"IsAccessPointOrder,omitempty"`
 	MarketplaceTaxInfo *MarketplaceTaxInfo `json:"MarketplaceTaxInfo,omitempty"`
 	// The seller’s friendly name registered in the marketplace where the sale took place. Sellers can use this data to issue electronic invoices for orders in Brazil.  **Note**: This attribute is only available in the Brazil marketplace for the orders with `Pending` or `Unshipped` status.
 	SellerDisplayName *string `json:"SellerDisplayName,omitempty"`
@@ -102,7 +104,7 @@ type Order struct {
 	BuyerInfo *BuyerInfo `json:"BuyerInfo,omitempty"`
 	AutomatedShippingSettings *AutomatedShippingSettings `json:"AutomatedShippingSettings,omitempty"`
 	// Whether the order contains regulated items which may require additional approval steps before being fulfilled.
-	HasRegulatedItems *bool `json:"HasRegulatedItems,omitempty"`
+	HasRegulatedItems *flexbool.FlexBool `json:"HasRegulatedItems,omitempty"`
 	ElectronicInvoiceStatus *ElectronicInvoiceStatus `json:"ElectronicInvoiceStatus,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -872,12 +874,12 @@ func (o *Order) GetIsBusinessOrder() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsBusinessOrder
+	return bool(*o.IsBusinessOrder)
 }
 
 // GetIsBusinessOrderOk returns a tuple with the IsBusinessOrder field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Order) GetIsBusinessOrderOk() (*bool, bool) {
+func (o *Order) GetIsBusinessOrderOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsBusinessOrder) {
 		return nil, false
 	}
@@ -895,7 +897,7 @@ func (o *Order) HasIsBusinessOrder() bool {
 
 // SetIsBusinessOrder gets a reference to the given bool and assigns it to the IsBusinessOrder field.
 func (o *Order) SetIsBusinessOrder(v bool) {
-	o.IsBusinessOrder = &v
+	o.IsBusinessOrder = flexbool.PtrFlexBool(v)
 }
 
 // GetIsPrime returns the IsPrime field value if set, zero value otherwise.
@@ -904,12 +906,12 @@ func (o *Order) GetIsPrime() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsPrime
+	return bool(*o.IsPrime)
 }
 
 // GetIsPrimeOk returns a tuple with the IsPrime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Order) GetIsPrimeOk() (*bool, bool) {
+func (o *Order) GetIsPrimeOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsPrime) {
 		return nil, false
 	}
@@ -927,7 +929,7 @@ func (o *Order) HasIsPrime() bool {
 
 // SetIsPrime gets a reference to the given bool and assigns it to the IsPrime field.
 func (o *Order) SetIsPrime(v bool) {
-	o.IsPrime = &v
+	o.IsPrime = flexbool.PtrFlexBool(v)
 }
 
 // GetIsPremiumOrder returns the IsPremiumOrder field value if set, zero value otherwise.
@@ -936,12 +938,12 @@ func (o *Order) GetIsPremiumOrder() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsPremiumOrder
+	return bool(*o.IsPremiumOrder)
 }
 
 // GetIsPremiumOrderOk returns a tuple with the IsPremiumOrder field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Order) GetIsPremiumOrderOk() (*bool, bool) {
+func (o *Order) GetIsPremiumOrderOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsPremiumOrder) {
 		return nil, false
 	}
@@ -959,7 +961,7 @@ func (o *Order) HasIsPremiumOrder() bool {
 
 // SetIsPremiumOrder gets a reference to the given bool and assigns it to the IsPremiumOrder field.
 func (o *Order) SetIsPremiumOrder(v bool) {
-	o.IsPremiumOrder = &v
+	o.IsPremiumOrder = flexbool.PtrFlexBool(v)
 }
 
 // GetIsGlobalExpressEnabled returns the IsGlobalExpressEnabled field value if set, zero value otherwise.
@@ -968,12 +970,12 @@ func (o *Order) GetIsGlobalExpressEnabled() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsGlobalExpressEnabled
+	return bool(*o.IsGlobalExpressEnabled)
 }
 
 // GetIsGlobalExpressEnabledOk returns a tuple with the IsGlobalExpressEnabled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Order) GetIsGlobalExpressEnabledOk() (*bool, bool) {
+func (o *Order) GetIsGlobalExpressEnabledOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsGlobalExpressEnabled) {
 		return nil, false
 	}
@@ -991,7 +993,7 @@ func (o *Order) HasIsGlobalExpressEnabled() bool {
 
 // SetIsGlobalExpressEnabled gets a reference to the given bool and assigns it to the IsGlobalExpressEnabled field.
 func (o *Order) SetIsGlobalExpressEnabled(v bool) {
-	o.IsGlobalExpressEnabled = &v
+	o.IsGlobalExpressEnabled = flexbool.PtrFlexBool(v)
 }
 
 // GetReplacedOrderId returns the ReplacedOrderId field value if set, zero value otherwise.
@@ -1032,12 +1034,12 @@ func (o *Order) GetIsReplacementOrder() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsReplacementOrder
+	return bool(*o.IsReplacementOrder)
 }
 
 // GetIsReplacementOrderOk returns a tuple with the IsReplacementOrder field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Order) GetIsReplacementOrderOk() (*bool, bool) {
+func (o *Order) GetIsReplacementOrderOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsReplacementOrder) {
 		return nil, false
 	}
@@ -1055,7 +1057,7 @@ func (o *Order) HasIsReplacementOrder() bool {
 
 // SetIsReplacementOrder gets a reference to the given bool and assigns it to the IsReplacementOrder field.
 func (o *Order) SetIsReplacementOrder(v bool) {
-	o.IsReplacementOrder = &v
+	o.IsReplacementOrder = flexbool.PtrFlexBool(v)
 }
 
 // GetPromiseResponseDueDate returns the PromiseResponseDueDate field value if set, zero value otherwise.
@@ -1096,12 +1098,12 @@ func (o *Order) GetIsEstimatedShipDateSet() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsEstimatedShipDateSet
+	return bool(*o.IsEstimatedShipDateSet)
 }
 
 // GetIsEstimatedShipDateSetOk returns a tuple with the IsEstimatedShipDateSet field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Order) GetIsEstimatedShipDateSetOk() (*bool, bool) {
+func (o *Order) GetIsEstimatedShipDateSetOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsEstimatedShipDateSet) {
 		return nil, false
 	}
@@ -1119,7 +1121,7 @@ func (o *Order) HasIsEstimatedShipDateSet() bool {
 
 // SetIsEstimatedShipDateSet gets a reference to the given bool and assigns it to the IsEstimatedShipDateSet field.
 func (o *Order) SetIsEstimatedShipDateSet(v bool) {
-	o.IsEstimatedShipDateSet = &v
+	o.IsEstimatedShipDateSet = flexbool.PtrFlexBool(v)
 }
 
 // GetIsSoldByAB returns the IsSoldByAB field value if set, zero value otherwise.
@@ -1128,12 +1130,12 @@ func (o *Order) GetIsSoldByAB() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsSoldByAB
+	return bool(*o.IsSoldByAB)
 }
 
 // GetIsSoldByABOk returns a tuple with the IsSoldByAB field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Order) GetIsSoldByABOk() (*bool, bool) {
+func (o *Order) GetIsSoldByABOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsSoldByAB) {
 		return nil, false
 	}
@@ -1151,7 +1153,7 @@ func (o *Order) HasIsSoldByAB() bool {
 
 // SetIsSoldByAB gets a reference to the given bool and assigns it to the IsSoldByAB field.
 func (o *Order) SetIsSoldByAB(v bool) {
-	o.IsSoldByAB = &v
+	o.IsSoldByAB = flexbool.PtrFlexBool(v)
 }
 
 // GetIsIBA returns the IsIBA field value if set, zero value otherwise.
@@ -1160,12 +1162,12 @@ func (o *Order) GetIsIBA() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsIBA
+	return bool(*o.IsIBA)
 }
 
 // GetIsIBAOk returns a tuple with the IsIBA field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Order) GetIsIBAOk() (*bool, bool) {
+func (o *Order) GetIsIBAOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsIBA) {
 		return nil, false
 	}
@@ -1183,7 +1185,7 @@ func (o *Order) HasIsIBA() bool {
 
 // SetIsIBA gets a reference to the given bool and assigns it to the IsIBA field.
 func (o *Order) SetIsIBA(v bool) {
-	o.IsIBA = &v
+	o.IsIBA = flexbool.PtrFlexBool(v)
 }
 
 // GetDefaultShipFromLocationAddress returns the DefaultShipFromLocationAddress field value if set, zero value otherwise.
@@ -1320,12 +1322,12 @@ func (o *Order) GetIsISPU() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsISPU
+	return bool(*o.IsISPU)
 }
 
 // GetIsISPUOk returns a tuple with the IsISPU field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Order) GetIsISPUOk() (*bool, bool) {
+func (o *Order) GetIsISPUOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsISPU) {
 		return nil, false
 	}
@@ -1343,7 +1345,7 @@ func (o *Order) HasIsISPU() bool {
 
 // SetIsISPU gets a reference to the given bool and assigns it to the IsISPU field.
 func (o *Order) SetIsISPU(v bool) {
-	o.IsISPU = &v
+	o.IsISPU = flexbool.PtrFlexBool(v)
 }
 
 // GetIsAccessPointOrder returns the IsAccessPointOrder field value if set, zero value otherwise.
@@ -1352,12 +1354,12 @@ func (o *Order) GetIsAccessPointOrder() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsAccessPointOrder
+	return bool(*o.IsAccessPointOrder)
 }
 
 // GetIsAccessPointOrderOk returns a tuple with the IsAccessPointOrder field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Order) GetIsAccessPointOrderOk() (*bool, bool) {
+func (o *Order) GetIsAccessPointOrderOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsAccessPointOrder) {
 		return nil, false
 	}
@@ -1375,7 +1377,7 @@ func (o *Order) HasIsAccessPointOrder() bool {
 
 // SetIsAccessPointOrder gets a reference to the given bool and assigns it to the IsAccessPointOrder field.
 func (o *Order) SetIsAccessPointOrder(v bool) {
-	o.IsAccessPointOrder = &v
+	o.IsAccessPointOrder = flexbool.PtrFlexBool(v)
 }
 
 // GetMarketplaceTaxInfo returns the MarketplaceTaxInfo field value if set, zero value otherwise.
@@ -1544,12 +1546,12 @@ func (o *Order) GetHasRegulatedItems() bool {
 		var ret bool
 		return ret
 	}
-	return *o.HasRegulatedItems
+	return bool(*o.HasRegulatedItems)
 }
 
 // GetHasRegulatedItemsOk returns a tuple with the HasRegulatedItems field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Order) GetHasRegulatedItemsOk() (*bool, bool) {
+func (o *Order) GetHasRegulatedItemsOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.HasRegulatedItems) {
 		return nil, false
 	}
@@ -1567,7 +1569,7 @@ func (o *Order) HasHasRegulatedItems() bool {
 
 // SetHasRegulatedItems gets a reference to the given bool and assigns it to the HasRegulatedItems field.
 func (o *Order) SetHasRegulatedItems(v bool) {
-	o.HasRegulatedItems = &v
+	o.HasRegulatedItems = flexbool.PtrFlexBool(v)
 }
 
 // GetElectronicInvoiceStatus returns the ElectronicInvoiceStatus field value if set, zero value otherwise.

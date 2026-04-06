@@ -13,6 +13,8 @@ package vendordirectfulfillmentinventoryv1
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the ItemDetails type satisfies the MappedNullable interface at compile time
@@ -26,7 +28,7 @@ type ItemDetails struct {
 	VendorProductIdentifier *string `json:"vendorProductIdentifier,omitempty"`
 	AvailableQuantity ItemQuantity `json:"availableQuantity"`
 	// When true, the item is permanently unavailable.
-	IsObsolete *bool `json:"isObsolete,omitempty"`
+	IsObsolete *flexbool.FlexBool `json:"isObsolete,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -144,12 +146,12 @@ func (o *ItemDetails) GetIsObsolete() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsObsolete
+	return bool(*o.IsObsolete)
 }
 
 // GetIsObsoleteOk returns a tuple with the IsObsolete field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ItemDetails) GetIsObsoleteOk() (*bool, bool) {
+func (o *ItemDetails) GetIsObsoleteOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsObsolete) {
 		return nil, false
 	}
@@ -167,7 +169,7 @@ func (o *ItemDetails) HasIsObsolete() bool {
 
 // SetIsObsolete gets a reference to the given bool and assigns it to the IsObsolete field.
 func (o *ItemDetails) SetIsObsolete(v bool) {
-	o.IsObsolete = &v
+	o.IsObsolete = flexbool.PtrFlexBool(v)
 }
 
 func (o ItemDetails) MarshalJSON() ([]byte, error) {

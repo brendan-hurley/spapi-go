@@ -13,6 +13,8 @@ package fulfillmentoutbound20200701
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the GetFeatureSkuResult type satisfies the MappedNullable interface at compile time
@@ -25,7 +27,7 @@ type GetFeatureSkuResult struct {
 	// The name of the feature.
 	FeatureName string `json:"featureName"`
 	// When true, the seller SKU is eligible for the requested feature.
-	IsEligible bool `json:"isEligible"`
+	IsEligible flexbool.FlexBool `json:"isEligible"`
 	// A list of one or more reasons that the seller SKU is ineligible for the feature.  Possible values: * `MERCHANT_NOT_ENROLLED`: The merchant isn't enrolled for the feature. * `SKU_NOT_ELIGIBLE`: The SKU doesn't reside in a warehouse that supports the feature. * `INVALID_SKU`: There is an issue with the SKU provided.
 	IneligibleReasons []string `json:"ineligibleReasons,omitempty"`
 	// Used to identify an item in the given marketplace. SellerSKU is qualified by the seller's SellerId, which is included with every operation that you submit.
@@ -49,7 +51,7 @@ func NewGetFeatureSkuResult(marketplaceId string, featureName string, isEligible
 	this := GetFeatureSkuResult{}
 	this.MarketplaceId = marketplaceId
 	this.FeatureName = featureName
-	this.IsEligible = isEligible
+	this.IsEligible = flexbool.FlexBool(isEligible)
 	return &this
 }
 
@@ -116,12 +118,12 @@ func (o *GetFeatureSkuResult) GetIsEligible() bool {
 		return ret
 	}
 
-	return o.IsEligible
+	return bool(o.IsEligible)
 }
 
 // GetIsEligibleOk returns a tuple with the IsEligible field value
 // and a boolean to check if the value has been set.
-func (o *GetFeatureSkuResult) GetIsEligibleOk() (*bool, bool) {
+func (o *GetFeatureSkuResult) GetIsEligibleOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -130,7 +132,7 @@ func (o *GetFeatureSkuResult) GetIsEligibleOk() (*bool, bool) {
 
 // SetIsEligible sets field value
 func (o *GetFeatureSkuResult) SetIsEligible(v bool) {
-	o.IsEligible = v
+	o.IsEligible = flexbool.FlexBool(v)
 }
 
 // GetIneligibleReasons returns the IneligibleReasons field value if set, zero value otherwise.

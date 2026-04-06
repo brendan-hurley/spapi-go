@@ -13,6 +13,8 @@ package fulfillmentoutbound20200701
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the GetFulfillmentPreviewRequest type satisfies the MappedNullable interface at compile time
@@ -28,9 +30,9 @@ type GetFulfillmentPreviewRequest struct {
 	// List of shipping speed categories.
 	ShippingSpeedCategories []ShippingSpeedCategory `json:"shippingSpeedCategories,omitempty"`
 	// When true, returns all fulfillment order previews both for COD and not for COD. Otherwise, returns only fulfillment order previews that are not for COD.
-	IncludeCODFulfillmentPreview *bool `json:"includeCODFulfillmentPreview,omitempty"`
+	IncludeCODFulfillmentPreview *flexbool.FlexBool `json:"includeCODFulfillmentPreview,omitempty"`
 	// When true, returns the `ScheduledDeliveryInfo` response object, which contains the available delivery windows for a Scheduled Delivery. The `ScheduledDeliveryInfo` response object can only be returned for fulfillment order previews with `ShippingSpeedCategories` equal to `ScheduledDelivery`.
-	IncludeDeliveryWindows *bool `json:"includeDeliveryWindows,omitempty"`
+	IncludeDeliveryWindows *flexbool.FlexBool `json:"includeDeliveryWindows,omitempty"`
 	// A list of features and their fulfillment policies to apply to the order.
 	FeatureConstraints []FeatureSettings `json:"featureConstraints,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -175,12 +177,12 @@ func (o *GetFulfillmentPreviewRequest) GetIncludeCODFulfillmentPreview() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IncludeCODFulfillmentPreview
+	return bool(*o.IncludeCODFulfillmentPreview)
 }
 
 // GetIncludeCODFulfillmentPreviewOk returns a tuple with the IncludeCODFulfillmentPreview field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetFulfillmentPreviewRequest) GetIncludeCODFulfillmentPreviewOk() (*bool, bool) {
+func (o *GetFulfillmentPreviewRequest) GetIncludeCODFulfillmentPreviewOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IncludeCODFulfillmentPreview) {
 		return nil, false
 	}
@@ -198,7 +200,7 @@ func (o *GetFulfillmentPreviewRequest) HasIncludeCODFulfillmentPreview() bool {
 
 // SetIncludeCODFulfillmentPreview gets a reference to the given bool and assigns it to the IncludeCODFulfillmentPreview field.
 func (o *GetFulfillmentPreviewRequest) SetIncludeCODFulfillmentPreview(v bool) {
-	o.IncludeCODFulfillmentPreview = &v
+	o.IncludeCODFulfillmentPreview = flexbool.PtrFlexBool(v)
 }
 
 // GetIncludeDeliveryWindows returns the IncludeDeliveryWindows field value if set, zero value otherwise.
@@ -207,12 +209,12 @@ func (o *GetFulfillmentPreviewRequest) GetIncludeDeliveryWindows() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IncludeDeliveryWindows
+	return bool(*o.IncludeDeliveryWindows)
 }
 
 // GetIncludeDeliveryWindowsOk returns a tuple with the IncludeDeliveryWindows field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetFulfillmentPreviewRequest) GetIncludeDeliveryWindowsOk() (*bool, bool) {
+func (o *GetFulfillmentPreviewRequest) GetIncludeDeliveryWindowsOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IncludeDeliveryWindows) {
 		return nil, false
 	}
@@ -230,7 +232,7 @@ func (o *GetFulfillmentPreviewRequest) HasIncludeDeliveryWindows() bool {
 
 // SetIncludeDeliveryWindows gets a reference to the given bool and assigns it to the IncludeDeliveryWindows field.
 func (o *GetFulfillmentPreviewRequest) SetIncludeDeliveryWindows(v bool) {
-	o.IncludeDeliveryWindows = &v
+	o.IncludeDeliveryWindows = flexbool.PtrFlexBool(v)
 }
 
 // GetFeatureConstraints returns the FeatureConstraints field value if set, zero value otherwise.

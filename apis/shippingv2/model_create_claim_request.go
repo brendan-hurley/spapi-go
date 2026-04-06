@@ -14,6 +14,8 @@ package shippingv2
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the CreateClaimRequest type satisfies the MappedNullable interface at compile time
@@ -26,7 +28,7 @@ type CreateClaimRequest struct {
 	DeclaredValue *Currency `json:"declaredValue,omitempty"`
 	ClaimReason ClaimReason `json:"claimReason"`
 	// Applicable for only On Amazon shipments to identify if replacement was sent
-	IsReplacementPackageSent *bool `json:"isReplacementPackageSent,omitempty"`
+	IsReplacementPackageSent *flexbool.FlexBool `json:"isReplacementPackageSent,omitempty"`
 	// A list of proof URLs for a claim. Basic URL validation will happen for each URLs present in the list
 	Proofs []string `json:"proofs,omitempty"`
 	SettlementType SettlementType `json:"settlementType"`
@@ -143,12 +145,12 @@ func (o *CreateClaimRequest) GetIsReplacementPackageSent() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsReplacementPackageSent
+	return bool(*o.IsReplacementPackageSent)
 }
 
 // GetIsReplacementPackageSentOk returns a tuple with the IsReplacementPackageSent field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateClaimRequest) GetIsReplacementPackageSentOk() (*bool, bool) {
+func (o *CreateClaimRequest) GetIsReplacementPackageSentOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsReplacementPackageSent) {
 		return nil, false
 	}
@@ -166,7 +168,7 @@ func (o *CreateClaimRequest) HasIsReplacementPackageSent() bool {
 
 // SetIsReplacementPackageSent gets a reference to the given bool and assigns it to the IsReplacementPackageSent field.
 func (o *CreateClaimRequest) SetIsReplacementPackageSent(v bool) {
-	o.IsReplacementPackageSent = &v
+	o.IsReplacementPackageSent = flexbool.PtrFlexBool(v)
 }
 
 // GetProofs returns the Proofs field value if set, zero value otherwise.

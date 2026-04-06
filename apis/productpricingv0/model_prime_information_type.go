@@ -13,6 +13,8 @@ package productpricingv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the PrimeInformationType type satisfies the MappedNullable interface at compile time
@@ -21,9 +23,9 @@ var _ MappedNullable = &PrimeInformationType{}
 // PrimeInformationType Amazon Prime information.
 type PrimeInformationType struct {
 	// Indicates whether the offer is an Amazon Prime offer.
-	IsPrime bool `json:"IsPrime"`
+	IsPrime flexbool.FlexBool `json:"IsPrime"`
 	// Indicates whether the offer is an Amazon Prime offer throughout the entire marketplace where it is listed.
-	IsNationalPrime bool `json:"IsNationalPrime"`
+	IsNationalPrime flexbool.FlexBool `json:"IsNationalPrime"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -35,8 +37,8 @@ type _PrimeInformationType PrimeInformationType
 // will change when the set of required properties is changed
 func NewPrimeInformationType(isPrime bool, isNationalPrime bool) *PrimeInformationType {
 	this := PrimeInformationType{}
-	this.IsPrime = isPrime
-	this.IsNationalPrime = isNationalPrime
+	this.IsPrime = flexbool.FlexBool(isPrime)
+	this.IsNationalPrime = flexbool.FlexBool(isNationalPrime)
 	return &this
 }
 
@@ -55,12 +57,12 @@ func (o *PrimeInformationType) GetIsPrime() bool {
 		return ret
 	}
 
-	return o.IsPrime
+	return bool(o.IsPrime)
 }
 
 // GetIsPrimeOk returns a tuple with the IsPrime field value
 // and a boolean to check if the value has been set.
-func (o *PrimeInformationType) GetIsPrimeOk() (*bool, bool) {
+func (o *PrimeInformationType) GetIsPrimeOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -69,7 +71,7 @@ func (o *PrimeInformationType) GetIsPrimeOk() (*bool, bool) {
 
 // SetIsPrime sets field value
 func (o *PrimeInformationType) SetIsPrime(v bool) {
-	o.IsPrime = v
+	o.IsPrime = flexbool.FlexBool(v)
 }
 
 // GetIsNationalPrime returns the IsNationalPrime field value
@@ -79,12 +81,12 @@ func (o *PrimeInformationType) GetIsNationalPrime() bool {
 		return ret
 	}
 
-	return o.IsNationalPrime
+	return bool(o.IsNationalPrime)
 }
 
 // GetIsNationalPrimeOk returns a tuple with the IsNationalPrime field value
 // and a boolean to check if the value has been set.
-func (o *PrimeInformationType) GetIsNationalPrimeOk() (*bool, bool) {
+func (o *PrimeInformationType) GetIsNationalPrimeOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -93,7 +95,7 @@ func (o *PrimeInformationType) GetIsNationalPrimeOk() (*bool, bool) {
 
 // SetIsNationalPrime sets field value
 func (o *PrimeInformationType) SetIsNationalPrime(v bool) {
-	o.IsNationalPrime = v
+	o.IsNationalPrime = flexbool.FlexBool(v)
 }
 
 func (o PrimeInformationType) MarshalJSON() ([]byte, error) {

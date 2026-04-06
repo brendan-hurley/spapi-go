@@ -13,6 +13,8 @@ package merchantfulfillmentv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the SellerInputDefinition type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &SellerInputDefinition{}
 // SellerInputDefinition Specifies characteristics that apply to a seller input.
 type SellerInputDefinition struct {
 	// When true, the additional input field is required.
-	IsRequired bool `json:"IsRequired"`
+	IsRequired flexbool.FlexBool `json:"IsRequired"`
 	// The data type of the additional input field.
 	DataType string `json:"DataType"`
 	// List of constraints.
@@ -43,7 +45,7 @@ type _SellerInputDefinition SellerInputDefinition
 // will change when the set of required properties is changed
 func NewSellerInputDefinition(isRequired bool, dataType string, constraints []Constraint, inputDisplayText string, storedValue AdditionalSellerInput) *SellerInputDefinition {
 	this := SellerInputDefinition{}
-	this.IsRequired = isRequired
+	this.IsRequired = flexbool.FlexBool(isRequired)
 	this.DataType = dataType
 	this.Constraints = constraints
 	this.InputDisplayText = inputDisplayText
@@ -66,12 +68,12 @@ func (o *SellerInputDefinition) GetIsRequired() bool {
 		return ret
 	}
 
-	return o.IsRequired
+	return bool(o.IsRequired)
 }
 
 // GetIsRequiredOk returns a tuple with the IsRequired field value
 // and a boolean to check if the value has been set.
-func (o *SellerInputDefinition) GetIsRequiredOk() (*bool, bool) {
+func (o *SellerInputDefinition) GetIsRequiredOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -80,7 +82,7 @@ func (o *SellerInputDefinition) GetIsRequiredOk() (*bool, bool) {
 
 // SetIsRequired sets field value
 func (o *SellerInputDefinition) SetIsRequired(v bool) {
-	o.IsRequired = v
+	o.IsRequired = flexbool.FlexBool(v)
 }
 
 // GetDataType returns the DataType field value

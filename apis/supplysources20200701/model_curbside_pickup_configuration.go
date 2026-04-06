@@ -12,6 +12,8 @@ package supplysources20200701
 
 import (
 	"encoding/json"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the CurbsidePickupConfiguration type satisfies the MappedNullable interface at compile time
@@ -20,7 +22,7 @@ var _ MappedNullable = &CurbsidePickupConfiguration{}
 // CurbsidePickupConfiguration The curbside pickup configuration of a supply source.
 type CurbsidePickupConfiguration struct {
 	// When true, curbside pickup is supported by the supply source.
-	IsSupported *bool `json:"isSupported,omitempty"`
+	IsSupported *flexbool.FlexBool `json:"isSupported,omitempty"`
 	OperationalConfiguration *OperationalConfiguration `json:"operationalConfiguration,omitempty"`
 	ParkingWithAddressConfiguration *ParkingWithAddressConfiguration `json:"parkingWithAddressConfiguration,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -51,12 +53,12 @@ func (o *CurbsidePickupConfiguration) GetIsSupported() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsSupported
+	return bool(*o.IsSupported)
 }
 
 // GetIsSupportedOk returns a tuple with the IsSupported field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CurbsidePickupConfiguration) GetIsSupportedOk() (*bool, bool) {
+func (o *CurbsidePickupConfiguration) GetIsSupportedOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsSupported) {
 		return nil, false
 	}
@@ -74,7 +76,7 @@ func (o *CurbsidePickupConfiguration) HasIsSupported() bool {
 
 // SetIsSupported gets a reference to the given bool and assigns it to the IsSupported field.
 func (o *CurbsidePickupConfiguration) SetIsSupported(v bool) {
-	o.IsSupported = &v
+	o.IsSupported = flexbool.PtrFlexBool(v)
 }
 
 // GetOperationalConfiguration returns the OperationalConfiguration field value if set, zero value otherwise.

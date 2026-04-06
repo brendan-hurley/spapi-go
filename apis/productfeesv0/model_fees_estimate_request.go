@@ -13,6 +13,8 @@ package productfeesv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the FeesEstimateRequest type satisfies the MappedNullable interface at compile time
@@ -23,7 +25,7 @@ type FeesEstimateRequest struct {
 	// A marketplace identifier.
 	MarketplaceId string `json:"MarketplaceId"`
 	// When true, the offer is fulfilled by Amazon.
-	IsAmazonFulfilled *bool `json:"IsAmazonFulfilled,omitempty"`
+	IsAmazonFulfilled *flexbool.FlexBool `json:"IsAmazonFulfilled,omitempty"`
 	PriceToEstimateFees PriceToEstimateFees `json:"PriceToEstimateFees"`
 	// A unique identifier provided by the caller to track this request.
 	Identifier string `json:"Identifier"`
@@ -83,12 +85,12 @@ func (o *FeesEstimateRequest) GetIsAmazonFulfilled() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsAmazonFulfilled
+	return bool(*o.IsAmazonFulfilled)
 }
 
 // GetIsAmazonFulfilledOk returns a tuple with the IsAmazonFulfilled field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FeesEstimateRequest) GetIsAmazonFulfilledOk() (*bool, bool) {
+func (o *FeesEstimateRequest) GetIsAmazonFulfilledOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsAmazonFulfilled) {
 		return nil, false
 	}
@@ -106,7 +108,7 @@ func (o *FeesEstimateRequest) HasIsAmazonFulfilled() bool {
 
 // SetIsAmazonFulfilled gets a reference to the given bool and assigns it to the IsAmazonFulfilled field.
 func (o *FeesEstimateRequest) SetIsAmazonFulfilled(v bool) {
-	o.IsAmazonFulfilled = &v
+	o.IsAmazonFulfilled = flexbool.PtrFlexBool(v)
 }
 
 // GetPriceToEstimateFees returns the PriceToEstimateFees field value

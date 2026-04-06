@@ -14,6 +14,8 @@ package shippingv2
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the AvailableValueAddedServiceGroup type satisfies the MappedNullable interface at compile time
@@ -26,7 +28,7 @@ type AvailableValueAddedServiceGroup struct {
 	// The name of the value-added service group.
 	GroupDescription string `json:"groupDescription"`
 	// When true, one or more of the value-added services listed must be specified.
-	IsRequired bool `json:"isRequired"`
+	IsRequired flexbool.FlexBool `json:"isRequired"`
 	// A list of optional value-added services available for purchase with a shipping service offering.
 	ValueAddedServices []ValueAddedService `json:"valueAddedServices,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -42,7 +44,7 @@ func NewAvailableValueAddedServiceGroup(groupId string, groupDescription string,
 	this := AvailableValueAddedServiceGroup{}
 	this.GroupId = groupId
 	this.GroupDescription = groupDescription
-	this.IsRequired = isRequired
+	this.IsRequired = flexbool.FlexBool(isRequired)
 	return &this
 }
 
@@ -109,12 +111,12 @@ func (o *AvailableValueAddedServiceGroup) GetIsRequired() bool {
 		return ret
 	}
 
-	return o.IsRequired
+	return bool(o.IsRequired)
 }
 
 // GetIsRequiredOk returns a tuple with the IsRequired field value
 // and a boolean to check if the value has been set.
-func (o *AvailableValueAddedServiceGroup) GetIsRequiredOk() (*bool, bool) {
+func (o *AvailableValueAddedServiceGroup) GetIsRequiredOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -123,7 +125,7 @@ func (o *AvailableValueAddedServiceGroup) GetIsRequiredOk() (*bool, bool) {
 
 // SetIsRequired sets field value
 func (o *AvailableValueAddedServiceGroup) SetIsRequired(v bool) {
-	o.IsRequired = v
+	o.IsRequired = flexbool.FlexBool(v)
 }
 
 // GetValueAddedServices returns the ValueAddedServices field value if set, zero value otherwise.

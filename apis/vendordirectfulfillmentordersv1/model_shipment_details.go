@@ -13,6 +13,8 @@ package vendordirectfulfillmentordersv1
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the ShipmentDetails type satisfies the MappedNullable interface at compile time
@@ -21,13 +23,13 @@ var _ MappedNullable = &ShipmentDetails{}
 // ShipmentDetails Shipment details required for the shipment.
 type ShipmentDetails struct {
 	// When true, this is a priority shipment.
-	IsPriorityShipment bool `json:"isPriorityShipment"`
+	IsPriorityShipment flexbool.FlexBool `json:"isPriorityShipment"`
 	// When true, this order is part of a scheduled delivery program.
-	IsScheduledDeliveryShipment *bool `json:"isScheduledDeliveryShipment,omitempty"`
+	IsScheduledDeliveryShipment *flexbool.FlexBool `json:"isScheduledDeliveryShipment,omitempty"`
 	// When true, a packing slip is required to be sent to the customer.
-	IsPslipRequired bool `json:"isPslipRequired"`
+	IsPslipRequired flexbool.FlexBool `json:"isPslipRequired"`
 	// When true, the order contain a gift. Include the gift message and gift wrap information.
-	IsGift *bool `json:"isGift,omitempty"`
+	IsGift *flexbool.FlexBool `json:"isGift,omitempty"`
 	// Ship method to be used for shipping the order. Amazon defines ship method codes indicating the shipping carrier and shipment service level. To see the full list of ship methods in use, including both the code and the friendly name, search the 'Help' section on Vendor Central for 'ship methods'.
 	ShipMethod string `json:"shipMethod"`
 	ShipmentDates ShipmentDates `json:"shipmentDates"`
@@ -44,8 +46,8 @@ type _ShipmentDetails ShipmentDetails
 // will change when the set of required properties is changed
 func NewShipmentDetails(isPriorityShipment bool, isPslipRequired bool, shipMethod string, shipmentDates ShipmentDates, messageToCustomer string) *ShipmentDetails {
 	this := ShipmentDetails{}
-	this.IsPriorityShipment = isPriorityShipment
-	this.IsPslipRequired = isPslipRequired
+	this.IsPriorityShipment = flexbool.FlexBool(isPriorityShipment)
+	this.IsPslipRequired = flexbool.FlexBool(isPslipRequired)
 	this.ShipMethod = shipMethod
 	this.ShipmentDates = shipmentDates
 	this.MessageToCustomer = messageToCustomer
@@ -67,12 +69,12 @@ func (o *ShipmentDetails) GetIsPriorityShipment() bool {
 		return ret
 	}
 
-	return o.IsPriorityShipment
+	return bool(o.IsPriorityShipment)
 }
 
 // GetIsPriorityShipmentOk returns a tuple with the IsPriorityShipment field value
 // and a boolean to check if the value has been set.
-func (o *ShipmentDetails) GetIsPriorityShipmentOk() (*bool, bool) {
+func (o *ShipmentDetails) GetIsPriorityShipmentOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -81,7 +83,7 @@ func (o *ShipmentDetails) GetIsPriorityShipmentOk() (*bool, bool) {
 
 // SetIsPriorityShipment sets field value
 func (o *ShipmentDetails) SetIsPriorityShipment(v bool) {
-	o.IsPriorityShipment = v
+	o.IsPriorityShipment = flexbool.FlexBool(v)
 }
 
 // GetIsScheduledDeliveryShipment returns the IsScheduledDeliveryShipment field value if set, zero value otherwise.
@@ -90,12 +92,12 @@ func (o *ShipmentDetails) GetIsScheduledDeliveryShipment() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsScheduledDeliveryShipment
+	return bool(*o.IsScheduledDeliveryShipment)
 }
 
 // GetIsScheduledDeliveryShipmentOk returns a tuple with the IsScheduledDeliveryShipment field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ShipmentDetails) GetIsScheduledDeliveryShipmentOk() (*bool, bool) {
+func (o *ShipmentDetails) GetIsScheduledDeliveryShipmentOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsScheduledDeliveryShipment) {
 		return nil, false
 	}
@@ -113,7 +115,7 @@ func (o *ShipmentDetails) HasIsScheduledDeliveryShipment() bool {
 
 // SetIsScheduledDeliveryShipment gets a reference to the given bool and assigns it to the IsScheduledDeliveryShipment field.
 func (o *ShipmentDetails) SetIsScheduledDeliveryShipment(v bool) {
-	o.IsScheduledDeliveryShipment = &v
+	o.IsScheduledDeliveryShipment = flexbool.PtrFlexBool(v)
 }
 
 // GetIsPslipRequired returns the IsPslipRequired field value
@@ -123,12 +125,12 @@ func (o *ShipmentDetails) GetIsPslipRequired() bool {
 		return ret
 	}
 
-	return o.IsPslipRequired
+	return bool(o.IsPslipRequired)
 }
 
 // GetIsPslipRequiredOk returns a tuple with the IsPslipRequired field value
 // and a boolean to check if the value has been set.
-func (o *ShipmentDetails) GetIsPslipRequiredOk() (*bool, bool) {
+func (o *ShipmentDetails) GetIsPslipRequiredOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -137,7 +139,7 @@ func (o *ShipmentDetails) GetIsPslipRequiredOk() (*bool, bool) {
 
 // SetIsPslipRequired sets field value
 func (o *ShipmentDetails) SetIsPslipRequired(v bool) {
-	o.IsPslipRequired = v
+	o.IsPslipRequired = flexbool.FlexBool(v)
 }
 
 // GetIsGift returns the IsGift field value if set, zero value otherwise.
@@ -146,12 +148,12 @@ func (o *ShipmentDetails) GetIsGift() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsGift
+	return bool(*o.IsGift)
 }
 
 // GetIsGiftOk returns a tuple with the IsGift field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ShipmentDetails) GetIsGiftOk() (*bool, bool) {
+func (o *ShipmentDetails) GetIsGiftOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsGift) {
 		return nil, false
 	}
@@ -169,7 +171,7 @@ func (o *ShipmentDetails) HasIsGift() bool {
 
 // SetIsGift gets a reference to the given bool and assigns it to the IsGift field.
 func (o *ShipmentDetails) SetIsGift(v bool) {
-	o.IsGift = &v
+	o.IsGift = flexbool.PtrFlexBool(v)
 }
 
 // GetShipMethod returns the ShipMethod field value

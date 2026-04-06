@@ -13,6 +13,8 @@ package productpricingv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the CompetitivePriceType type satisfies the MappedNullable interface at compile time
@@ -34,7 +36,7 @@ type CompetitivePriceType struct {
 	// The seller identifier for the offer.
 	SellerId *string `json:"sellerId,omitempty"`
 	//  Indicates whether or not the pricing information is for an offer listing that belongs to the requester. The requester is the seller associated with the SellerId that was submitted with the request. Possible values are: true and false.
-	BelongsToRequester *bool `json:"belongsToRequester,omitempty"`
+	BelongsToRequester *flexbool.FlexBool `json:"belongsToRequester,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -305,12 +307,12 @@ func (o *CompetitivePriceType) GetBelongsToRequester() bool {
 		var ret bool
 		return ret
 	}
-	return *o.BelongsToRequester
+	return bool(*o.BelongsToRequester)
 }
 
 // GetBelongsToRequesterOk returns a tuple with the BelongsToRequester field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CompetitivePriceType) GetBelongsToRequesterOk() (*bool, bool) {
+func (o *CompetitivePriceType) GetBelongsToRequesterOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.BelongsToRequester) {
 		return nil, false
 	}
@@ -328,7 +330,7 @@ func (o *CompetitivePriceType) HasBelongsToRequester() bool {
 
 // SetBelongsToRequester gets a reference to the given bool and assigns it to the BelongsToRequester field.
 func (o *CompetitivePriceType) SetBelongsToRequester(v bool) {
-	o.BelongsToRequester = &v
+	o.BelongsToRequester = flexbool.PtrFlexBool(v)
 }
 
 func (o CompetitivePriceType) MarshalJSON() ([]byte, error) {

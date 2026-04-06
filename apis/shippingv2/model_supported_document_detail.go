@@ -14,6 +14,8 @@ package shippingv2
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the SupportedDocumentDetail type satisfies the MappedNullable interface at compile time
@@ -23,7 +25,7 @@ var _ MappedNullable = &SupportedDocumentDetail{}
 type SupportedDocumentDetail struct {
 	Name DocumentType `json:"name"`
 	// When true, the supported document type is required.
-	IsMandatory bool `json:"isMandatory"`
+	IsMandatory flexbool.FlexBool `json:"isMandatory"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -36,7 +38,7 @@ type _SupportedDocumentDetail SupportedDocumentDetail
 func NewSupportedDocumentDetail(name DocumentType, isMandatory bool) *SupportedDocumentDetail {
 	this := SupportedDocumentDetail{}
 	this.Name = name
-	this.IsMandatory = isMandatory
+	this.IsMandatory = flexbool.FlexBool(isMandatory)
 	return &this
 }
 
@@ -79,12 +81,12 @@ func (o *SupportedDocumentDetail) GetIsMandatory() bool {
 		return ret
 	}
 
-	return o.IsMandatory
+	return bool(o.IsMandatory)
 }
 
 // GetIsMandatoryOk returns a tuple with the IsMandatory field value
 // and a boolean to check if the value has been set.
-func (o *SupportedDocumentDetail) GetIsMandatoryOk() (*bool, bool) {
+func (o *SupportedDocumentDetail) GetIsMandatoryOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -93,7 +95,7 @@ func (o *SupportedDocumentDetail) GetIsMandatoryOk() (*bool, bool) {
 
 // SetIsMandatory sets field value
 func (o *SupportedDocumentDetail) SetIsMandatory(v bool) {
-	o.IsMandatory = v
+	o.IsMandatory = flexbool.FlexBool(v)
 }
 
 func (o SupportedDocumentDetail) MarshalJSON() ([]byte, error) {

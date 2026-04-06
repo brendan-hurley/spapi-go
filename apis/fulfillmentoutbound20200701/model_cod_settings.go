@@ -13,6 +13,8 @@ package fulfillmentoutbound20200701
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the CODSettings type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &CODSettings{}
 // CODSettings The COD (Cash On Delivery) charges that you associate with a COD fulfillment order.
 type CODSettings struct {
 	// When true, this fulfillment order requires a COD (Cash On Delivery) payment.
-	IsCodRequired bool `json:"isCodRequired"`
+	IsCodRequired flexbool.FlexBool `json:"isCodRequired"`
 	CodCharge *Money `json:"codCharge,omitempty"`
 	CodChargeTax *Money `json:"codChargeTax,omitempty"`
 	ShippingCharge *Money `json:"shippingCharge,omitempty"`
@@ -37,7 +39,7 @@ type _CODSettings CODSettings
 // will change when the set of required properties is changed
 func NewCODSettings(isCodRequired bool) *CODSettings {
 	this := CODSettings{}
-	this.IsCodRequired = isCodRequired
+	this.IsCodRequired = flexbool.FlexBool(isCodRequired)
 	return &this
 }
 
@@ -56,12 +58,12 @@ func (o *CODSettings) GetIsCodRequired() bool {
 		return ret
 	}
 
-	return o.IsCodRequired
+	return bool(o.IsCodRequired)
 }
 
 // GetIsCodRequiredOk returns a tuple with the IsCodRequired field value
 // and a boolean to check if the value has been set.
-func (o *CODSettings) GetIsCodRequiredOk() (*bool, bool) {
+func (o *CODSettings) GetIsCodRequiredOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,7 +72,7 @@ func (o *CODSettings) GetIsCodRequiredOk() (*bool, bool) {
 
 // SetIsCodRequired sets field value
 func (o *CODSettings) SetIsCodRequired(v bool) {
-	o.IsCodRequired = v
+	o.IsCodRequired = flexbool.FlexBool(v)
 }
 
 // GetCodCharge returns the CodCharge field value if set, zero value otherwise.

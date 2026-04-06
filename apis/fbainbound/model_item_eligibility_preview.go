@@ -13,6 +13,8 @@ package fbainbound
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the ItemEligibilityPreview type satisfies the MappedNullable interface at compile time
@@ -27,7 +29,7 @@ type ItemEligibilityPreview struct {
 	// The program for which eligibility was determined.
 	Program string `json:"program"`
 	// Indicates if the item is eligible for the program.
-	IsEligibleForProgram bool `json:"isEligibleForProgram"`
+	IsEligibleForProgram flexbool.FlexBool `json:"isEligibleForProgram"`
 	// Potential Ineligibility Reason Codes.
 	IneligibilityReasonList []string `json:"ineligibilityReasonList,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -43,7 +45,7 @@ func NewItemEligibilityPreview(asin string, program string, isEligibleForProgram
 	this := ItemEligibilityPreview{}
 	this.Asin = asin
 	this.Program = program
-	this.IsEligibleForProgram = isEligibleForProgram
+	this.IsEligibleForProgram = flexbool.FlexBool(isEligibleForProgram)
 	return &this
 }
 
@@ -142,12 +144,12 @@ func (o *ItemEligibilityPreview) GetIsEligibleForProgram() bool {
 		return ret
 	}
 
-	return o.IsEligibleForProgram
+	return bool(o.IsEligibleForProgram)
 }
 
 // GetIsEligibleForProgramOk returns a tuple with the IsEligibleForProgram field value
 // and a boolean to check if the value has been set.
-func (o *ItemEligibilityPreview) GetIsEligibleForProgramOk() (*bool, bool) {
+func (o *ItemEligibilityPreview) GetIsEligibleForProgramOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -156,7 +158,7 @@ func (o *ItemEligibilityPreview) GetIsEligibleForProgramOk() (*bool, bool) {
 
 // SetIsEligibleForProgram sets field value
 func (o *ItemEligibilityPreview) SetIsEligibleForProgram(v bool) {
-	o.IsEligibleForProgram = v
+	o.IsEligibleForProgram = flexbool.FlexBool(v)
 }
 
 // GetIneligibilityReasonList returns the IneligibilityReasonList field value if set, zero value otherwise.

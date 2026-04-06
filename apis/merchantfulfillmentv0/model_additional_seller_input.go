@@ -13,6 +13,8 @@ package merchantfulfillmentv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the AdditionalSellerInput type satisfies the MappedNullable interface at compile time
@@ -25,7 +27,7 @@ type AdditionalSellerInput struct {
 	// The value when the data type is string.
 	ValueAsString *string `json:"ValueAsString,omitempty"`
 	// The value when the data type is boolean.
-	ValueAsBoolean *bool `json:"ValueAsBoolean,omitempty"`
+	ValueAsBoolean *flexbool.FlexBool `json:"ValueAsBoolean,omitempty"`
 	// The value when the data type is integer.
 	ValueAsInteger *int32 `json:"ValueAsInteger,omitempty"`
 	// Date-time formatted timestamp.
@@ -126,12 +128,12 @@ func (o *AdditionalSellerInput) GetValueAsBoolean() bool {
 		var ret bool
 		return ret
 	}
-	return *o.ValueAsBoolean
+	return bool(*o.ValueAsBoolean)
 }
 
 // GetValueAsBooleanOk returns a tuple with the ValueAsBoolean field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AdditionalSellerInput) GetValueAsBooleanOk() (*bool, bool) {
+func (o *AdditionalSellerInput) GetValueAsBooleanOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.ValueAsBoolean) {
 		return nil, false
 	}
@@ -149,7 +151,7 @@ func (o *AdditionalSellerInput) HasValueAsBoolean() bool {
 
 // SetValueAsBoolean gets a reference to the given bool and assigns it to the ValueAsBoolean field.
 func (o *AdditionalSellerInput) SetValueAsBoolean(v bool) {
-	o.ValueAsBoolean = &v
+	o.ValueAsBoolean = flexbool.PtrFlexBool(v)
 }
 
 // GetValueAsInteger returns the ValueAsInteger field value if set, zero value otherwise.

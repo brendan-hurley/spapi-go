@@ -12,6 +12,8 @@ package ordersv0
 
 import (
 	"encoding/json"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the ExceptionDates type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ type ExceptionDates struct {
 	// Date when the business is closed, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date format.
 	ExceptionDate *string `json:"ExceptionDate,omitempty"`
 	// Boolean indicating if the business is closed or open on that date.
-	IsOpen *bool `json:"IsOpen,omitempty"`
+	IsOpen *flexbool.FlexBool `json:"IsOpen,omitempty"`
 	// Time window during the day when the business is open.
 	OpenIntervals []OpenInterval `json:"OpenIntervals,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -85,12 +87,12 @@ func (o *ExceptionDates) GetIsOpen() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsOpen
+	return bool(*o.IsOpen)
 }
 
 // GetIsOpenOk returns a tuple with the IsOpen field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ExceptionDates) GetIsOpenOk() (*bool, bool) {
+func (o *ExceptionDates) GetIsOpenOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsOpen) {
 		return nil, false
 	}
@@ -108,7 +110,7 @@ func (o *ExceptionDates) HasIsOpen() bool {
 
 // SetIsOpen gets a reference to the given bool and assigns it to the IsOpen field.
 func (o *ExceptionDates) SetIsOpen(v bool) {
-	o.IsOpen = &v
+	o.IsOpen = flexbool.PtrFlexBool(v)
 }
 
 // GetOpenIntervals returns the OpenIntervals field value if set, zero value otherwise.

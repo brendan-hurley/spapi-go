@@ -13,6 +13,8 @@ package shippingv2
 
 import (
 	"encoding/json"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the CarrierAccountInput type satisfies the MappedNullable interface at compile time
@@ -28,11 +30,11 @@ type CarrierAccountInput struct {
 	GroupName *string `json:"groupName,omitempty"`
 	InputType *InputType `json:"inputType,omitempty"`
 	// mandatory or not  value .
-	IsMandatory *bool `json:"isMandatory,omitempty"`
+	IsMandatory *flexbool.FlexBool `json:"isMandatory,omitempty"`
 	// is value is Confidential .
-	IsConfidential *bool `json:"isConfidential,omitempty"`
+	IsConfidential *flexbool.FlexBool `json:"isConfidential,omitempty"`
 	// is value is hidden .
-	IsHidden *bool `json:"isHidden,omitempty"`
+	IsHidden *flexbool.FlexBool `json:"isHidden,omitempty"`
 	// A list of ValidationMetadata
 	ValidationMetadata []ValidationMetadata `json:"validationMetadata,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -191,12 +193,12 @@ func (o *CarrierAccountInput) GetIsMandatory() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsMandatory
+	return bool(*o.IsMandatory)
 }
 
 // GetIsMandatoryOk returns a tuple with the IsMandatory field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CarrierAccountInput) GetIsMandatoryOk() (*bool, bool) {
+func (o *CarrierAccountInput) GetIsMandatoryOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsMandatory) {
 		return nil, false
 	}
@@ -214,7 +216,7 @@ func (o *CarrierAccountInput) HasIsMandatory() bool {
 
 // SetIsMandatory gets a reference to the given bool and assigns it to the IsMandatory field.
 func (o *CarrierAccountInput) SetIsMandatory(v bool) {
-	o.IsMandatory = &v
+	o.IsMandatory = flexbool.PtrFlexBool(v)
 }
 
 // GetIsConfidential returns the IsConfidential field value if set, zero value otherwise.
@@ -223,12 +225,12 @@ func (o *CarrierAccountInput) GetIsConfidential() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsConfidential
+	return bool(*o.IsConfidential)
 }
 
 // GetIsConfidentialOk returns a tuple with the IsConfidential field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CarrierAccountInput) GetIsConfidentialOk() (*bool, bool) {
+func (o *CarrierAccountInput) GetIsConfidentialOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsConfidential) {
 		return nil, false
 	}
@@ -246,7 +248,7 @@ func (o *CarrierAccountInput) HasIsConfidential() bool {
 
 // SetIsConfidential gets a reference to the given bool and assigns it to the IsConfidential field.
 func (o *CarrierAccountInput) SetIsConfidential(v bool) {
-	o.IsConfidential = &v
+	o.IsConfidential = flexbool.PtrFlexBool(v)
 }
 
 // GetIsHidden returns the IsHidden field value if set, zero value otherwise.
@@ -255,12 +257,12 @@ func (o *CarrierAccountInput) GetIsHidden() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsHidden
+	return bool(*o.IsHidden)
 }
 
 // GetIsHiddenOk returns a tuple with the IsHidden field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CarrierAccountInput) GetIsHiddenOk() (*bool, bool) {
+func (o *CarrierAccountInput) GetIsHiddenOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsHidden) {
 		return nil, false
 	}
@@ -278,7 +280,7 @@ func (o *CarrierAccountInput) HasIsHidden() bool {
 
 // SetIsHidden gets a reference to the given bool and assigns it to the IsHidden field.
 func (o *CarrierAccountInput) SetIsHidden(v bool) {
-	o.IsHidden = &v
+	o.IsHidden = flexbool.PtrFlexBool(v)
 }
 
 // GetValidationMetadata returns the ValidationMetadata field value if set, zero value otherwise.

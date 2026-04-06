@@ -12,6 +12,8 @@ package supplysources20200701
 
 import (
 	"encoding/json"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the DeliveryChannel type satisfies the MappedNullable interface at compile time
@@ -19,7 +21,7 @@ var _ MappedNullable = &DeliveryChannel{}
 
 // DeliveryChannel The delivery channel of a supply source.
 type DeliveryChannel struct {
-	IsSupported *bool `json:"isSupported,omitempty"`
+	IsSupported *flexbool.FlexBool `json:"isSupported,omitempty"`
 	OperationalConfiguration *OperationalConfiguration `json:"operationalConfiguration,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -49,12 +51,12 @@ func (o *DeliveryChannel) GetIsSupported() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsSupported
+	return bool(*o.IsSupported)
 }
 
 // GetIsSupportedOk returns a tuple with the IsSupported field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DeliveryChannel) GetIsSupportedOk() (*bool, bool) {
+func (o *DeliveryChannel) GetIsSupportedOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsSupported) {
 		return nil, false
 	}
@@ -72,7 +74,7 @@ func (o *DeliveryChannel) HasIsSupported() bool {
 
 // SetIsSupported gets a reference to the given bool and assigns it to the IsSupported field.
 func (o *DeliveryChannel) SetIsSupported(v bool) {
-	o.IsSupported = &v
+	o.IsSupported = flexbool.PtrFlexBool(v)
 }
 
 // GetOperationalConfiguration returns the OperationalConfiguration field value if set, zero value otherwise.

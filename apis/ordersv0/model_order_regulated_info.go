@@ -13,6 +13,8 @@ package ordersv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the OrderRegulatedInfo type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type OrderRegulatedInfo struct {
 	AmazonOrderId string `json:"AmazonOrderId"`
 	RegulatedInformation RegulatedInformation `json:"RegulatedInformation"`
 	// When true, the order requires attaching a dosage information label when shipped.
-	RequiresDosageLabel bool `json:"RequiresDosageLabel"`
+	RequiresDosageLabel flexbool.FlexBool `json:"RequiresDosageLabel"`
 	RegulatedOrderVerificationStatus RegulatedOrderVerificationStatus `json:"RegulatedOrderVerificationStatus"`
 	AdditionalProperties map[string]interface{}
 }
@@ -39,7 +41,7 @@ func NewOrderRegulatedInfo(amazonOrderId string, regulatedInformation RegulatedI
 	this := OrderRegulatedInfo{}
 	this.AmazonOrderId = amazonOrderId
 	this.RegulatedInformation = regulatedInformation
-	this.RequiresDosageLabel = requiresDosageLabel
+	this.RequiresDosageLabel = flexbool.FlexBool(requiresDosageLabel)
 	this.RegulatedOrderVerificationStatus = regulatedOrderVerificationStatus
 	return &this
 }
@@ -107,12 +109,12 @@ func (o *OrderRegulatedInfo) GetRequiresDosageLabel() bool {
 		return ret
 	}
 
-	return o.RequiresDosageLabel
+	return bool(o.RequiresDosageLabel)
 }
 
 // GetRequiresDosageLabelOk returns a tuple with the RequiresDosageLabel field value
 // and a boolean to check if the value has been set.
-func (o *OrderRegulatedInfo) GetRequiresDosageLabelOk() (*bool, bool) {
+func (o *OrderRegulatedInfo) GetRequiresDosageLabelOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -121,7 +123,7 @@ func (o *OrderRegulatedInfo) GetRequiresDosageLabelOk() (*bool, bool) {
 
 // SetRequiresDosageLabel sets field value
 func (o *OrderRegulatedInfo) SetRequiresDosageLabel(v bool) {
-	o.RequiresDosageLabel = v
+	o.RequiresDosageLabel = flexbool.FlexBool(v)
 }
 
 // GetRegulatedOrderVerificationStatus returns the RegulatedOrderVerificationStatus field value

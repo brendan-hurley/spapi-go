@@ -13,6 +13,8 @@ package merchantfulfillmentv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the Item type satisfies the MappedNullable interface at compile time
@@ -33,7 +35,7 @@ type Item struct {
 	ItemLevelSellerInputsList []AdditionalSellerInputs `json:"ItemLevelSellerInputsList,omitempty"`
 	LiquidVolume *LiquidVolume `json:"LiquidVolume,omitempty"`
 	// When true, the item qualifies as hazardous materials (hazmat). Defaults to false.
-	IsHazmat *bool `json:"IsHazmat,omitempty"`
+	IsHazmat *flexbool.FlexBool `json:"IsHazmat,omitempty"`
 	DangerousGoodsDetails *DangerousGoodsDetails `json:"DangerousGoodsDetails,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -273,12 +275,12 @@ func (o *Item) GetIsHazmat() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsHazmat
+	return bool(*o.IsHazmat)
 }
 
 // GetIsHazmatOk returns a tuple with the IsHazmat field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Item) GetIsHazmatOk() (*bool, bool) {
+func (o *Item) GetIsHazmatOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsHazmat) {
 		return nil, false
 	}
@@ -296,7 +298,7 @@ func (o *Item) HasIsHazmat() bool {
 
 // SetIsHazmat gets a reference to the given bool and assigns it to the IsHazmat field.
 func (o *Item) SetIsHazmat(v bool) {
-	o.IsHazmat = &v
+	o.IsHazmat = flexbool.PtrFlexBool(v)
 }
 
 // GetDangerousGoodsDetails returns the DangerousGoodsDetails field value if set, zero value otherwise.

@@ -103,3 +103,11 @@ if (( ${#failed[@]} > 0 )); then
   printf '   - %s\n' "${failed[@]}"
   exit 1
 fi
+
+# ---------- post-generation: FlexBool ----------
+# Amazon's SP-API sometimes returns boolean fields as strings ("true"/"false")
+# despite the spec declaring them as boolean. Replace all bool struct fields
+# with flexbool.FlexBool which handles both representations.
+echo
+echo ">> applying FlexBool transformations"
+python3 "$script_dir/apply_flexbool.py" "$apis_dir"

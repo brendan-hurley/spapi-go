@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the ShippingService type satisfies the MappedNullable interface at compile time
@@ -46,7 +48,7 @@ type ShippingService struct {
 	// The available label formats.
 	AvailableFormatOptionsForLabel []LabelFormatOption `json:"AvailableFormatOptionsForLabel,omitempty"`
 	// When true, additional seller inputs are required.
-	RequiresAdditionalSellerInputs bool `json:"RequiresAdditionalSellerInputs"`
+	RequiresAdditionalSellerInputs flexbool.FlexBool `json:"RequiresAdditionalSellerInputs"`
 	Benefits *Benefits `json:"Benefits,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -67,7 +69,7 @@ func NewShippingService(shippingServiceName string, carrierName string, shipping
 	this.Rate = rate
 	this.RateWithAdjustments = rateWithAdjustments
 	this.ShippingServiceOptions = shippingServiceOptions
-	this.RequiresAdditionalSellerInputs = requiresAdditionalSellerInputs
+	this.RequiresAdditionalSellerInputs = flexbool.FlexBool(requiresAdditionalSellerInputs)
 	return &this
 }
 
@@ -470,12 +472,12 @@ func (o *ShippingService) GetRequiresAdditionalSellerInputs() bool {
 		return ret
 	}
 
-	return o.RequiresAdditionalSellerInputs
+	return bool(o.RequiresAdditionalSellerInputs)
 }
 
 // GetRequiresAdditionalSellerInputsOk returns a tuple with the RequiresAdditionalSellerInputs field value
 // and a boolean to check if the value has been set.
-func (o *ShippingService) GetRequiresAdditionalSellerInputsOk() (*bool, bool) {
+func (o *ShippingService) GetRequiresAdditionalSellerInputsOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -484,7 +486,7 @@ func (o *ShippingService) GetRequiresAdditionalSellerInputsOk() (*bool, bool) {
 
 // SetRequiresAdditionalSellerInputs sets field value
 func (o *ShippingService) SetRequiresAdditionalSellerInputs(v bool) {
-	o.RequiresAdditionalSellerInputs = v
+	o.RequiresAdditionalSellerInputs = flexbool.FlexBool(v)
 }
 
 // GetBenefits returns the Benefits field value if set, zero value otherwise.

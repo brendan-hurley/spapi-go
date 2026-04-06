@@ -13,6 +13,8 @@ package definitionsproducttypes20200901
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the ProductTypeVersion type satisfies the MappedNullable interface at compile time
@@ -23,9 +25,9 @@ type ProductTypeVersion struct {
 	// Version identifier.
 	Version string `json:"version"`
 	// When true, the version indicated by the version identifier is the latest available for the Amazon product type.
-	Latest bool `json:"latest"`
+	Latest flexbool.FlexBool `json:"latest"`
 	// When true, the version indicated by the version identifier is the prerelease (release candidate) for the Amazon product type.
-	ReleaseCandidate *bool `json:"releaseCandidate,omitempty"`
+	ReleaseCandidate *flexbool.FlexBool `json:"releaseCandidate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -38,7 +40,7 @@ type _ProductTypeVersion ProductTypeVersion
 func NewProductTypeVersion(version string, latest bool) *ProductTypeVersion {
 	this := ProductTypeVersion{}
 	this.Version = version
-	this.Latest = latest
+	this.Latest = flexbool.FlexBool(latest)
 	return &this
 }
 
@@ -81,12 +83,12 @@ func (o *ProductTypeVersion) GetLatest() bool {
 		return ret
 	}
 
-	return o.Latest
+	return bool(o.Latest)
 }
 
 // GetLatestOk returns a tuple with the Latest field value
 // and a boolean to check if the value has been set.
-func (o *ProductTypeVersion) GetLatestOk() (*bool, bool) {
+func (o *ProductTypeVersion) GetLatestOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -95,7 +97,7 @@ func (o *ProductTypeVersion) GetLatestOk() (*bool, bool) {
 
 // SetLatest sets field value
 func (o *ProductTypeVersion) SetLatest(v bool) {
-	o.Latest = v
+	o.Latest = flexbool.FlexBool(v)
 }
 
 // GetReleaseCandidate returns the ReleaseCandidate field value if set, zero value otherwise.
@@ -104,12 +106,12 @@ func (o *ProductTypeVersion) GetReleaseCandidate() bool {
 		var ret bool
 		return ret
 	}
-	return *o.ReleaseCandidate
+	return bool(*o.ReleaseCandidate)
 }
 
 // GetReleaseCandidateOk returns a tuple with the ReleaseCandidate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ProductTypeVersion) GetReleaseCandidateOk() (*bool, bool) {
+func (o *ProductTypeVersion) GetReleaseCandidateOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.ReleaseCandidate) {
 		return nil, false
 	}
@@ -127,7 +129,7 @@ func (o *ProductTypeVersion) HasReleaseCandidate() bool {
 
 // SetReleaseCandidate gets a reference to the given bool and assigns it to the ReleaseCandidate field.
 func (o *ProductTypeVersion) SetReleaseCandidate(v bool) {
-	o.ReleaseCandidate = &v
+	o.ReleaseCandidate = flexbool.PtrFlexBool(v)
 }
 
 func (o ProductTypeVersion) MarshalJSON() ([]byte, error) {

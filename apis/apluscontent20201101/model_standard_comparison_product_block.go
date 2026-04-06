@@ -13,6 +13,8 @@ package apluscontent20201101
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the StandardComparisonProductBlock type satisfies the MappedNullable interface at compile time
@@ -28,7 +30,7 @@ type StandardComparisonProductBlock struct {
 	// The Amazon Standard Identification Number (ASIN).
 	Asin *string `json:"asin,omitempty"`
 	// When true, indicates that this content block is visually highlighted.
-	Highlight *bool `json:"highlight,omitempty"`
+	Highlight *flexbool.FlexBool `json:"highlight,omitempty"`
 	// Comparison metrics for the product.
 	Metrics []PlainTextItem `json:"metrics,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -180,12 +182,12 @@ func (o *StandardComparisonProductBlock) GetHighlight() bool {
 		var ret bool
 		return ret
 	}
-	return *o.Highlight
+	return bool(*o.Highlight)
 }
 
 // GetHighlightOk returns a tuple with the Highlight field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *StandardComparisonProductBlock) GetHighlightOk() (*bool, bool) {
+func (o *StandardComparisonProductBlock) GetHighlightOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.Highlight) {
 		return nil, false
 	}
@@ -203,7 +205,7 @@ func (o *StandardComparisonProductBlock) HasHighlight() bool {
 
 // SetHighlight gets a reference to the given bool and assigns it to the Highlight field.
 func (o *StandardComparisonProductBlock) SetHighlight(v bool) {
-	o.Highlight = &v
+	o.Highlight = flexbool.PtrFlexBool(v)
 }
 
 // GetMetrics returns the Metrics field value if set, zero value otherwise.

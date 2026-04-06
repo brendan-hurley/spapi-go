@@ -13,6 +13,8 @@ package vendordirectfulfillmentinventoryv1
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the InventoryUpdate type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ var _ MappedNullable = &InventoryUpdate{}
 type InventoryUpdate struct {
 	SellingParty PartyIdentification `json:"sellingParty"`
 	// When true, this request contains a full feed. Otherwise, this request contains a partial feed. When sending a full feed, you must send information about all items in the warehouse. Any items not in the full feed are updated as not available. When sending a partial feed, only include the items that need an update to inventory. The status of other items will remain unchanged.
-	IsFullUpdate bool `json:"isFullUpdate"`
+	IsFullUpdate flexbool.FlexBool `json:"isFullUpdate"`
 	// A list of inventory items with updated details, including quantity available.
 	Items []ItemDetails `json:"items"`
 	AdditionalProperties map[string]interface{}
@@ -37,7 +39,7 @@ type _InventoryUpdate InventoryUpdate
 func NewInventoryUpdate(sellingParty PartyIdentification, isFullUpdate bool, items []ItemDetails) *InventoryUpdate {
 	this := InventoryUpdate{}
 	this.SellingParty = sellingParty
-	this.IsFullUpdate = isFullUpdate
+	this.IsFullUpdate = flexbool.FlexBool(isFullUpdate)
 	this.Items = items
 	return &this
 }
@@ -81,12 +83,12 @@ func (o *InventoryUpdate) GetIsFullUpdate() bool {
 		return ret
 	}
 
-	return o.IsFullUpdate
+	return bool(o.IsFullUpdate)
 }
 
 // GetIsFullUpdateOk returns a tuple with the IsFullUpdate field value
 // and a boolean to check if the value has been set.
-func (o *InventoryUpdate) GetIsFullUpdateOk() (*bool, bool) {
+func (o *InventoryUpdate) GetIsFullUpdateOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -95,7 +97,7 @@ func (o *InventoryUpdate) GetIsFullUpdateOk() (*bool, bool) {
 
 // SetIsFullUpdate sets field value
 func (o *InventoryUpdate) SetIsFullUpdate(v bool) {
-	o.IsFullUpdate = v
+	o.IsFullUpdate = flexbool.FlexBool(v)
 }
 
 // GetItems returns the Items field value

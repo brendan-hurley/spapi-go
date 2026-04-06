@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the OrderDetails type satisfies the MappedNullable interface at compile time
@@ -34,7 +36,7 @@ type OrderDetails struct {
 	ShipToParty Address `json:"shipToParty"`
 	BillToParty PartyIdentification `json:"billToParty"`
 	// When `true`, the order contains customizable items.
-	HasCustomizableItems *bool `json:"hasCustomizableItems,omitempty"`
+	HasCustomizableItems *flexbool.FlexBool `json:"hasCustomizableItems,omitempty"`
 	// A list of items in this purchase order.
 	Items []OrderItem `json:"items"`
 	AdditionalProperties map[string]interface{}
@@ -305,12 +307,12 @@ func (o *OrderDetails) GetHasCustomizableItems() bool {
 		var ret bool
 		return ret
 	}
-	return *o.HasCustomizableItems
+	return bool(*o.HasCustomizableItems)
 }
 
 // GetHasCustomizableItemsOk returns a tuple with the HasCustomizableItems field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrderDetails) GetHasCustomizableItemsOk() (*bool, bool) {
+func (o *OrderDetails) GetHasCustomizableItemsOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.HasCustomizableItems) {
 		return nil, false
 	}
@@ -328,7 +330,7 @@ func (o *OrderDetails) HasHasCustomizableItems() bool {
 
 // SetHasCustomizableItems gets a reference to the given bool and assigns it to the HasCustomizableItems field.
 func (o *OrderDetails) SetHasCustomizableItems(v bool) {
-	o.HasCustomizableItems = &v
+	o.HasCustomizableItems = flexbool.PtrFlexBool(v)
 }
 
 // GetItems returns the Items field value

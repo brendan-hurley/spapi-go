@@ -14,6 +14,8 @@ package shippingv2
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the Package type satisfies the MappedNullable interface at compile time
@@ -25,7 +27,7 @@ type Package struct {
 	Weight Weight `json:"weight"`
 	InsuredValue Currency `json:"insuredValue"`
 	// When true, the package contains hazardous materials. Defaults to false.
-	IsHazmat *bool `json:"isHazmat,omitempty"`
+	IsHazmat *flexbool.FlexBool `json:"isHazmat,omitempty"`
 	// The seller name displayed on the label.
 	SellerDisplayName *string `json:"sellerDisplayName,omitempty"`
 	// A list of charges based on the shipping service charges applied on a package.
@@ -139,12 +141,12 @@ func (o *Package) GetIsHazmat() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsHazmat
+	return bool(*o.IsHazmat)
 }
 
 // GetIsHazmatOk returns a tuple with the IsHazmat field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Package) GetIsHazmatOk() (*bool, bool) {
+func (o *Package) GetIsHazmatOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsHazmat) {
 		return nil, false
 	}
@@ -162,7 +164,7 @@ func (o *Package) HasIsHazmat() bool {
 
 // SetIsHazmat gets a reference to the given bool and assigns it to the IsHazmat field.
 func (o *Package) SetIsHazmat(v bool) {
-	o.IsHazmat = &v
+	o.IsHazmat = flexbool.PtrFlexBool(v)
 }
 
 // GetSellerDisplayName returns the SellerDisplayName field value if set, zero value otherwise.

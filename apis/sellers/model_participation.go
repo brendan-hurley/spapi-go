@@ -13,6 +13,8 @@ package sellers
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the Participation type satisfies the MappedNullable interface at compile time
@@ -21,9 +23,9 @@ var _ MappedNullable = &Participation{}
 // Participation Information that is specific to a seller in a marketplace.
 type Participation struct {
 	// If `true`, the seller participates in the marketplace. Otherwise `false`.
-	IsParticipating bool `json:"isParticipating"`
+	IsParticipating flexbool.FlexBool `json:"isParticipating"`
 	// Specifies if the seller has suspended listings. `true` if the seller Listing Status is set to Inactive, otherwise `false`.
-	HasSuspendedListings bool `json:"hasSuspendedListings"`
+	HasSuspendedListings flexbool.FlexBool `json:"hasSuspendedListings"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -35,8 +37,8 @@ type _Participation Participation
 // will change when the set of required properties is changed
 func NewParticipation(isParticipating bool, hasSuspendedListings bool) *Participation {
 	this := Participation{}
-	this.IsParticipating = isParticipating
-	this.HasSuspendedListings = hasSuspendedListings
+	this.IsParticipating = flexbool.FlexBool(isParticipating)
+	this.HasSuspendedListings = flexbool.FlexBool(hasSuspendedListings)
 	return &this
 }
 
@@ -55,12 +57,12 @@ func (o *Participation) GetIsParticipating() bool {
 		return ret
 	}
 
-	return o.IsParticipating
+	return bool(o.IsParticipating)
 }
 
 // GetIsParticipatingOk returns a tuple with the IsParticipating field value
 // and a boolean to check if the value has been set.
-func (o *Participation) GetIsParticipatingOk() (*bool, bool) {
+func (o *Participation) GetIsParticipatingOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -69,7 +71,7 @@ func (o *Participation) GetIsParticipatingOk() (*bool, bool) {
 
 // SetIsParticipating sets field value
 func (o *Participation) SetIsParticipating(v bool) {
-	o.IsParticipating = v
+	o.IsParticipating = flexbool.FlexBool(v)
 }
 
 // GetHasSuspendedListings returns the HasSuspendedListings field value
@@ -79,12 +81,12 @@ func (o *Participation) GetHasSuspendedListings() bool {
 		return ret
 	}
 
-	return o.HasSuspendedListings
+	return bool(o.HasSuspendedListings)
 }
 
 // GetHasSuspendedListingsOk returns a tuple with the HasSuspendedListings field value
 // and a boolean to check if the value has been set.
-func (o *Participation) GetHasSuspendedListingsOk() (*bool, bool) {
+func (o *Participation) GetHasSuspendedListingsOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -93,7 +95,7 @@ func (o *Participation) GetHasSuspendedListingsOk() (*bool, bool) {
 
 // SetHasSuspendedListings sets field value
 func (o *Participation) SetHasSuspendedListings(v bool) {
-	o.HasSuspendedListings = v
+	o.HasSuspendedListings = flexbool.FlexBool(v)
 }
 
 func (o Participation) MarshalJSON() ([]byte, error) {

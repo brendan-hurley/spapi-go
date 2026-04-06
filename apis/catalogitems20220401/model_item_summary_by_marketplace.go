@@ -13,6 +13,8 @@ package catalogitems20220401
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the ItemSummaryByMarketplace type satisfies the MappedNullable interface at compile time
@@ -23,9 +25,9 @@ type ItemSummaryByMarketplace struct {
 	// Amazon marketplace identifier. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
 	MarketplaceId string `json:"marketplaceId"`
 	// When `true`, the Amazon catalog item is intended for an adult audience or is sexual in nature.
-	AdultProduct *bool `json:"adultProduct,omitempty"`
+	AdultProduct *flexbool.FlexBool `json:"adultProduct,omitempty"`
 	// When `true`, the Amazon catalog item is autographed.
-	Autographed *bool `json:"autographed,omitempty"`
+	Autographed *flexbool.FlexBool `json:"autographed,omitempty"`
 	// Name of the brand that is associated with the Amazon catalog item.
 	Brand *string `json:"brand,omitempty"`
 	BrowseClassification *ItemBrowseClassification `json:"browseClassification,omitempty"`
@@ -40,7 +42,7 @@ type ItemSummaryByMarketplace struct {
 	// The name of the manufacturer that is associated with the Amazon catalog item.
 	Manufacturer *string `json:"manufacturer,omitempty"`
 	// When true, the item is classified as memorabilia.
-	Memorabilia *bool `json:"memorabilia,omitempty"`
+	Memorabilia *flexbool.FlexBool `json:"memorabilia,omitempty"`
 	// The model number that is associated with the Amazon catalog item.
 	ModelNumber *string `json:"modelNumber,omitempty"`
 	// The quantity of the Amazon catalog item within one package.
@@ -54,7 +56,7 @@ type ItemSummaryByMarketplace struct {
 	// The name of the style that is associated with the Amazon catalog item.
 	Style *string `json:"style,omitempty"`
 	// When true, the Amazon catalog item is eligible for trade-in.
-	TradeInEligible *bool `json:"tradeInEligible,omitempty"`
+	TradeInEligible *flexbool.FlexBool `json:"tradeInEligible,omitempty"`
 	// The identifier of the website display group that is associated with the Amazon catalog item.
 	WebsiteDisplayGroup *string `json:"websiteDisplayGroup,omitempty"`
 	// The display name of the website display group that is associated with the Amazon catalog item.
@@ -112,12 +114,12 @@ func (o *ItemSummaryByMarketplace) GetAdultProduct() bool {
 		var ret bool
 		return ret
 	}
-	return *o.AdultProduct
+	return bool(*o.AdultProduct)
 }
 
 // GetAdultProductOk returns a tuple with the AdultProduct field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ItemSummaryByMarketplace) GetAdultProductOk() (*bool, bool) {
+func (o *ItemSummaryByMarketplace) GetAdultProductOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.AdultProduct) {
 		return nil, false
 	}
@@ -135,7 +137,7 @@ func (o *ItemSummaryByMarketplace) HasAdultProduct() bool {
 
 // SetAdultProduct gets a reference to the given bool and assigns it to the AdultProduct field.
 func (o *ItemSummaryByMarketplace) SetAdultProduct(v bool) {
-	o.AdultProduct = &v
+	o.AdultProduct = flexbool.PtrFlexBool(v)
 }
 
 // GetAutographed returns the Autographed field value if set, zero value otherwise.
@@ -144,12 +146,12 @@ func (o *ItemSummaryByMarketplace) GetAutographed() bool {
 		var ret bool
 		return ret
 	}
-	return *o.Autographed
+	return bool(*o.Autographed)
 }
 
 // GetAutographedOk returns a tuple with the Autographed field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ItemSummaryByMarketplace) GetAutographedOk() (*bool, bool) {
+func (o *ItemSummaryByMarketplace) GetAutographedOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.Autographed) {
 		return nil, false
 	}
@@ -167,7 +169,7 @@ func (o *ItemSummaryByMarketplace) HasAutographed() bool {
 
 // SetAutographed gets a reference to the given bool and assigns it to the Autographed field.
 func (o *ItemSummaryByMarketplace) SetAutographed(v bool) {
-	o.Autographed = &v
+	o.Autographed = flexbool.PtrFlexBool(v)
 }
 
 // GetBrand returns the Brand field value if set, zero value otherwise.
@@ -400,12 +402,12 @@ func (o *ItemSummaryByMarketplace) GetMemorabilia() bool {
 		var ret bool
 		return ret
 	}
-	return *o.Memorabilia
+	return bool(*o.Memorabilia)
 }
 
 // GetMemorabiliaOk returns a tuple with the Memorabilia field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ItemSummaryByMarketplace) GetMemorabiliaOk() (*bool, bool) {
+func (o *ItemSummaryByMarketplace) GetMemorabiliaOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.Memorabilia) {
 		return nil, false
 	}
@@ -423,7 +425,7 @@ func (o *ItemSummaryByMarketplace) HasMemorabilia() bool {
 
 // SetMemorabilia gets a reference to the given bool and assigns it to the Memorabilia field.
 func (o *ItemSummaryByMarketplace) SetMemorabilia(v bool) {
-	o.Memorabilia = &v
+	o.Memorabilia = flexbool.PtrFlexBool(v)
 }
 
 // GetModelNumber returns the ModelNumber field value if set, zero value otherwise.
@@ -624,12 +626,12 @@ func (o *ItemSummaryByMarketplace) GetTradeInEligible() bool {
 		var ret bool
 		return ret
 	}
-	return *o.TradeInEligible
+	return bool(*o.TradeInEligible)
 }
 
 // GetTradeInEligibleOk returns a tuple with the TradeInEligible field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ItemSummaryByMarketplace) GetTradeInEligibleOk() (*bool, bool) {
+func (o *ItemSummaryByMarketplace) GetTradeInEligibleOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.TradeInEligible) {
 		return nil, false
 	}
@@ -647,7 +649,7 @@ func (o *ItemSummaryByMarketplace) HasTradeInEligible() bool {
 
 // SetTradeInEligible gets a reference to the given bool and assigns it to the TradeInEligible field.
 func (o *ItemSummaryByMarketplace) SetTradeInEligible(v bool) {
-	o.TradeInEligible = &v
+	o.TradeInEligible = flexbool.PtrFlexBool(v)
 }
 
 // GetWebsiteDisplayGroup returns the WebsiteDisplayGroup field value if set, zero value otherwise.

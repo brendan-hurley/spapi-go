@@ -13,6 +13,8 @@ package productpricingv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the OfferDetail type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &OfferDetail{}
 // OfferDetail Schema for an individual offer. Object in `OfferDetailList`.
 type OfferDetail struct {
 	// When true, this is the seller's offer.
-	MyOffer *bool `json:"MyOffer,omitempty"`
+	MyOffer *flexbool.FlexBool `json:"MyOffer,omitempty"`
 	OfferType *OfferCustomerType `json:"offerType,omitempty"`
 	// The subcondition of the item. Subcondition values: New, Mint, Very Good, Good, Acceptable, Poor, Club, OEM, Warranty, Refurbished Warranty, Refurbished, Open Box, or Other.
 	SubCondition string `json:"SubCondition"`
@@ -38,12 +40,12 @@ type OfferDetail struct {
 	Shipping MoneyType `json:"Shipping"`
 	ShipsFrom *ShipsFromType `json:"ShipsFrom,omitempty"`
 	// When true, the offer is fulfilled by Amazon.
-	IsFulfilledByAmazon bool `json:"IsFulfilledByAmazon"`
+	IsFulfilledByAmazon flexbool.FlexBool `json:"IsFulfilledByAmazon"`
 	PrimeInformation *PrimeInformationType `json:"PrimeInformation,omitempty"`
 	// When true, the offer is currently in the Buy Box. There can be up to two Buy Box winners at any time per ASIN, one that is eligible for Prime and one that is not eligible for Prime.
-	IsBuyBoxWinner *bool `json:"IsBuyBoxWinner,omitempty"`
+	IsBuyBoxWinner *flexbool.FlexBool `json:"IsBuyBoxWinner,omitempty"`
 	// When true, the seller of the item is eligible to win the Buy Box.
-	IsFeaturedMerchant *bool `json:"IsFeaturedMerchant,omitempty"`
+	IsFeaturedMerchant *flexbool.FlexBool `json:"IsFeaturedMerchant,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -59,7 +61,7 @@ func NewOfferDetail(subCondition string, shippingTime DetailedShippingTimeType, 
 	this.ShippingTime = shippingTime
 	this.ListingPrice = listingPrice
 	this.Shipping = shipping
-	this.IsFulfilledByAmazon = isFulfilledByAmazon
+	this.IsFulfilledByAmazon = flexbool.FlexBool(isFulfilledByAmazon)
 	return &this
 }
 
@@ -77,12 +79,12 @@ func (o *OfferDetail) GetMyOffer() bool {
 		var ret bool
 		return ret
 	}
-	return *o.MyOffer
+	return bool(*o.MyOffer)
 }
 
 // GetMyOfferOk returns a tuple with the MyOffer field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OfferDetail) GetMyOfferOk() (*bool, bool) {
+func (o *OfferDetail) GetMyOfferOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.MyOffer) {
 		return nil, false
 	}
@@ -100,7 +102,7 @@ func (o *OfferDetail) HasMyOffer() bool {
 
 // SetMyOffer gets a reference to the given bool and assigns it to the MyOffer field.
 func (o *OfferDetail) SetMyOffer(v bool) {
-	o.MyOffer = &v
+	o.MyOffer = flexbool.PtrFlexBool(v)
 }
 
 // GetOfferType returns the OfferType field value if set, zero value otherwise.
@@ -430,12 +432,12 @@ func (o *OfferDetail) GetIsFulfilledByAmazon() bool {
 		return ret
 	}
 
-	return o.IsFulfilledByAmazon
+	return bool(o.IsFulfilledByAmazon)
 }
 
 // GetIsFulfilledByAmazonOk returns a tuple with the IsFulfilledByAmazon field value
 // and a boolean to check if the value has been set.
-func (o *OfferDetail) GetIsFulfilledByAmazonOk() (*bool, bool) {
+func (o *OfferDetail) GetIsFulfilledByAmazonOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -444,7 +446,7 @@ func (o *OfferDetail) GetIsFulfilledByAmazonOk() (*bool, bool) {
 
 // SetIsFulfilledByAmazon sets field value
 func (o *OfferDetail) SetIsFulfilledByAmazon(v bool) {
-	o.IsFulfilledByAmazon = v
+	o.IsFulfilledByAmazon = flexbool.FlexBool(v)
 }
 
 // GetPrimeInformation returns the PrimeInformation field value if set, zero value otherwise.
@@ -485,12 +487,12 @@ func (o *OfferDetail) GetIsBuyBoxWinner() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsBuyBoxWinner
+	return bool(*o.IsBuyBoxWinner)
 }
 
 // GetIsBuyBoxWinnerOk returns a tuple with the IsBuyBoxWinner field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OfferDetail) GetIsBuyBoxWinnerOk() (*bool, bool) {
+func (o *OfferDetail) GetIsBuyBoxWinnerOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsBuyBoxWinner) {
 		return nil, false
 	}
@@ -508,7 +510,7 @@ func (o *OfferDetail) HasIsBuyBoxWinner() bool {
 
 // SetIsBuyBoxWinner gets a reference to the given bool and assigns it to the IsBuyBoxWinner field.
 func (o *OfferDetail) SetIsBuyBoxWinner(v bool) {
-	o.IsBuyBoxWinner = &v
+	o.IsBuyBoxWinner = flexbool.PtrFlexBool(v)
 }
 
 // GetIsFeaturedMerchant returns the IsFeaturedMerchant field value if set, zero value otherwise.
@@ -517,12 +519,12 @@ func (o *OfferDetail) GetIsFeaturedMerchant() bool {
 		var ret bool
 		return ret
 	}
-	return *o.IsFeaturedMerchant
+	return bool(*o.IsFeaturedMerchant)
 }
 
 // GetIsFeaturedMerchantOk returns a tuple with the IsFeaturedMerchant field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OfferDetail) GetIsFeaturedMerchantOk() (*bool, bool) {
+func (o *OfferDetail) GetIsFeaturedMerchantOk() (*flexbool.FlexBool, bool) {
 	if o == nil || IsNil(o.IsFeaturedMerchant) {
 		return nil, false
 	}
@@ -540,7 +542,7 @@ func (o *OfferDetail) HasIsFeaturedMerchant() bool {
 
 // SetIsFeaturedMerchant gets a reference to the given bool and assigns it to the IsFeaturedMerchant field.
 func (o *OfferDetail) SetIsFeaturedMerchant(v bool) {
-	o.IsFeaturedMerchant = &v
+	o.IsFeaturedMerchant = flexbool.PtrFlexBool(v)
 }
 
 func (o OfferDetail) MarshalJSON() ([]byte, error) {

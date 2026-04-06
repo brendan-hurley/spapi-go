@@ -10,3 +10,5 @@
 
 # Local openapi-generator cache (npx puts its download here)
 /node_modules/
+
+.env

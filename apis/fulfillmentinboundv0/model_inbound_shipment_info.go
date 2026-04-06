@@ -13,6 +13,8 @@ package fulfillmentinboundv0
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
 // checks if the InboundShipmentInfo type satisfies the MappedNullable interface at compile time
@@ -30,7 +32,7 @@ type InboundShipmentInfo struct {
 	ShipmentStatus *ShipmentStatus `json:"ShipmentStatus,omitempty"`
 	LabelPrepType *LabelPrepType `json:"LabelPrepType,omitempty"`
 	// Indicates whether or not an inbound shipment contains case-packed boxes. When AreCasesRequired = true for an inbound shipment, all items in the inbound shipment must be case packed.
-	AreCasesRequired bool `json:"AreCasesRequired"`
+	AreCasesRequired flexbool.FlexBool `json:"AreCasesRequired"`
 	// Type containing date in string format
 	ConfirmedNeedByDate *string `json:"ConfirmedNeedByDate,omitempty"`
 	BoxContentsSource *BoxContentsSource `json:"BoxContentsSource,omitempty"`
@@ -47,7 +49,7 @@ type _InboundShipmentInfo InboundShipmentInfo
 func NewInboundShipmentInfo(shipFromAddress Address, areCasesRequired bool) *InboundShipmentInfo {
 	this := InboundShipmentInfo{}
 	this.ShipFromAddress = shipFromAddress
-	this.AreCasesRequired = areCasesRequired
+	this.AreCasesRequired = flexbool.FlexBool(areCasesRequired)
 	return &this
 }
 
@@ -250,12 +252,12 @@ func (o *InboundShipmentInfo) GetAreCasesRequired() bool {
 		return ret
 	}
 
-	return o.AreCasesRequired
+	return bool(o.AreCasesRequired)
 }
 
 // GetAreCasesRequiredOk returns a tuple with the AreCasesRequired field value
 // and a boolean to check if the value has been set.
-func (o *InboundShipmentInfo) GetAreCasesRequiredOk() (*bool, bool) {
+func (o *InboundShipmentInfo) GetAreCasesRequiredOk() (*flexbool.FlexBool, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -264,7 +266,7 @@ func (o *InboundShipmentInfo) GetAreCasesRequiredOk() (*bool, bool) {
 
 // SetAreCasesRequired sets field value
 func (o *InboundShipmentInfo) SetAreCasesRequired(v bool) {
-	o.AreCasesRequired = v
+	o.AreCasesRequired = flexbool.FlexBool(v)
 }
 
 // GetConfirmedNeedByDate returns the ConfirmedNeedByDate field value if set, zero value otherwise.
