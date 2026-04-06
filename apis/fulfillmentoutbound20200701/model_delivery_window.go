@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the DeliveryWindow type satisfies the MappedNullable interface at compile time
@@ -22,9 +24,9 @@ var _ MappedNullable = &DeliveryWindow{}
 // DeliveryWindow The time range within which a Scheduled Delivery fulfillment order should be delivered. This is only available in the JP marketplace.
 type DeliveryWindow struct {
 	// Date timestamp
-	StartDate time.Time `json:"startDate"`
+	StartDate flextime.FlexTime `json:"startDate"`
 	// Date timestamp
-	EndDate time.Time `json:"endDate"`
+	EndDate flextime.FlexTime `json:"endDate"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -36,8 +38,8 @@ type _DeliveryWindow DeliveryWindow
 // will change when the set of required properties is changed
 func NewDeliveryWindow(startDate time.Time, endDate time.Time) *DeliveryWindow {
 	this := DeliveryWindow{}
-	this.StartDate = startDate
-	this.EndDate = endDate
+	this.StartDate = flextime.FlexTime{Time: startDate}
+	this.EndDate = flextime.FlexTime{Time: endDate}
 	return &this
 }
 
@@ -56,12 +58,12 @@ func (o *DeliveryWindow) GetStartDate() time.Time {
 		return ret
 	}
 
-	return o.StartDate
+	return o.StartDate.Time
 }
 
 // GetStartDateOk returns a tuple with the StartDate field value
 // and a boolean to check if the value has been set.
-func (o *DeliveryWindow) GetStartDateOk() (*time.Time, bool) {
+func (o *DeliveryWindow) GetStartDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,7 +72,7 @@ func (o *DeliveryWindow) GetStartDateOk() (*time.Time, bool) {
 
 // SetStartDate sets field value
 func (o *DeliveryWindow) SetStartDate(v time.Time) {
-	o.StartDate = v
+	o.StartDate = flextime.FlexTime{Time: v}
 }
 
 // GetEndDate returns the EndDate field value
@@ -80,12 +82,12 @@ func (o *DeliveryWindow) GetEndDate() time.Time {
 		return ret
 	}
 
-	return o.EndDate
+	return o.EndDate.Time
 }
 
 // GetEndDateOk returns a tuple with the EndDate field value
 // and a boolean to check if the value has been set.
-func (o *DeliveryWindow) GetEndDateOk() (*time.Time, bool) {
+func (o *DeliveryWindow) GetEndDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -94,7 +96,7 @@ func (o *DeliveryWindow) GetEndDateOk() (*time.Time, bool) {
 
 // SetEndDate sets field value
 func (o *DeliveryWindow) SetEndDate(v time.Time) {
-	o.EndDate = v
+	o.EndDate = flextime.FlexTime{Time: v}
 }
 
 func (o DeliveryWindow) MarshalJSON() ([]byte, error) {

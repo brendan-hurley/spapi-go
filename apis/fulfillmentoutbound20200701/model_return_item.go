@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ReturnItem type satisfies the MappedNullable interface at compile time
@@ -35,7 +37,7 @@ type ReturnItem struct {
 	AmazonReturnReasonCode *string `json:"amazonReturnReasonCode,omitempty"`
 	Status FulfillmentReturnItemStatus `json:"status"`
 	// Date timestamp
-	StatusChangedDate time.Time `json:"statusChangedDate"`
+	StatusChangedDate flextime.FlexTime `json:"statusChangedDate"`
 	// Identifies the return authorization used to return this item. Refer to `ReturnAuthorization`.
 	ReturnAuthorizationId *string `json:"returnAuthorizationId,omitempty"`
 	ReturnReceivedCondition *ReturnItemDisposition `json:"returnReceivedCondition,omitempty"`
@@ -57,7 +59,7 @@ func NewReturnItem(sellerReturnItemId string, sellerFulfillmentOrderItemId strin
 	this.AmazonShipmentId = amazonShipmentId
 	this.SellerReturnReasonCode = sellerReturnReasonCode
 	this.Status = status
-	this.StatusChangedDate = statusChangedDate
+	this.StatusChangedDate = flextime.FlexTime{Time: statusChangedDate}
 	return &this
 }
 
@@ -260,12 +262,12 @@ func (o *ReturnItem) GetStatusChangedDate() time.Time {
 		return ret
 	}
 
-	return o.StatusChangedDate
+	return o.StatusChangedDate.Time
 }
 
 // GetStatusChangedDateOk returns a tuple with the StatusChangedDate field value
 // and a boolean to check if the value has been set.
-func (o *ReturnItem) GetStatusChangedDateOk() (*time.Time, bool) {
+func (o *ReturnItem) GetStatusChangedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -274,7 +276,7 @@ func (o *ReturnItem) GetStatusChangedDateOk() (*time.Time, bool) {
 
 // SetStatusChangedDate sets field value
 func (o *ReturnItem) SetStatusChangedDate(v time.Time) {
-	o.StatusChangedDate = v
+	o.StatusChangedDate = flextime.FlexTime{Time: v}
 }
 
 // GetReturnAuthorizationId returns the ReturnAuthorizationId field value if set, zero value otherwise.

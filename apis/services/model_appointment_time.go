@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the AppointmentTime type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ var _ MappedNullable = &AppointmentTime{}
 // AppointmentTime The time of the appointment window.
 type AppointmentTime struct {
 	// The date and time of the start of the appointment window in ISO 8601 format.
-	StartTime time.Time `json:"startTime"`
+	StartTime flextime.FlexTime `json:"startTime"`
 	// The duration of the appointment window, in minutes.
 	DurationInMinutes int32 `json:"durationInMinutes"`
 	AdditionalProperties map[string]interface{}
@@ -36,7 +38,7 @@ type _AppointmentTime AppointmentTime
 // will change when the set of required properties is changed
 func NewAppointmentTime(startTime time.Time, durationInMinutes int32) *AppointmentTime {
 	this := AppointmentTime{}
-	this.StartTime = startTime
+	this.StartTime = flextime.FlexTime{Time: startTime}
 	this.DurationInMinutes = durationInMinutes
 	return &this
 }
@@ -56,12 +58,12 @@ func (o *AppointmentTime) GetStartTime() time.Time {
 		return ret
 	}
 
-	return o.StartTime
+	return o.StartTime.Time
 }
 
 // GetStartTimeOk returns a tuple with the StartTime field value
 // and a boolean to check if the value has been set.
-func (o *AppointmentTime) GetStartTimeOk() (*time.Time, bool) {
+func (o *AppointmentTime) GetStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,7 +72,7 @@ func (o *AppointmentTime) GetStartTimeOk() (*time.Time, bool) {
 
 // SetStartTime sets field value
 func (o *AppointmentTime) SetStartTime(v time.Time) {
-	o.StartTime = v
+	o.StartTime = flextime.FlexTime{Time: v}
 }
 
 // GetDurationInMinutes returns the DurationInMinutes field value

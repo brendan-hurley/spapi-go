@@ -13,6 +13,8 @@ package invoicesapimodel20240619
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Invoice type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &Invoice{}
 // Invoice Provides detailed information about an invoice.
 type Invoice struct {
 	// The date and time the invoice is issued. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	Date *time.Time `json:"date,omitempty"`
+	Date *flextime.FlexTime `json:"date,omitempty"`
 	// If the invoice is in an error state, this attribute displays the error code.
 	ErrorCode *string `json:"errorCode,omitempty"`
 	// The invoice identifier that is used by an external party. This is typically the government agency that authorized the invoice.
@@ -68,12 +70,12 @@ func (o *Invoice) GetDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.Date
+	return o.Date.Time
 }
 
 // GetDateOk returns a tuple with the Date field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Invoice) GetDateOk() (*time.Time, bool) {
+func (o *Invoice) GetDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.Date) {
 		return nil, false
 	}
@@ -91,7 +93,7 @@ func (o *Invoice) HasDate() bool {
 
 // SetDate gets a reference to the given time.Time and assigns it to the Date field.
 func (o *Invoice) SetDate(v time.Time) {
-	o.Date = &v
+	o.Date = flextime.PtrFlexTime(v)
 }
 
 // GetErrorCode returns the ErrorCode field value if set, zero value otherwise.

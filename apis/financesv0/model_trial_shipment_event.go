@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TrialShipmentEvent type satisfies the MappedNullable interface at compile time
@@ -25,7 +27,7 @@ type TrialShipmentEvent struct {
 	// The identifier of the financial event group.
 	FinancialEventGroupId *string `json:"FinancialEventGroupId,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	PostedDate *time.Time `json:"PostedDate,omitempty"`
+	PostedDate *flextime.FlexTime `json:"PostedDate,omitempty"`
 	// The seller SKU of the item. The seller SKU is qualified by the seller's seller ID, which is included with every call to the Selling Partner API.
 	SKU *string `json:"SKU,omitempty"`
 	// A list of fee component information.
@@ -122,12 +124,12 @@ func (o *TrialShipmentEvent) GetPostedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PostedDate
+	return o.PostedDate.Time
 }
 
 // GetPostedDateOk returns a tuple with the PostedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TrialShipmentEvent) GetPostedDateOk() (*time.Time, bool) {
+func (o *TrialShipmentEvent) GetPostedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PostedDate) {
 		return nil, false
 	}
@@ -145,7 +147,7 @@ func (o *TrialShipmentEvent) HasPostedDate() bool {
 
 // SetPostedDate gets a reference to the given time.Time and assigns it to the PostedDate field.
 func (o *TrialShipmentEvent) SetPostedDate(v time.Time) {
-	o.PostedDate = &v
+	o.PostedDate = flextime.PtrFlexTime(v)
 }
 
 // GetSKU returns the SKU field value if set, zero value otherwise.

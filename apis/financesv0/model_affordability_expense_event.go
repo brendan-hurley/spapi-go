@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the AffordabilityExpenseEvent type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type AffordabilityExpenseEvent struct {
 	// An Amazon-defined identifier for an order.
 	AmazonOrderId *string `json:"AmazonOrderId,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	PostedDate *time.Time `json:"PostedDate,omitempty"`
+	PostedDate *flextime.FlexTime `json:"PostedDate,omitempty"`
 	// The Amazon-defined marketplace identifier.
 	MarketplaceId *string `json:"MarketplaceId,omitempty"`
 	// The type of transaction.   Possible values:  * `Charge`: an affordability promotion expense. * `Refund`: an affordability promotion expense reversal.
@@ -97,12 +99,12 @@ func (o *AffordabilityExpenseEvent) GetPostedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PostedDate
+	return o.PostedDate.Time
 }
 
 // GetPostedDateOk returns a tuple with the PostedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AffordabilityExpenseEvent) GetPostedDateOk() (*time.Time, bool) {
+func (o *AffordabilityExpenseEvent) GetPostedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PostedDate) {
 		return nil, false
 	}
@@ -120,7 +122,7 @@ func (o *AffordabilityExpenseEvent) HasPostedDate() bool {
 
 // SetPostedDate gets a reference to the given time.Time and assigns it to the PostedDate field.
 func (o *AffordabilityExpenseEvent) SetPostedDate(v time.Time) {
-	o.PostedDate = &v
+	o.PostedDate = flextime.PtrFlexTime(v)
 }
 
 // GetMarketplaceId returns the MarketplaceId field value if set, zero value otherwise.

@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Order type satisfies the MappedNullable interface at compile time
@@ -26,9 +28,9 @@ type Order struct {
 	// Alternative identifiers that can be used to reference this order, such as seller-defined order numbers.
 	OrderAliases []Alias `json:"orderAliases,omitempty"`
 	// The time when the customer placed the order. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.
-	CreatedTime time.Time `json:"createdTime"`
+	CreatedTime flextime.FlexTime `json:"createdTime"`
 	// The most recent time when any aspect of this order was modified by Amazon or the seller. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.
-	LastUpdatedTime time.Time `json:"lastUpdatedTime"`
+	LastUpdatedTime flextime.FlexTime `json:"lastUpdatedTime"`
 	// Special programs associated with this order that may affect fulfillment or customer experience.   **Possible values**: `AMAZON_BAZAAR`, `AMAZON_BUSINESS`,  `AMAZON_EASY_SHIP`, `AMAZON_HAUL`, `DELIVERY_BY_AMAZON`, `FBM_SHIP_PLUS`, `IN_STORE_PICK_UP`, `PREMIUM`, `PREORDER`, `PRIME`
 	Programs []string `json:"programs,omitempty"`
 	// Other orders that have a direct relationship to this order, such as replacement or exchange orders.
@@ -54,8 +56,8 @@ type _Order Order
 func NewOrder(orderId string, createdTime time.Time, lastUpdatedTime time.Time, salesChannel SalesChannel, orderItems []OrderItem) *Order {
 	this := Order{}
 	this.OrderId = orderId
-	this.CreatedTime = createdTime
-	this.LastUpdatedTime = lastUpdatedTime
+	this.CreatedTime = flextime.FlexTime{Time: createdTime}
+	this.LastUpdatedTime = flextime.FlexTime{Time: lastUpdatedTime}
 	this.SalesChannel = salesChannel
 	this.OrderItems = orderItems
 	return &this
@@ -132,12 +134,12 @@ func (o *Order) GetCreatedTime() time.Time {
 		return ret
 	}
 
-	return o.CreatedTime
+	return o.CreatedTime.Time
 }
 
 // GetCreatedTimeOk returns a tuple with the CreatedTime field value
 // and a boolean to check if the value has been set.
-func (o *Order) GetCreatedTimeOk() (*time.Time, bool) {
+func (o *Order) GetCreatedTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -146,7 +148,7 @@ func (o *Order) GetCreatedTimeOk() (*time.Time, bool) {
 
 // SetCreatedTime sets field value
 func (o *Order) SetCreatedTime(v time.Time) {
-	o.CreatedTime = v
+	o.CreatedTime = flextime.FlexTime{Time: v}
 }
 
 // GetLastUpdatedTime returns the LastUpdatedTime field value
@@ -156,12 +158,12 @@ func (o *Order) GetLastUpdatedTime() time.Time {
 		return ret
 	}
 
-	return o.LastUpdatedTime
+	return o.LastUpdatedTime.Time
 }
 
 // GetLastUpdatedTimeOk returns a tuple with the LastUpdatedTime field value
 // and a boolean to check if the value has been set.
-func (o *Order) GetLastUpdatedTimeOk() (*time.Time, bool) {
+func (o *Order) GetLastUpdatedTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -170,7 +172,7 @@ func (o *Order) GetLastUpdatedTimeOk() (*time.Time, bool) {
 
 // SetLastUpdatedTime sets field value
 func (o *Order) SetLastUpdatedTime(v time.Time) {
-	o.LastUpdatedTime = v
+	o.LastUpdatedTime = flextime.FlexTime{Time: v}
 }
 
 // GetPrograms returns the Programs field value if set, zero value otherwise.

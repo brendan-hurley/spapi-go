@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Feed type satisfies the MappedNullable interface at compile time
@@ -28,13 +30,13 @@ type Feed struct {
 	// A list of identifiers for the marketplaces that the feed is applied to.
 	MarketplaceIds []string `json:"marketplaceIds,omitempty"`
 	// The date and time when the feed was created, in ISO 8601 date time format.
-	CreatedTime time.Time `json:"createdTime"`
+	CreatedTime flextime.FlexTime `json:"createdTime"`
 	// The processing status of the feed.
 	ProcessingStatus string `json:"processingStatus"`
 	// The date and time when feed processing started, in ISO 8601 date time format.
-	ProcessingStartTime *time.Time `json:"processingStartTime,omitempty"`
+	ProcessingStartTime *flextime.FlexTime `json:"processingStartTime,omitempty"`
 	// The date and time when feed processing completed, in ISO 8601 date time format.
-	ProcessingEndTime *time.Time `json:"processingEndTime,omitempty"`
+	ProcessingEndTime *flextime.FlexTime `json:"processingEndTime,omitempty"`
 	// The identifier for the feed document. This identifier is unique only in combination with a seller ID.
 	ResultFeedDocumentId *string `json:"resultFeedDocumentId,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -50,7 +52,7 @@ func NewFeed(feedId string, feedType string, createdTime time.Time, processingSt
 	this := Feed{}
 	this.FeedId = feedId
 	this.FeedType = feedType
-	this.CreatedTime = createdTime
+	this.CreatedTime = flextime.FlexTime{Time: createdTime}
 	this.ProcessingStatus = processingStatus
 	return &this
 }
@@ -150,12 +152,12 @@ func (o *Feed) GetCreatedTime() time.Time {
 		return ret
 	}
 
-	return o.CreatedTime
+	return o.CreatedTime.Time
 }
 
 // GetCreatedTimeOk returns a tuple with the CreatedTime field value
 // and a boolean to check if the value has been set.
-func (o *Feed) GetCreatedTimeOk() (*time.Time, bool) {
+func (o *Feed) GetCreatedTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -164,7 +166,7 @@ func (o *Feed) GetCreatedTimeOk() (*time.Time, bool) {
 
 // SetCreatedTime sets field value
 func (o *Feed) SetCreatedTime(v time.Time) {
-	o.CreatedTime = v
+	o.CreatedTime = flextime.FlexTime{Time: v}
 }
 
 // GetProcessingStatus returns the ProcessingStatus field value
@@ -197,12 +199,12 @@ func (o *Feed) GetProcessingStartTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ProcessingStartTime
+	return o.ProcessingStartTime.Time
 }
 
 // GetProcessingStartTimeOk returns a tuple with the ProcessingStartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Feed) GetProcessingStartTimeOk() (*time.Time, bool) {
+func (o *Feed) GetProcessingStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ProcessingStartTime) {
 		return nil, false
 	}
@@ -220,7 +222,7 @@ func (o *Feed) HasProcessingStartTime() bool {
 
 // SetProcessingStartTime gets a reference to the given time.Time and assigns it to the ProcessingStartTime field.
 func (o *Feed) SetProcessingStartTime(v time.Time) {
-	o.ProcessingStartTime = &v
+	o.ProcessingStartTime = flextime.PtrFlexTime(v)
 }
 
 // GetProcessingEndTime returns the ProcessingEndTime field value if set, zero value otherwise.
@@ -229,12 +231,12 @@ func (o *Feed) GetProcessingEndTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ProcessingEndTime
+	return o.ProcessingEndTime.Time
 }
 
 // GetProcessingEndTimeOk returns a tuple with the ProcessingEndTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Feed) GetProcessingEndTimeOk() (*time.Time, bool) {
+func (o *Feed) GetProcessingEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ProcessingEndTime) {
 		return nil, false
 	}
@@ -252,7 +254,7 @@ func (o *Feed) HasProcessingEndTime() bool {
 
 // SetProcessingEndTime gets a reference to the given time.Time and assigns it to the ProcessingEndTime field.
 func (o *Feed) SetProcessingEndTime(v time.Time) {
-	o.ProcessingEndTime = &v
+	o.ProcessingEndTime = flextime.PtrFlexTime(v)
 }
 
 // GetResultFeedDocumentId returns the ResultFeedDocumentId field value if set, zero value otherwise.

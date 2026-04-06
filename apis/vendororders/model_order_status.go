@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the OrderStatus type satisfies the MappedNullable interface at compile time
@@ -26,9 +28,9 @@ type OrderStatus struct {
 	// The status of the buyer's purchase order for this order.
 	PurchaseOrderStatus string `json:"purchaseOrderStatus"`
 	// The date the purchase order was placed. Must be in ISO-8601 date/time format.
-	PurchaseOrderDate time.Time `json:"purchaseOrderDate"`
+	PurchaseOrderDate flextime.FlexTime `json:"purchaseOrderDate"`
 	// The date when the purchase order was last updated. Must be in ISO-8601 date/time format.
-	LastUpdatedDate *time.Time `json:"lastUpdatedDate,omitempty"`
+	LastUpdatedDate *flextime.FlexTime `json:"lastUpdatedDate,omitempty"`
 	SellingParty PartyIdentification `json:"sellingParty"`
 	ShipToParty PartyIdentification `json:"shipToParty"`
 	// Detailed description of items order status.
@@ -46,7 +48,7 @@ func NewOrderStatus(purchaseOrderNumber string, purchaseOrderStatus string, purc
 	this := OrderStatus{}
 	this.PurchaseOrderNumber = purchaseOrderNumber
 	this.PurchaseOrderStatus = purchaseOrderStatus
-	this.PurchaseOrderDate = purchaseOrderDate
+	this.PurchaseOrderDate = flextime.FlexTime{Time: purchaseOrderDate}
 	this.SellingParty = sellingParty
 	this.ShipToParty = shipToParty
 	this.ItemStatus = itemStatus
@@ -116,12 +118,12 @@ func (o *OrderStatus) GetPurchaseOrderDate() time.Time {
 		return ret
 	}
 
-	return o.PurchaseOrderDate
+	return o.PurchaseOrderDate.Time
 }
 
 // GetPurchaseOrderDateOk returns a tuple with the PurchaseOrderDate field value
 // and a boolean to check if the value has been set.
-func (o *OrderStatus) GetPurchaseOrderDateOk() (*time.Time, bool) {
+func (o *OrderStatus) GetPurchaseOrderDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -130,7 +132,7 @@ func (o *OrderStatus) GetPurchaseOrderDateOk() (*time.Time, bool) {
 
 // SetPurchaseOrderDate sets field value
 func (o *OrderStatus) SetPurchaseOrderDate(v time.Time) {
-	o.PurchaseOrderDate = v
+	o.PurchaseOrderDate = flextime.FlexTime{Time: v}
 }
 
 // GetLastUpdatedDate returns the LastUpdatedDate field value if set, zero value otherwise.
@@ -139,12 +141,12 @@ func (o *OrderStatus) GetLastUpdatedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.LastUpdatedDate
+	return o.LastUpdatedDate.Time
 }
 
 // GetLastUpdatedDateOk returns a tuple with the LastUpdatedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrderStatus) GetLastUpdatedDateOk() (*time.Time, bool) {
+func (o *OrderStatus) GetLastUpdatedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.LastUpdatedDate) {
 		return nil, false
 	}
@@ -162,7 +164,7 @@ func (o *OrderStatus) HasLastUpdatedDate() bool {
 
 // SetLastUpdatedDate gets a reference to the given time.Time and assigns it to the LastUpdatedDate field.
 func (o *OrderStatus) SetLastUpdatedDate(v time.Time) {
-	o.LastUpdatedDate = &v
+	o.LastUpdatedDate = flextime.PtrFlexTime(v)
 }
 
 // GetSellingParty returns the SellingParty field value

@@ -13,6 +13,8 @@ package fulfillmentinbound20240320
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the GenerateSelfShipAppointmentSlotsRequest type satisfies the MappedNullable interface at compile time
@@ -21,9 +23,9 @@ var _ MappedNullable = &GenerateSelfShipAppointmentSlotsRequest{}
 // GenerateSelfShipAppointmentSlotsRequest The `generateSelfShipAppointmentSlots` request.
 type GenerateSelfShipAppointmentSlotsRequest struct {
 	// The desired end date. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format.
-	DesiredEndDate *time.Time `json:"desiredEndDate,omitempty"`
+	DesiredEndDate *flextime.FlexTime `json:"desiredEndDate,omitempty"`
 	// The desired start date. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format.
-	DesiredStartDate *time.Time `json:"desiredStartDate,omitempty"`
+	DesiredStartDate *flextime.FlexTime `json:"desiredStartDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -52,12 +54,12 @@ func (o *GenerateSelfShipAppointmentSlotsRequest) GetDesiredEndDate() time.Time 
 		var ret time.Time
 		return ret
 	}
-	return *o.DesiredEndDate
+	return o.DesiredEndDate.Time
 }
 
 // GetDesiredEndDateOk returns a tuple with the DesiredEndDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GenerateSelfShipAppointmentSlotsRequest) GetDesiredEndDateOk() (*time.Time, bool) {
+func (o *GenerateSelfShipAppointmentSlotsRequest) GetDesiredEndDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.DesiredEndDate) {
 		return nil, false
 	}
@@ -75,7 +77,7 @@ func (o *GenerateSelfShipAppointmentSlotsRequest) HasDesiredEndDate() bool {
 
 // SetDesiredEndDate gets a reference to the given time.Time and assigns it to the DesiredEndDate field.
 func (o *GenerateSelfShipAppointmentSlotsRequest) SetDesiredEndDate(v time.Time) {
-	o.DesiredEndDate = &v
+	o.DesiredEndDate = flextime.PtrFlexTime(v)
 }
 
 // GetDesiredStartDate returns the DesiredStartDate field value if set, zero value otherwise.
@@ -84,12 +86,12 @@ func (o *GenerateSelfShipAppointmentSlotsRequest) GetDesiredStartDate() time.Tim
 		var ret time.Time
 		return ret
 	}
-	return *o.DesiredStartDate
+	return o.DesiredStartDate.Time
 }
 
 // GetDesiredStartDateOk returns a tuple with the DesiredStartDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GenerateSelfShipAppointmentSlotsRequest) GetDesiredStartDateOk() (*time.Time, bool) {
+func (o *GenerateSelfShipAppointmentSlotsRequest) GetDesiredStartDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.DesiredStartDate) {
 		return nil, false
 	}
@@ -107,7 +109,7 @@ func (o *GenerateSelfShipAppointmentSlotsRequest) HasDesiredStartDate() bool {
 
 // SetDesiredStartDate gets a reference to the given time.Time and assigns it to the DesiredStartDate field.
 func (o *GenerateSelfShipAppointmentSlotsRequest) SetDesiredStartDate(v time.Time) {
-	o.DesiredStartDate = &v
+	o.DesiredStartDate = flextime.PtrFlexTime(v)
 }
 
 func (o GenerateSelfShipAppointmentSlotsRequest) MarshalJSON() ([]byte, error) {

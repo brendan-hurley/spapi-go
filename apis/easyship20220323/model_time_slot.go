@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TimeSlot type satisfies the MappedNullable interface at compile time
@@ -24,9 +26,9 @@ type TimeSlot struct {
 	// A string of up to 255 characters.
 	SlotId string `json:"slotId"`
 	// A datetime value in ISO 8601 format.
-	StartTime *time.Time `json:"startTime,omitempty"`
+	StartTime *flextime.FlexTime `json:"startTime,omitempty"`
 	// A datetime value in ISO 8601 format.
-	EndTime *time.Time `json:"endTime,omitempty"`
+	EndTime *flextime.FlexTime `json:"endTime,omitempty"`
 	HandoverMethod *HandoverMethod `json:"handoverMethod,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -81,12 +83,12 @@ func (o *TimeSlot) GetStartTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.StartTime
+	return o.StartTime.Time
 }
 
 // GetStartTimeOk returns a tuple with the StartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TimeSlot) GetStartTimeOk() (*time.Time, bool) {
+func (o *TimeSlot) GetStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.StartTime) {
 		return nil, false
 	}
@@ -104,7 +106,7 @@ func (o *TimeSlot) HasStartTime() bool {
 
 // SetStartTime gets a reference to the given time.Time and assigns it to the StartTime field.
 func (o *TimeSlot) SetStartTime(v time.Time) {
-	o.StartTime = &v
+	o.StartTime = flextime.PtrFlexTime(v)
 }
 
 // GetEndTime returns the EndTime field value if set, zero value otherwise.
@@ -113,12 +115,12 @@ func (o *TimeSlot) GetEndTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EndTime
+	return o.EndTime.Time
 }
 
 // GetEndTimeOk returns a tuple with the EndTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TimeSlot) GetEndTimeOk() (*time.Time, bool) {
+func (o *TimeSlot) GetEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EndTime) {
 		return nil, false
 	}
@@ -136,7 +138,7 @@ func (o *TimeSlot) HasEndTime() bool {
 
 // SetEndTime gets a reference to the given time.Time and assigns it to the EndTime field.
 func (o *TimeSlot) SetEndTime(v time.Time) {
-	o.EndTime = &v
+	o.EndTime = flextime.PtrFlexTime(v)
 }
 
 // GetHandoverMethod returns the HandoverMethod field value if set, zero value otherwise.

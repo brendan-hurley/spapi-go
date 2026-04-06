@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the WindowInput type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ var _ MappedNullable = &WindowInput{}
 // WindowInput Contains only a starting DateTime.
 type WindowInput struct {
 	// The start date of the window. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format with minute precision. Supports patterns `yyyy-MM-ddTHH:mmZ`, `yyyy-MM-ddTHH:mm:ssZ`, or `yyyy-MM-ddTHH:mm:ss.sssZ`. Note that non-zero second and millisecond components are removed.
-	Start time.Time `json:"start"`
+	Start flextime.FlexTime `json:"start"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -34,7 +36,7 @@ type _WindowInput WindowInput
 // will change when the set of required properties is changed
 func NewWindowInput(start time.Time) *WindowInput {
 	this := WindowInput{}
-	this.Start = start
+	this.Start = flextime.FlexTime{Time: start}
 	return &this
 }
 
@@ -53,12 +55,12 @@ func (o *WindowInput) GetStart() time.Time {
 		return ret
 	}
 
-	return o.Start
+	return o.Start.Time
 }
 
 // GetStartOk returns a tuple with the Start field value
 // and a boolean to check if the value has been set.
-func (o *WindowInput) GetStartOk() (*time.Time, bool) {
+func (o *WindowInput) GetStartOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -67,7 +69,7 @@ func (o *WindowInput) GetStartOk() (*time.Time, bool) {
 
 // SetStart sets field value
 func (o *WindowInput) SetStart(v time.Time) {
-	o.Start = v
+	o.Start = flextime.FlexTime{Time: v}
 }
 
 func (o WindowInput) MarshalJSON() ([]byte, error) {

@@ -13,6 +13,8 @@ package services
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the RangeSlot type satisfies the MappedNullable interface at compile time
@@ -21,9 +23,9 @@ var _ MappedNullable = &RangeSlot{}
 // RangeSlot Capacity slots represented in a format similar to availability rules.
 type RangeSlot struct {
 	// Start date time of slot in ISO 8601 format with precision of seconds.
-	StartDateTime *time.Time `json:"startDateTime,omitempty"`
+	StartDateTime *flextime.FlexTime `json:"startDateTime,omitempty"`
 	// End date time of slot in ISO 8601 format with precision of seconds.
-	EndDateTime *time.Time `json:"endDateTime,omitempty"`
+	EndDateTime *flextime.FlexTime `json:"endDateTime,omitempty"`
 	// Capacity of the slot.
 	Capacity *int32 `json:"capacity,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -54,12 +56,12 @@ func (o *RangeSlot) GetStartDateTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.StartDateTime
+	return o.StartDateTime.Time
 }
 
 // GetStartDateTimeOk returns a tuple with the StartDateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RangeSlot) GetStartDateTimeOk() (*time.Time, bool) {
+func (o *RangeSlot) GetStartDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.StartDateTime) {
 		return nil, false
 	}
@@ -77,7 +79,7 @@ func (o *RangeSlot) HasStartDateTime() bool {
 
 // SetStartDateTime gets a reference to the given time.Time and assigns it to the StartDateTime field.
 func (o *RangeSlot) SetStartDateTime(v time.Time) {
-	o.StartDateTime = &v
+	o.StartDateTime = flextime.PtrFlexTime(v)
 }
 
 // GetEndDateTime returns the EndDateTime field value if set, zero value otherwise.
@@ -86,12 +88,12 @@ func (o *RangeSlot) GetEndDateTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EndDateTime
+	return o.EndDateTime.Time
 }
 
 // GetEndDateTimeOk returns a tuple with the EndDateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RangeSlot) GetEndDateTimeOk() (*time.Time, bool) {
+func (o *RangeSlot) GetEndDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EndDateTime) {
 		return nil, false
 	}
@@ -109,7 +111,7 @@ func (o *RangeSlot) HasEndDateTime() bool {
 
 // SetEndDateTime gets a reference to the given time.Time and assigns it to the EndDateTime field.
 func (o *RangeSlot) SetEndDateTime(v time.Time) {
-	o.EndDateTime = &v
+	o.EndDateTime = flextime.PtrFlexTime(v)
 }
 
 // GetCapacity returns the Capacity field value if set, zero value otherwise.

@@ -13,6 +13,8 @@ package vendororders
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the OrderedQuantityDetails type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &OrderedQuantityDetails{}
 // OrderedQuantityDetails Details of item quantity ordered.
 type OrderedQuantityDetails struct {
 	// The date when the line item quantity was updated by buyer. Must be in ISO-8601 date/time format.
-	UpdatedDate *time.Time `json:"updatedDate,omitempty"`
+	UpdatedDate *flextime.FlexTime `json:"updatedDate,omitempty"`
 	OrderedQuantity *ItemQuantity `json:"orderedQuantity,omitempty"`
 	CancelledQuantity *ItemQuantity `json:"cancelledQuantity,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -52,12 +54,12 @@ func (o *OrderedQuantityDetails) GetUpdatedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.UpdatedDate
+	return o.UpdatedDate.Time
 }
 
 // GetUpdatedDateOk returns a tuple with the UpdatedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrderedQuantityDetails) GetUpdatedDateOk() (*time.Time, bool) {
+func (o *OrderedQuantityDetails) GetUpdatedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.UpdatedDate) {
 		return nil, false
 	}
@@ -75,7 +77,7 @@ func (o *OrderedQuantityDetails) HasUpdatedDate() bool {
 
 // SetUpdatedDate gets a reference to the given time.Time and assigns it to the UpdatedDate field.
 func (o *OrderedQuantityDetails) SetUpdatedDate(v time.Time) {
-	o.UpdatedDate = &v
+	o.UpdatedDate = flextime.PtrFlexTime(v)
 }
 
 // GetOrderedQuantity returns the OrderedQuantity field value if set, zero value otherwise.

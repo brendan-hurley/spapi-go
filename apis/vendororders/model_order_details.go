@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the OrderDetails type satisfies the MappedNullable interface at compile time
@@ -22,11 +24,11 @@ var _ MappedNullable = &OrderDetails{}
 // OrderDetails Details of an order.
 type OrderDetails struct {
 	// The date the purchase order was placed. Must be in ISO-8601 date/time format.
-	PurchaseOrderDate time.Time `json:"purchaseOrderDate"`
+	PurchaseOrderDate flextime.FlexTime `json:"purchaseOrderDate"`
 	// The date when purchase order was last changed by Amazon after the order was placed. This date will be greater than 'purchaseOrderDate'. This means the PO data was changed on that date and vendors are required to fulfill the  updated PO. The PO changes can be related to Item Quantity, Ship to Location, Ship Window etc. This field will not be present in orders that have not changed after creation. Must be in ISO-8601 date/time format.
-	PurchaseOrderChangedDate *time.Time `json:"purchaseOrderChangedDate,omitempty"`
+	PurchaseOrderChangedDate *flextime.FlexTime `json:"purchaseOrderChangedDate,omitempty"`
 	// The date when current purchase order state was changed. Current purchase order state is available in the field 'purchaseOrderState'. Must be in ISO-8601 date/time format.
-	PurchaseOrderStateChangedDate time.Time `json:"purchaseOrderStateChangedDate"`
+	PurchaseOrderStateChangedDate flextime.FlexTime `json:"purchaseOrderStateChangedDate"`
 	// Type of purchase order.
 	PurchaseOrderType *string `json:"purchaseOrderType,omitempty"`
 	ImportDetails *ImportDetails `json:"importDetails,omitempty"`
@@ -55,8 +57,8 @@ type _OrderDetails OrderDetails
 // will change when the set of required properties is changed
 func NewOrderDetails(purchaseOrderDate time.Time, purchaseOrderStateChangedDate time.Time, items []OrderItem) *OrderDetails {
 	this := OrderDetails{}
-	this.PurchaseOrderDate = purchaseOrderDate
-	this.PurchaseOrderStateChangedDate = purchaseOrderStateChangedDate
+	this.PurchaseOrderDate = flextime.FlexTime{Time: purchaseOrderDate}
+	this.PurchaseOrderStateChangedDate = flextime.FlexTime{Time: purchaseOrderStateChangedDate}
 	this.Items = items
 	return &this
 }
@@ -76,12 +78,12 @@ func (o *OrderDetails) GetPurchaseOrderDate() time.Time {
 		return ret
 	}
 
-	return o.PurchaseOrderDate
+	return o.PurchaseOrderDate.Time
 }
 
 // GetPurchaseOrderDateOk returns a tuple with the PurchaseOrderDate field value
 // and a boolean to check if the value has been set.
-func (o *OrderDetails) GetPurchaseOrderDateOk() (*time.Time, bool) {
+func (o *OrderDetails) GetPurchaseOrderDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -90,7 +92,7 @@ func (o *OrderDetails) GetPurchaseOrderDateOk() (*time.Time, bool) {
 
 // SetPurchaseOrderDate sets field value
 func (o *OrderDetails) SetPurchaseOrderDate(v time.Time) {
-	o.PurchaseOrderDate = v
+	o.PurchaseOrderDate = flextime.FlexTime{Time: v}
 }
 
 // GetPurchaseOrderChangedDate returns the PurchaseOrderChangedDate field value if set, zero value otherwise.
@@ -99,12 +101,12 @@ func (o *OrderDetails) GetPurchaseOrderChangedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PurchaseOrderChangedDate
+	return o.PurchaseOrderChangedDate.Time
 }
 
 // GetPurchaseOrderChangedDateOk returns a tuple with the PurchaseOrderChangedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrderDetails) GetPurchaseOrderChangedDateOk() (*time.Time, bool) {
+func (o *OrderDetails) GetPurchaseOrderChangedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PurchaseOrderChangedDate) {
 		return nil, false
 	}
@@ -122,7 +124,7 @@ func (o *OrderDetails) HasPurchaseOrderChangedDate() bool {
 
 // SetPurchaseOrderChangedDate gets a reference to the given time.Time and assigns it to the PurchaseOrderChangedDate field.
 func (o *OrderDetails) SetPurchaseOrderChangedDate(v time.Time) {
-	o.PurchaseOrderChangedDate = &v
+	o.PurchaseOrderChangedDate = flextime.PtrFlexTime(v)
 }
 
 // GetPurchaseOrderStateChangedDate returns the PurchaseOrderStateChangedDate field value
@@ -132,12 +134,12 @@ func (o *OrderDetails) GetPurchaseOrderStateChangedDate() time.Time {
 		return ret
 	}
 
-	return o.PurchaseOrderStateChangedDate
+	return o.PurchaseOrderStateChangedDate.Time
 }
 
 // GetPurchaseOrderStateChangedDateOk returns a tuple with the PurchaseOrderStateChangedDate field value
 // and a boolean to check if the value has been set.
-func (o *OrderDetails) GetPurchaseOrderStateChangedDateOk() (*time.Time, bool) {
+func (o *OrderDetails) GetPurchaseOrderStateChangedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -146,7 +148,7 @@ func (o *OrderDetails) GetPurchaseOrderStateChangedDateOk() (*time.Time, bool) {
 
 // SetPurchaseOrderStateChangedDate sets field value
 func (o *OrderDetails) SetPurchaseOrderStateChangedDate(v time.Time) {
-	o.PurchaseOrderStateChangedDate = v
+	o.PurchaseOrderStateChangedDate = flextime.FlexTime{Time: v}
 }
 
 // GetPurchaseOrderType returns the PurchaseOrderType field value if set, zero value otherwise.

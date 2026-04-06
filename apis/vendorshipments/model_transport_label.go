@@ -13,6 +13,8 @@ package vendorshipments
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TransportLabel type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &TransportLabel{}
 // TransportLabel A list of one or more ShipmentLabels.
 type TransportLabel struct {
 	// Date on which label is created.
-	LabelCreateDateTime *time.Time `json:"labelCreateDateTime,omitempty"`
+	LabelCreateDateTime *flextime.FlexTime `json:"labelCreateDateTime,omitempty"`
 	ShipmentInformation *ShipmentInformation `json:"shipmentInformation,omitempty"`
 	// Indicates the label data,format and type associated .
 	LabelData []LabelData `json:"labelData,omitempty"`
@@ -53,12 +55,12 @@ func (o *TransportLabel) GetLabelCreateDateTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.LabelCreateDateTime
+	return o.LabelCreateDateTime.Time
 }
 
 // GetLabelCreateDateTimeOk returns a tuple with the LabelCreateDateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransportLabel) GetLabelCreateDateTimeOk() (*time.Time, bool) {
+func (o *TransportLabel) GetLabelCreateDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.LabelCreateDateTime) {
 		return nil, false
 	}
@@ -76,7 +78,7 @@ func (o *TransportLabel) HasLabelCreateDateTime() bool {
 
 // SetLabelCreateDateTime gets a reference to the given time.Time and assigns it to the LabelCreateDateTime field.
 func (o *TransportLabel) SetLabelCreateDateTime(v time.Time) {
-	o.LabelCreateDateTime = &v
+	o.LabelCreateDateTime = flextime.PtrFlexTime(v)
 }
 
 // GetShipmentInformation returns the ShipmentInformation field value if set, zero value otherwise.

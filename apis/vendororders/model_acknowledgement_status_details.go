@@ -13,6 +13,8 @@ package vendororders
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the AcknowledgementStatusDetails type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &AcknowledgementStatusDetails{}
 // AcknowledgementStatusDetails Details of item quantity ordered
 type AcknowledgementStatusDetails struct {
 	// The date when the line item was confirmed by vendor. Must be in ISO-8601 date/time format.
-	AcknowledgementDate *time.Time `json:"acknowledgementDate,omitempty"`
+	AcknowledgementDate *flextime.FlexTime `json:"acknowledgementDate,omitempty"`
 	AcceptedQuantity *ItemQuantity `json:"acceptedQuantity,omitempty"`
 	RejectedQuantity *ItemQuantity `json:"rejectedQuantity,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -52,12 +54,12 @@ func (o *AcknowledgementStatusDetails) GetAcknowledgementDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.AcknowledgementDate
+	return o.AcknowledgementDate.Time
 }
 
 // GetAcknowledgementDateOk returns a tuple with the AcknowledgementDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AcknowledgementStatusDetails) GetAcknowledgementDateOk() (*time.Time, bool) {
+func (o *AcknowledgementStatusDetails) GetAcknowledgementDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.AcknowledgementDate) {
 		return nil, false
 	}
@@ -75,7 +77,7 @@ func (o *AcknowledgementStatusDetails) HasAcknowledgementDate() bool {
 
 // SetAcknowledgementDate gets a reference to the given time.Time and assigns it to the AcknowledgementDate field.
 func (o *AcknowledgementStatusDetails) SetAcknowledgementDate(v time.Time) {
-	o.AcknowledgementDate = &v
+	o.AcknowledgementDate = flextime.PtrFlexTime(v)
 }
 
 // GetAcceptedQuantity returns the AcceptedQuantity field value if set, zero value otherwise.

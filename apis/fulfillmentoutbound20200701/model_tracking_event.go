@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TrackingEvent type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ var _ MappedNullable = &TrackingEvent{}
 // TrackingEvent Information for tracking package deliveries.
 type TrackingEvent struct {
 	// Date timestamp
-	EventDate time.Time `json:"eventDate"`
+	EventDate flextime.FlexTime `json:"eventDate"`
 	EventAddress TrackingAddress `json:"eventAddress"`
 	EventCode EventCode `json:"eventCode"`
 	// A description for the corresponding event code.
@@ -38,7 +40,7 @@ type _TrackingEvent TrackingEvent
 // will change when the set of required properties is changed
 func NewTrackingEvent(eventDate time.Time, eventAddress TrackingAddress, eventCode EventCode, eventDescription string) *TrackingEvent {
 	this := TrackingEvent{}
-	this.EventDate = eventDate
+	this.EventDate = flextime.FlexTime{Time: eventDate}
 	this.EventAddress = eventAddress
 	this.EventCode = eventCode
 	this.EventDescription = eventDescription
@@ -60,12 +62,12 @@ func (o *TrackingEvent) GetEventDate() time.Time {
 		return ret
 	}
 
-	return o.EventDate
+	return o.EventDate.Time
 }
 
 // GetEventDateOk returns a tuple with the EventDate field value
 // and a boolean to check if the value has been set.
-func (o *TrackingEvent) GetEventDateOk() (*time.Time, bool) {
+func (o *TrackingEvent) GetEventDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -74,7 +76,7 @@ func (o *TrackingEvent) GetEventDateOk() (*time.Time, bool) {
 
 // SetEventDate sets field value
 func (o *TrackingEvent) SetEventDate(v time.Time) {
-	o.EventDate = v
+	o.EventDate = flextime.FlexTime{Time: v}
 }
 
 // GetEventAddress returns the EventAddress field value

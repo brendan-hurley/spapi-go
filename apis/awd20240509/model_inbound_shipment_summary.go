@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the InboundShipmentSummary type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ var _ MappedNullable = &InboundShipmentSummary{}
 // InboundShipmentSummary Summary for an AWD inbound shipment containing the shipment ID, which can be used to retrieve the actual shipment.
 type InboundShipmentSummary struct {
 	// Timestamp when the shipment was created.
-	CreatedAt *time.Time `json:"createdAt,omitempty"`
+	CreatedAt *flextime.FlexTime `json:"createdAt,omitempty"`
 	// Optional client-provided reference ID that can be used to correlate this shipment with client resources. For example, to map this shipment to an internal bookkeeping order record.
 	ExternalReferenceId *string `json:"externalReferenceId,omitempty"`
 	// The AWD inbound order ID that this inbound shipment belongs to.
@@ -31,7 +33,7 @@ type InboundShipmentSummary struct {
 	ShipmentId string `json:"shipmentId"`
 	ShipmentStatus InboundShipmentStatus `json:"shipmentStatus"`
 	// Timestamp when the shipment was updated.
-	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	UpdatedAt *flextime.FlexTime `json:"updatedAt,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -63,12 +65,12 @@ func (o *InboundShipmentSummary) GetCreatedAt() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.CreatedAt
+	return o.CreatedAt.Time
 }
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InboundShipmentSummary) GetCreatedAtOk() (*time.Time, bool) {
+func (o *InboundShipmentSummary) GetCreatedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
@@ -86,7 +88,7 @@ func (o *InboundShipmentSummary) HasCreatedAt() bool {
 
 // SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
 func (o *InboundShipmentSummary) SetCreatedAt(v time.Time) {
-	o.CreatedAt = &v
+	o.CreatedAt = flextime.PtrFlexTime(v)
 }
 
 // GetExternalReferenceId returns the ExternalReferenceId field value if set, zero value otherwise.
@@ -199,12 +201,12 @@ func (o *InboundShipmentSummary) GetUpdatedAt() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.UpdatedAt
+	return o.UpdatedAt.Time
 }
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InboundShipmentSummary) GetUpdatedAtOk() (*time.Time, bool) {
+func (o *InboundShipmentSummary) GetUpdatedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
@@ -222,7 +224,7 @@ func (o *InboundShipmentSummary) HasUpdatedAt() bool {
 
 // SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
 func (o *InboundShipmentSummary) SetUpdatedAt(v time.Time) {
-	o.UpdatedAt = &v
+	o.UpdatedAt = flextime.PtrFlexTime(v)
 }
 
 func (o InboundShipmentSummary) MarshalJSON() ([]byte, error) {

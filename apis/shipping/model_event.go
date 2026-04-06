@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Event type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type Event struct {
 	// The event code of a shipment, such as Departed, Received, and ReadyForReceive.
 	EventCode string `json:"eventCode"`
 	// The date and time of an event for a shipment.
-	EventTime time.Time `json:"eventTime"`
+	EventTime flextime.FlexTime `json:"eventTime"`
 	Location *Location `json:"location,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -38,7 +40,7 @@ type _Event Event
 func NewEvent(eventCode string, eventTime time.Time) *Event {
 	this := Event{}
 	this.EventCode = eventCode
-	this.EventTime = eventTime
+	this.EventTime = flextime.FlexTime{Time: eventTime}
 	return &this
 }
 
@@ -81,12 +83,12 @@ func (o *Event) GetEventTime() time.Time {
 		return ret
 	}
 
-	return o.EventTime
+	return o.EventTime.Time
 }
 
 // GetEventTimeOk returns a tuple with the EventTime field value
 // and a boolean to check if the value has been set.
-func (o *Event) GetEventTimeOk() (*time.Time, bool) {
+func (o *Event) GetEventTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -95,7 +97,7 @@ func (o *Event) GetEventTimeOk() (*time.Time, bool) {
 
 // SetEventTime sets field value
 func (o *Event) SetEventTime(v time.Time) {
-	o.EventTime = v
+	o.EventTime = flextime.FlexTime{Time: v}
 }
 
 // GetLocation returns the Location field value if set, zero value otherwise.

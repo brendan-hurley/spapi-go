@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the DeliveryWindowOption type satisfies the MappedNullable interface at compile time
@@ -26,11 +28,11 @@ type DeliveryWindowOption struct {
 	// Identifier of a delivery window option. A delivery window option represent one option for when a shipment is expected to be delivered.
 	DeliveryWindowOptionId string `json:"deliveryWindowOptionId" validate:"regexp=^[a-zA-Z0-9-]*$"`
 	// The time at which this delivery window option ends. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format with pattern `yyyy-MM-ddTHH:mmZ`.
-	EndDate time.Time `json:"endDate"`
+	EndDate flextime.FlexTime `json:"endDate"`
 	// The time at which this delivery window option starts. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format with pattern `yyyy-MM-ddTHH:mmZ`.
-	StartDate time.Time `json:"startDate"`
+	StartDate flextime.FlexTime `json:"startDate"`
 	// The time at which this window delivery option is no longer valid. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format with pattern `yyyy-MM-ddTHH:mmZ`.
-	ValidUntil time.Time `json:"validUntil"`
+	ValidUntil flextime.FlexTime `json:"validUntil"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -44,9 +46,9 @@ func NewDeliveryWindowOption(availabilityType string, deliveryWindowOptionId str
 	this := DeliveryWindowOption{}
 	this.AvailabilityType = availabilityType
 	this.DeliveryWindowOptionId = deliveryWindowOptionId
-	this.EndDate = endDate
-	this.StartDate = startDate
-	this.ValidUntil = validUntil
+	this.EndDate = flextime.FlexTime{Time: endDate}
+	this.StartDate = flextime.FlexTime{Time: startDate}
+	this.ValidUntil = flextime.FlexTime{Time: validUntil}
 	return &this
 }
 
@@ -113,12 +115,12 @@ func (o *DeliveryWindowOption) GetEndDate() time.Time {
 		return ret
 	}
 
-	return o.EndDate
+	return o.EndDate.Time
 }
 
 // GetEndDateOk returns a tuple with the EndDate field value
 // and a boolean to check if the value has been set.
-func (o *DeliveryWindowOption) GetEndDateOk() (*time.Time, bool) {
+func (o *DeliveryWindowOption) GetEndDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -127,7 +129,7 @@ func (o *DeliveryWindowOption) GetEndDateOk() (*time.Time, bool) {
 
 // SetEndDate sets field value
 func (o *DeliveryWindowOption) SetEndDate(v time.Time) {
-	o.EndDate = v
+	o.EndDate = flextime.FlexTime{Time: v}
 }
 
 // GetStartDate returns the StartDate field value
@@ -137,12 +139,12 @@ func (o *DeliveryWindowOption) GetStartDate() time.Time {
 		return ret
 	}
 
-	return o.StartDate
+	return o.StartDate.Time
 }
 
 // GetStartDateOk returns a tuple with the StartDate field value
 // and a boolean to check if the value has been set.
-func (o *DeliveryWindowOption) GetStartDateOk() (*time.Time, bool) {
+func (o *DeliveryWindowOption) GetStartDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -151,7 +153,7 @@ func (o *DeliveryWindowOption) GetStartDateOk() (*time.Time, bool) {
 
 // SetStartDate sets field value
 func (o *DeliveryWindowOption) SetStartDate(v time.Time) {
-	o.StartDate = v
+	o.StartDate = flextime.FlexTime{Time: v}
 }
 
 // GetValidUntil returns the ValidUntil field value
@@ -161,12 +163,12 @@ func (o *DeliveryWindowOption) GetValidUntil() time.Time {
 		return ret
 	}
 
-	return o.ValidUntil
+	return o.ValidUntil.Time
 }
 
 // GetValidUntilOk returns a tuple with the ValidUntil field value
 // and a boolean to check if the value has been set.
-func (o *DeliveryWindowOption) GetValidUntilOk() (*time.Time, bool) {
+func (o *DeliveryWindowOption) GetValidUntilOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -175,7 +177,7 @@ func (o *DeliveryWindowOption) GetValidUntilOk() (*time.Time, bool) {
 
 // SetValidUntil sets field value
 func (o *DeliveryWindowOption) SetValidUntil(v time.Time) {
-	o.ValidUntil = v
+	o.ValidUntil = flextime.FlexTime{Time: v}
 }
 
 func (o DeliveryWindowOption) MarshalJSON() ([]byte, error) {

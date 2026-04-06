@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the EBTRefundReimbursementOnlyEvent type satisfies the MappedNullable interface at compile time
@@ -23,7 +25,7 @@ type EBTRefundReimbursementOnlyEvent struct {
 	// The identifier of an order.
 	OrderId *string `json:"OrderId,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	PostedDate *time.Time `json:"PostedDate,omitempty"`
+	PostedDate *flextime.FlexTime `json:"PostedDate,omitempty"`
 	Amount *Currency `json:"Amount,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -85,12 +87,12 @@ func (o *EBTRefundReimbursementOnlyEvent) GetPostedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PostedDate
+	return o.PostedDate.Time
 }
 
 // GetPostedDateOk returns a tuple with the PostedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EBTRefundReimbursementOnlyEvent) GetPostedDateOk() (*time.Time, bool) {
+func (o *EBTRefundReimbursementOnlyEvent) GetPostedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PostedDate) {
 		return nil, false
 	}
@@ -108,7 +110,7 @@ func (o *EBTRefundReimbursementOnlyEvent) HasPostedDate() bool {
 
 // SetPostedDate gets a reference to the given time.Time and assigns it to the PostedDate field.
 func (o *EBTRefundReimbursementOnlyEvent) SetPostedDate(v time.Time) {
-	o.PostedDate = &v
+	o.PostedDate = flextime.PtrFlexTime(v)
 }
 
 // GetAmount returns the Amount field value if set, zero value otherwise.

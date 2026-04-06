@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ContentMetadata type satisfies the MappedNullable interface at compile time
@@ -29,7 +31,7 @@ type ContentMetadata struct {
 	// The set of content badges.
 	BadgeSet []ContentBadge `json:"badgeSet"`
 	// The approximate age of the A+ Content document and metadata.
-	UpdateTime time.Time `json:"updateTime"`
+	UpdateTime flextime.FlexTime `json:"updateTime"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -45,7 +47,7 @@ func NewContentMetadata(name string, marketplaceId string, status ContentStatus,
 	this.MarketplaceId = marketplaceId
 	this.Status = status
 	this.BadgeSet = badgeSet
-	this.UpdateTime = updateTime
+	this.UpdateTime = flextime.FlexTime{Time: updateTime}
 	return &this
 }
 
@@ -160,12 +162,12 @@ func (o *ContentMetadata) GetUpdateTime() time.Time {
 		return ret
 	}
 
-	return o.UpdateTime
+	return o.UpdateTime.Time
 }
 
 // GetUpdateTimeOk returns a tuple with the UpdateTime field value
 // and a boolean to check if the value has been set.
-func (o *ContentMetadata) GetUpdateTimeOk() (*time.Time, bool) {
+func (o *ContentMetadata) GetUpdateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -174,7 +176,7 @@ func (o *ContentMetadata) GetUpdateTimeOk() (*time.Time, bool) {
 
 // SetUpdateTime sets field value
 func (o *ContentMetadata) SetUpdateTime(v time.Time) {
-	o.UpdateTime = v
+	o.UpdateTime = flextime.FlexTime{Time: v}
 }
 
 func (o ContentMetadata) MarshalJSON() ([]byte, error) {

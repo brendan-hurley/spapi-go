@@ -14,6 +14,8 @@ package shippingv2
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the InvoiceDetails type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type InvoiceDetails struct {
 	// The invoice number of the item.
 	InvoiceNumber *string `json:"invoiceNumber,omitempty"`
 	// The invoice date of the item in ISO 8061 format.
-	InvoiceDate *time.Time `json:"invoiceDate,omitempty"`
+	InvoiceDate *flextime.FlexTime `json:"invoiceDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -85,12 +87,12 @@ func (o *InvoiceDetails) GetInvoiceDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.InvoiceDate
+	return o.InvoiceDate.Time
 }
 
 // GetInvoiceDateOk returns a tuple with the InvoiceDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InvoiceDetails) GetInvoiceDateOk() (*time.Time, bool) {
+func (o *InvoiceDetails) GetInvoiceDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.InvoiceDate) {
 		return nil, false
 	}
@@ -108,7 +110,7 @@ func (o *InvoiceDetails) HasInvoiceDate() bool {
 
 // SetInvoiceDate gets a reference to the given time.Time and assigns it to the InvoiceDate field.
 func (o *InvoiceDetails) SetInvoiceDate(v time.Time) {
-	o.InvoiceDate = &v
+	o.InvoiceDate = flextime.PtrFlexTime(v)
 }
 
 func (o InvoiceDetails) MarshalJSON() ([]byte, error) {

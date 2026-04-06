@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the FulfillmentShipment type satisfies the MappedNullable interface at compile time
@@ -28,9 +30,9 @@ type FulfillmentShipment struct {
 	// The current status of the shipment.
 	FulfillmentShipmentStatus string `json:"fulfillmentShipmentStatus"`
 	// Date timestamp
-	ShippingDate *time.Time `json:"shippingDate,omitempty"`
+	ShippingDate *flextime.FlexTime `json:"shippingDate,omitempty"`
 	// Date timestamp
-	EstimatedArrivalDate *time.Time `json:"estimatedArrivalDate,omitempty"`
+	EstimatedArrivalDate *flextime.FlexTime `json:"estimatedArrivalDate,omitempty"`
 	// Provides additional insight into shipment timeline. Primarily used to communicate that actual delivery dates aren't available.
 	ShippingNotes []string `json:"shippingNotes,omitempty"`
 	// An array of fulfillment shipment item information.
@@ -141,12 +143,12 @@ func (o *FulfillmentShipment) GetShippingDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ShippingDate
+	return o.ShippingDate.Time
 }
 
 // GetShippingDateOk returns a tuple with the ShippingDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FulfillmentShipment) GetShippingDateOk() (*time.Time, bool) {
+func (o *FulfillmentShipment) GetShippingDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ShippingDate) {
 		return nil, false
 	}
@@ -164,7 +166,7 @@ func (o *FulfillmentShipment) HasShippingDate() bool {
 
 // SetShippingDate gets a reference to the given time.Time and assigns it to the ShippingDate field.
 func (o *FulfillmentShipment) SetShippingDate(v time.Time) {
-	o.ShippingDate = &v
+	o.ShippingDate = flextime.PtrFlexTime(v)
 }
 
 // GetEstimatedArrivalDate returns the EstimatedArrivalDate field value if set, zero value otherwise.
@@ -173,12 +175,12 @@ func (o *FulfillmentShipment) GetEstimatedArrivalDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EstimatedArrivalDate
+	return o.EstimatedArrivalDate.Time
 }
 
 // GetEstimatedArrivalDateOk returns a tuple with the EstimatedArrivalDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FulfillmentShipment) GetEstimatedArrivalDateOk() (*time.Time, bool) {
+func (o *FulfillmentShipment) GetEstimatedArrivalDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EstimatedArrivalDate) {
 		return nil, false
 	}
@@ -196,7 +198,7 @@ func (o *FulfillmentShipment) HasEstimatedArrivalDate() bool {
 
 // SetEstimatedArrivalDate gets a reference to the given time.Time and assigns it to the EstimatedArrivalDate field.
 func (o *FulfillmentShipment) SetEstimatedArrivalDate(v time.Time) {
-	o.EstimatedArrivalDate = &v
+	o.EstimatedArrivalDate = flextime.PtrFlexTime(v)
 }
 
 // GetShippingNotes returns the ShippingNotes field value if set, zero value otherwise.

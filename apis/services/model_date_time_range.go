@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the DateTimeRange type satisfies the MappedNullable interface at compile time
@@ -22,9 +24,9 @@ var _ MappedNullable = &DateTimeRange{}
 // DateTimeRange A range of time.
 type DateTimeRange struct {
 	// The beginning of the time range. Must be in UTC in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.
-	StartTime time.Time `json:"startTime"`
+	StartTime flextime.FlexTime `json:"startTime"`
 	// The end of the time range. Must be in UTC in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.
-	EndTime time.Time `json:"endTime"`
+	EndTime flextime.FlexTime `json:"endTime"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -36,8 +38,8 @@ type _DateTimeRange DateTimeRange
 // will change when the set of required properties is changed
 func NewDateTimeRange(startTime time.Time, endTime time.Time) *DateTimeRange {
 	this := DateTimeRange{}
-	this.StartTime = startTime
-	this.EndTime = endTime
+	this.StartTime = flextime.FlexTime{Time: startTime}
+	this.EndTime = flextime.FlexTime{Time: endTime}
 	return &this
 }
 
@@ -56,12 +58,12 @@ func (o *DateTimeRange) GetStartTime() time.Time {
 		return ret
 	}
 
-	return o.StartTime
+	return o.StartTime.Time
 }
 
 // GetStartTimeOk returns a tuple with the StartTime field value
 // and a boolean to check if the value has been set.
-func (o *DateTimeRange) GetStartTimeOk() (*time.Time, bool) {
+func (o *DateTimeRange) GetStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,7 +72,7 @@ func (o *DateTimeRange) GetStartTimeOk() (*time.Time, bool) {
 
 // SetStartTime sets field value
 func (o *DateTimeRange) SetStartTime(v time.Time) {
-	o.StartTime = v
+	o.StartTime = flextime.FlexTime{Time: v}
 }
 
 // GetEndTime returns the EndTime field value
@@ -80,12 +82,12 @@ func (o *DateTimeRange) GetEndTime() time.Time {
 		return ret
 	}
 
-	return o.EndTime
+	return o.EndTime.Time
 }
 
 // GetEndTimeOk returns a tuple with the EndTime field value
 // and a boolean to check if the value has been set.
-func (o *DateTimeRange) GetEndTimeOk() (*time.Time, bool) {
+func (o *DateTimeRange) GetEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -94,7 +96,7 @@ func (o *DateTimeRange) GetEndTimeOk() (*time.Time, bool) {
 
 // SetEndTime sets field value
 func (o *DateTimeRange) SetEndTime(v time.Time) {
-	o.EndTime = v
+	o.EndTime = flextime.FlexTime{Time: v}
 }
 
 func (o DateTimeRange) MarshalJSON() ([]byte, error) {

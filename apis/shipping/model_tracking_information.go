@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TrackingInformation type satisfies the MappedNullable interface at compile time
@@ -25,7 +27,7 @@ type TrackingInformation struct {
 	TrackingId string `json:"trackingId"`
 	Summary TrackingSummary `json:"summary"`
 	// The promised delivery date and time of a shipment.
-	PromisedDeliveryDate time.Time `json:"promisedDeliveryDate"`
+	PromisedDeliveryDate flextime.FlexTime `json:"promisedDeliveryDate"`
 	// A list of events of a shipment.
 	EventHistory []Event `json:"eventHistory"`
 	AdditionalProperties map[string]interface{}
@@ -41,7 +43,7 @@ func NewTrackingInformation(trackingId string, summary TrackingSummary, promised
 	this := TrackingInformation{}
 	this.TrackingId = trackingId
 	this.Summary = summary
-	this.PromisedDeliveryDate = promisedDeliveryDate
+	this.PromisedDeliveryDate = flextime.FlexTime{Time: promisedDeliveryDate}
 	this.EventHistory = eventHistory
 	return &this
 }
@@ -109,12 +111,12 @@ func (o *TrackingInformation) GetPromisedDeliveryDate() time.Time {
 		return ret
 	}
 
-	return o.PromisedDeliveryDate
+	return o.PromisedDeliveryDate.Time
 }
 
 // GetPromisedDeliveryDateOk returns a tuple with the PromisedDeliveryDate field value
 // and a boolean to check if the value has been set.
-func (o *TrackingInformation) GetPromisedDeliveryDateOk() (*time.Time, bool) {
+func (o *TrackingInformation) GetPromisedDeliveryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -123,7 +125,7 @@ func (o *TrackingInformation) GetPromisedDeliveryDateOk() (*time.Time, bool) {
 
 // SetPromisedDeliveryDate sets field value
 func (o *TrackingInformation) SetPromisedDeliveryDate(v time.Time) {
-	o.PromisedDeliveryDate = v
+	o.PromisedDeliveryDate = flextime.FlexTime{Time: v}
 }
 
 // GetEventHistory returns the EventHistory field value

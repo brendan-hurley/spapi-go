@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the PlacementOption type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type PlacementOption struct {
 	// Discount for the offered option.
 	Discounts []Incentive `json:"discounts"`
 	// The expiration date of the placement option. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format with pattern `yyyy-MM-ddTHH:mm:ss.sssZ`.
-	Expiration *time.Time `json:"expiration,omitempty"`
+	Expiration *flextime.FlexTime `json:"expiration,omitempty"`
 	// The fee for the offered option.
 	Fees []Incentive `json:"fees"`
 	// The identifier of a placement option. A placement option represents the shipment splits and destinations of SKUs.
@@ -90,12 +92,12 @@ func (o *PlacementOption) GetExpiration() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.Expiration
+	return o.Expiration.Time
 }
 
 // GetExpirationOk returns a tuple with the Expiration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PlacementOption) GetExpirationOk() (*time.Time, bool) {
+func (o *PlacementOption) GetExpirationOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.Expiration) {
 		return nil, false
 	}
@@ -113,7 +115,7 @@ func (o *PlacementOption) HasExpiration() bool {
 
 // SetExpiration gets a reference to the given time.Time and assigns it to the Expiration field.
 func (o *PlacementOption) SetExpiration(v time.Time) {
-	o.Expiration = &v
+	o.Expiration = flextime.PtrFlexTime(v)
 }
 
 // GetFees returns the Fees field value

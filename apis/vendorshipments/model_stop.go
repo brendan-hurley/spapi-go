@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Stop type satisfies the MappedNullable interface at compile time
@@ -25,9 +27,9 @@ type Stop struct {
 	FunctionCode string `json:"functionCode"`
 	LocationIdentification *Location `json:"locationIdentification,omitempty"`
 	// Date and time of the arrival of the cargo.
-	ArrivalTime *time.Time `json:"arrivalTime,omitempty"`
+	ArrivalTime *flextime.FlexTime `json:"arrivalTime,omitempty"`
 	// Date and time of the departure of the cargo.
-	DepartureTime *time.Time `json:"departureTime,omitempty"`
+	DepartureTime *flextime.FlexTime `json:"departureTime,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -113,12 +115,12 @@ func (o *Stop) GetArrivalTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ArrivalTime
+	return o.ArrivalTime.Time
 }
 
 // GetArrivalTimeOk returns a tuple with the ArrivalTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Stop) GetArrivalTimeOk() (*time.Time, bool) {
+func (o *Stop) GetArrivalTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ArrivalTime) {
 		return nil, false
 	}
@@ -136,7 +138,7 @@ func (o *Stop) HasArrivalTime() bool {
 
 // SetArrivalTime gets a reference to the given time.Time and assigns it to the ArrivalTime field.
 func (o *Stop) SetArrivalTime(v time.Time) {
-	o.ArrivalTime = &v
+	o.ArrivalTime = flextime.PtrFlexTime(v)
 }
 
 // GetDepartureTime returns the DepartureTime field value if set, zero value otherwise.
@@ -145,12 +147,12 @@ func (o *Stop) GetDepartureTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.DepartureTime
+	return o.DepartureTime.Time
 }
 
 // GetDepartureTimeOk returns a tuple with the DepartureTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Stop) GetDepartureTimeOk() (*time.Time, bool) {
+func (o *Stop) GetDepartureTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.DepartureTime) {
 		return nil, false
 	}
@@ -168,7 +170,7 @@ func (o *Stop) HasDepartureTime() bool {
 
 // SetDepartureTime gets a reference to the given time.Time and assigns it to the DepartureTime field.
 func (o *Stop) SetDepartureTime(v time.Time) {
-	o.DepartureTime = &v
+	o.DepartureTime = flextime.PtrFlexTime(v)
 }
 
 func (o Stop) MarshalJSON() ([]byte, error) {

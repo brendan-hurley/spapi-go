@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the DateRange type satisfies the MappedNullable interface at compile time
@@ -22,9 +24,9 @@ var _ MappedNullable = &DateRange{}
 // DateRange A date range.
 type DateRange struct {
 	// The start date of the date range in ISO-8601 date/time format.
-	StartDate time.Time `json:"startDate"`
+	StartDate flextime.FlexTime `json:"startDate"`
 	// The end date of the date range in ISO-8601 date/time format.
-	EndDate time.Time `json:"endDate"`
+	EndDate flextime.FlexTime `json:"endDate"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -36,8 +38,8 @@ type _DateRange DateRange
 // will change when the set of required properties is changed
 func NewDateRange(startDate time.Time, endDate time.Time) *DateRange {
 	this := DateRange{}
-	this.StartDate = startDate
-	this.EndDate = endDate
+	this.StartDate = flextime.FlexTime{Time: startDate}
+	this.EndDate = flextime.FlexTime{Time: endDate}
 	return &this
 }
 
@@ -56,12 +58,12 @@ func (o *DateRange) GetStartDate() time.Time {
 		return ret
 	}
 
-	return o.StartDate
+	return o.StartDate.Time
 }
 
 // GetStartDateOk returns a tuple with the StartDate field value
 // and a boolean to check if the value has been set.
-func (o *DateRange) GetStartDateOk() (*time.Time, bool) {
+func (o *DateRange) GetStartDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,7 +72,7 @@ func (o *DateRange) GetStartDateOk() (*time.Time, bool) {
 
 // SetStartDate sets field value
 func (o *DateRange) SetStartDate(v time.Time) {
-	o.StartDate = v
+	o.StartDate = flextime.FlexTime{Time: v}
 }
 
 // GetEndDate returns the EndDate field value
@@ -80,12 +82,12 @@ func (o *DateRange) GetEndDate() time.Time {
 		return ret
 	}
 
-	return o.EndDate
+	return o.EndDate.Time
 }
 
 // GetEndDateOk returns a tuple with the EndDate field value
 // and a boolean to check if the value has been set.
-func (o *DateRange) GetEndDateOk() (*time.Time, bool) {
+func (o *DateRange) GetEndDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -94,7 +96,7 @@ func (o *DateRange) GetEndDateOk() (*time.Time, bool) {
 
 // SetEndDate sets field value
 func (o *DateRange) SetEndDate(v time.Time) {
-	o.EndDate = v
+	o.EndDate = flextime.FlexTime{Time: v}
 }
 
 func (o DateRange) MarshalJSON() ([]byte, error) {

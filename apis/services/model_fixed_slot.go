@@ -13,6 +13,8 @@ package services
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the FixedSlot type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &FixedSlot{}
 // FixedSlot In this slot format each slot only has the requested capacity types. This slot size is as specified by slot duration.
 type FixedSlot struct {
 	// Start date time of slot in ISO 8601 format with precision of seconds.
-	StartDateTime *time.Time `json:"startDateTime,omitempty"`
+	StartDateTime *flextime.FlexTime `json:"startDateTime,omitempty"`
 	// Scheduled capacity corresponding to the slot. This capacity represents the originally allocated capacity as per resource schedule.
 	ScheduledCapacity *int32 `json:"scheduledCapacity,omitempty"`
 	// Available capacity corresponding to the slot. This capacity represents the capacity available for allocation to reservations.
@@ -58,12 +60,12 @@ func (o *FixedSlot) GetStartDateTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.StartDateTime
+	return o.StartDateTime.Time
 }
 
 // GetStartDateTimeOk returns a tuple with the StartDateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FixedSlot) GetStartDateTimeOk() (*time.Time, bool) {
+func (o *FixedSlot) GetStartDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.StartDateTime) {
 		return nil, false
 	}
@@ -81,7 +83,7 @@ func (o *FixedSlot) HasStartDateTime() bool {
 
 // SetStartDateTime gets a reference to the given time.Time and assigns it to the StartDateTime field.
 func (o *FixedSlot) SetStartDateTime(v time.Time) {
-	o.StartDateTime = &v
+	o.StartDateTime = flextime.PtrFlexTime(v)
 }
 
 // GetScheduledCapacity returns the ScheduledCapacity field value if set, zero value otherwise.

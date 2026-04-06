@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the CreateFulfillmentOrderRequest type satisfies the MappedNullable interface at compile time
@@ -28,7 +30,7 @@ type CreateFulfillmentOrderRequest struct {
 	// A fulfillment order identifier that the seller creates. This value displays as the order identifier in recipient-facing materials such as the outbound shipment packing slip. The value of `displayableOrderId` should match the order identifier that the seller provides to the recipient. The seller can use the SellerFulfillmentOrderId for this value or they can specify an alternate value if they want the recipient to reference an alternate order identifier.  The value must be an alpha-numeric or ISO 8859-1 compliant string from one to 40 characters in length. Cannot contain two spaces in a row. Leading and trailing white space is removed.
 	DisplayableOrderId string `json:"displayableOrderId"`
 	// Date timestamp
-	DisplayableOrderDate time.Time `json:"displayableOrderDate"`
+	DisplayableOrderDate flextime.FlexTime `json:"displayableOrderDate"`
 	// Order-specific text that appears in recipient-facing materials such as the outbound shipment packing slip.
 	DisplayableOrderComment string `json:"displayableOrderComment"`
 	ShippingSpeedCategory ShippingSpeedCategory `json:"shippingSpeedCategory"`
@@ -61,7 +63,7 @@ func NewCreateFulfillmentOrderRequest(sellerFulfillmentOrderId string, displayab
 	this := CreateFulfillmentOrderRequest{}
 	this.SellerFulfillmentOrderId = sellerFulfillmentOrderId
 	this.DisplayableOrderId = displayableOrderId
-	this.DisplayableOrderDate = displayableOrderDate
+	this.DisplayableOrderDate = flextime.FlexTime{Time: displayableOrderDate}
 	this.DisplayableOrderComment = displayableOrderComment
 	this.ShippingSpeedCategory = shippingSpeedCategory
 	this.DestinationAddress = destinationAddress
@@ -164,12 +166,12 @@ func (o *CreateFulfillmentOrderRequest) GetDisplayableOrderDate() time.Time {
 		return ret
 	}
 
-	return o.DisplayableOrderDate
+	return o.DisplayableOrderDate.Time
 }
 
 // GetDisplayableOrderDateOk returns a tuple with the DisplayableOrderDate field value
 // and a boolean to check if the value has been set.
-func (o *CreateFulfillmentOrderRequest) GetDisplayableOrderDateOk() (*time.Time, bool) {
+func (o *CreateFulfillmentOrderRequest) GetDisplayableOrderDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -178,7 +180,7 @@ func (o *CreateFulfillmentOrderRequest) GetDisplayableOrderDateOk() (*time.Time,
 
 // SetDisplayableOrderDate sets field value
 func (o *CreateFulfillmentOrderRequest) SetDisplayableOrderDate(v time.Time) {
-	o.DisplayableOrderDate = v
+	o.DisplayableOrderDate = flextime.FlexTime{Time: v}
 }
 
 // GetDisplayableOrderComment returns the DisplayableOrderComment field value

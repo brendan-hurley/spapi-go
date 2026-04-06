@@ -13,6 +13,8 @@ package vendorshipments
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TransportationDetails type satisfies the MappedNullable interface at compile time
@@ -25,11 +27,11 @@ type TransportationDetails struct {
 	// The mode of transportation for this shipment.
 	TransportationMode *string `json:"transportationMode,omitempty"`
 	// Date when shipment is performed by the Vendor to Buyer
-	ShippedDate *time.Time `json:"shippedDate,omitempty"`
+	ShippedDate *flextime.FlexTime `json:"shippedDate,omitempty"`
 	// Estimated Date on which shipment will be delivered from Vendor to Buyer
-	EstimatedDeliveryDate *time.Time `json:"estimatedDeliveryDate,omitempty"`
+	EstimatedDeliveryDate *flextime.FlexTime `json:"estimatedDeliveryDate,omitempty"`
 	// Date on which shipment will be delivered from Vendor to Buyer
-	ShipmentDeliveryDate *time.Time `json:"shipmentDeliveryDate,omitempty"`
+	ShipmentDeliveryDate *flextime.FlexTime `json:"shipmentDeliveryDate,omitempty"`
 	CarrierDetails *CarrierDetails `json:"carrierDetails,omitempty"`
 	// The Bill of Lading (BOL) number is a unique number assigned to each shipment of goods by the vendor or shipper during the creation of the Bill of Lading. This number must be unique for every shipment and cannot be a date/time or single character. The BOL numer is mandatory in Shipment Confirmation message for FTL and LTL shipments, and must match the paper BOL provided with the shipment. Instead of BOL, an alternative reference number (like Delivery Note Number) for the shipment can also be sent in this field.
 	BillOfLadingNumber *string `json:"billOfLadingNumber,omitempty"`
@@ -125,12 +127,12 @@ func (o *TransportationDetails) GetShippedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ShippedDate
+	return o.ShippedDate.Time
 }
 
 // GetShippedDateOk returns a tuple with the ShippedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransportationDetails) GetShippedDateOk() (*time.Time, bool) {
+func (o *TransportationDetails) GetShippedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ShippedDate) {
 		return nil, false
 	}
@@ -148,7 +150,7 @@ func (o *TransportationDetails) HasShippedDate() bool {
 
 // SetShippedDate gets a reference to the given time.Time and assigns it to the ShippedDate field.
 func (o *TransportationDetails) SetShippedDate(v time.Time) {
-	o.ShippedDate = &v
+	o.ShippedDate = flextime.PtrFlexTime(v)
 }
 
 // GetEstimatedDeliveryDate returns the EstimatedDeliveryDate field value if set, zero value otherwise.
@@ -157,12 +159,12 @@ func (o *TransportationDetails) GetEstimatedDeliveryDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EstimatedDeliveryDate
+	return o.EstimatedDeliveryDate.Time
 }
 
 // GetEstimatedDeliveryDateOk returns a tuple with the EstimatedDeliveryDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransportationDetails) GetEstimatedDeliveryDateOk() (*time.Time, bool) {
+func (o *TransportationDetails) GetEstimatedDeliveryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EstimatedDeliveryDate) {
 		return nil, false
 	}
@@ -180,7 +182,7 @@ func (o *TransportationDetails) HasEstimatedDeliveryDate() bool {
 
 // SetEstimatedDeliveryDate gets a reference to the given time.Time and assigns it to the EstimatedDeliveryDate field.
 func (o *TransportationDetails) SetEstimatedDeliveryDate(v time.Time) {
-	o.EstimatedDeliveryDate = &v
+	o.EstimatedDeliveryDate = flextime.PtrFlexTime(v)
 }
 
 // GetShipmentDeliveryDate returns the ShipmentDeliveryDate field value if set, zero value otherwise.
@@ -189,12 +191,12 @@ func (o *TransportationDetails) GetShipmentDeliveryDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ShipmentDeliveryDate
+	return o.ShipmentDeliveryDate.Time
 }
 
 // GetShipmentDeliveryDateOk returns a tuple with the ShipmentDeliveryDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransportationDetails) GetShipmentDeliveryDateOk() (*time.Time, bool) {
+func (o *TransportationDetails) GetShipmentDeliveryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ShipmentDeliveryDate) {
 		return nil, false
 	}
@@ -212,7 +214,7 @@ func (o *TransportationDetails) HasShipmentDeliveryDate() bool {
 
 // SetShipmentDeliveryDate gets a reference to the given time.Time and assigns it to the ShipmentDeliveryDate field.
 func (o *TransportationDetails) SetShipmentDeliveryDate(v time.Time) {
-	o.ShipmentDeliveryDate = &v
+	o.ShipmentDeliveryDate = flextime.PtrFlexTime(v)
 }
 
 // GetCarrierDetails returns the CarrierDetails field value if set, zero value otherwise.

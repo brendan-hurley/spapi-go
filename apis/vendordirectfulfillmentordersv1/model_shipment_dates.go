@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ShipmentDates type satisfies the MappedNullable interface at compile time
@@ -22,9 +24,9 @@ var _ MappedNullable = &ShipmentDates{}
 // ShipmentDates Shipment dates.
 type ShipmentDates struct {
 	// Time by which the vendor is required to ship the order.
-	RequiredShipDate time.Time `json:"requiredShipDate"`
+	RequiredShipDate flextime.FlexTime `json:"requiredShipDate"`
 	// Delivery date promised to the Amazon customer.
-	PromisedDeliveryDate *time.Time `json:"promisedDeliveryDate,omitempty"`
+	PromisedDeliveryDate *flextime.FlexTime `json:"promisedDeliveryDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -36,7 +38,7 @@ type _ShipmentDates ShipmentDates
 // will change when the set of required properties is changed
 func NewShipmentDates(requiredShipDate time.Time) *ShipmentDates {
 	this := ShipmentDates{}
-	this.RequiredShipDate = requiredShipDate
+	this.RequiredShipDate = flextime.FlexTime{Time: requiredShipDate}
 	return &this
 }
 
@@ -55,12 +57,12 @@ func (o *ShipmentDates) GetRequiredShipDate() time.Time {
 		return ret
 	}
 
-	return o.RequiredShipDate
+	return o.RequiredShipDate.Time
 }
 
 // GetRequiredShipDateOk returns a tuple with the RequiredShipDate field value
 // and a boolean to check if the value has been set.
-func (o *ShipmentDates) GetRequiredShipDateOk() (*time.Time, bool) {
+func (o *ShipmentDates) GetRequiredShipDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -69,7 +71,7 @@ func (o *ShipmentDates) GetRequiredShipDateOk() (*time.Time, bool) {
 
 // SetRequiredShipDate sets field value
 func (o *ShipmentDates) SetRequiredShipDate(v time.Time) {
-	o.RequiredShipDate = v
+	o.RequiredShipDate = flextime.FlexTime{Time: v}
 }
 
 // GetPromisedDeliveryDate returns the PromisedDeliveryDate field value if set, zero value otherwise.
@@ -78,12 +80,12 @@ func (o *ShipmentDates) GetPromisedDeliveryDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PromisedDeliveryDate
+	return o.PromisedDeliveryDate.Time
 }
 
 // GetPromisedDeliveryDateOk returns a tuple with the PromisedDeliveryDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ShipmentDates) GetPromisedDeliveryDateOk() (*time.Time, bool) {
+func (o *ShipmentDates) GetPromisedDeliveryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PromisedDeliveryDate) {
 		return nil, false
 	}
@@ -101,7 +103,7 @@ func (o *ShipmentDates) HasPromisedDeliveryDate() bool {
 
 // SetPromisedDeliveryDate gets a reference to the given time.Time and assigns it to the PromisedDeliveryDate field.
 func (o *ShipmentDates) SetPromisedDeliveryDate(v time.Time) {
-	o.PromisedDeliveryDate = &v
+	o.PromisedDeliveryDate = flextime.PtrFlexTime(v)
 }
 
 func (o ShipmentDates) MarshalJSON() ([]byte, error) {

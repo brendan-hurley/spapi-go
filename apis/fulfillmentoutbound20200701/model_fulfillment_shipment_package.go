@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the FulfillmentShipmentPackage type satisfies the MappedNullable interface at compile time
@@ -30,7 +32,7 @@ type FulfillmentShipmentPackage struct {
 	// The Amazon fulfillment tracking number, if provided, can be used to obtain tracking and delivery information.
 	AmazonFulfillmentTrackingNumber *string `json:"amazonFulfillmentTrackingNumber,omitempty"`
 	// Date timestamp
-	EstimatedArrivalDate *time.Time `json:"estimatedArrivalDate,omitempty"`
+	EstimatedArrivalDate *flextime.FlexTime `json:"estimatedArrivalDate,omitempty"`
 	LockerDetails *LockerDetails `json:"lockerDetails,omitempty"`
 	DeliveryInformation *DeliveryInformation `json:"deliveryInformation,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -175,12 +177,12 @@ func (o *FulfillmentShipmentPackage) GetEstimatedArrivalDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EstimatedArrivalDate
+	return o.EstimatedArrivalDate.Time
 }
 
 // GetEstimatedArrivalDateOk returns a tuple with the EstimatedArrivalDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FulfillmentShipmentPackage) GetEstimatedArrivalDateOk() (*time.Time, bool) {
+func (o *FulfillmentShipmentPackage) GetEstimatedArrivalDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EstimatedArrivalDate) {
 		return nil, false
 	}
@@ -198,7 +200,7 @@ func (o *FulfillmentShipmentPackage) HasEstimatedArrivalDate() bool {
 
 // SetEstimatedArrivalDate gets a reference to the given time.Time and assigns it to the EstimatedArrivalDate field.
 func (o *FulfillmentShipmentPackage) SetEstimatedArrivalDate(v time.Time) {
-	o.EstimatedArrivalDate = &v
+	o.EstimatedArrivalDate = flextime.PtrFlexTime(v)
 }
 
 // GetLockerDetails returns the LockerDetails field value if set, zero value otherwise.

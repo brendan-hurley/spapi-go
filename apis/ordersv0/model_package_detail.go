@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the PackageDetail type satisfies the MappedNullable interface at compile time
@@ -32,7 +34,7 @@ type PackageDetail struct {
 	// The tracking number used to obtain tracking and delivery information.
 	TrackingNumber string `json:"trackingNumber"`
 	// The shipping date for the package. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date/time format.
-	ShipDate time.Time `json:"shipDate"`
+	ShipDate flextime.FlexTime `json:"shipDate"`
 	// The unique identifier for the supply source.
 	ShipFromSupplySourceId *string `json:"shipFromSupplySourceId,omitempty"`
 	// A list of order items.
@@ -51,7 +53,7 @@ func NewPackageDetail(packageReferenceId string, carrierCode string, trackingNum
 	this.PackageReferenceId = packageReferenceId
 	this.CarrierCode = carrierCode
 	this.TrackingNumber = trackingNumber
-	this.ShipDate = shipDate
+	this.ShipDate = flextime.FlexTime{Time: shipDate}
 	this.OrderItems = orderItems
 	return &this
 }
@@ -207,12 +209,12 @@ func (o *PackageDetail) GetShipDate() time.Time {
 		return ret
 	}
 
-	return o.ShipDate
+	return o.ShipDate.Time
 }
 
 // GetShipDateOk returns a tuple with the ShipDate field value
 // and a boolean to check if the value has been set.
-func (o *PackageDetail) GetShipDateOk() (*time.Time, bool) {
+func (o *PackageDetail) GetShipDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -221,7 +223,7 @@ func (o *PackageDetail) GetShipDateOk() (*time.Time, bool) {
 
 // SetShipDate sets field value
 func (o *PackageDetail) SetShipDate(v time.Time) {
-	o.ShipDate = v
+	o.ShipDate = flextime.FlexTime{Time: v}
 }
 
 // GetShipFromSupplySourceId returns the ShipFromSupplySourceId field value if set, zero value otherwise.

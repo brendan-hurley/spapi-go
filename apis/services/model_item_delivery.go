@@ -13,6 +13,8 @@ package services
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ItemDelivery type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &ItemDelivery{}
 // ItemDelivery Delivery information for the item.
 type ItemDelivery struct {
 	// The date and time of the latest Estimated Delivery Date (EDD) of all the items with an EDD. In ISO 8601 format.
-	EstimatedDeliveryDate *time.Time `json:"estimatedDeliveryDate,omitempty"`
+	EstimatedDeliveryDate *flextime.FlexTime `json:"estimatedDeliveryDate,omitempty"`
 	ItemDeliveryPromise *ItemDeliveryPromise `json:"itemDeliveryPromise,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -51,12 +53,12 @@ func (o *ItemDelivery) GetEstimatedDeliveryDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EstimatedDeliveryDate
+	return o.EstimatedDeliveryDate.Time
 }
 
 // GetEstimatedDeliveryDateOk returns a tuple with the EstimatedDeliveryDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ItemDelivery) GetEstimatedDeliveryDateOk() (*time.Time, bool) {
+func (o *ItemDelivery) GetEstimatedDeliveryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EstimatedDeliveryDate) {
 		return nil, false
 	}
@@ -74,7 +76,7 @@ func (o *ItemDelivery) HasEstimatedDeliveryDate() bool {
 
 // SetEstimatedDeliveryDate gets a reference to the given time.Time and assigns it to the EstimatedDeliveryDate field.
 func (o *ItemDelivery) SetEstimatedDeliveryDate(v time.Time) {
-	o.EstimatedDeliveryDate = &v
+	o.EstimatedDeliveryDate = flextime.PtrFlexTime(v)
 }
 
 // GetItemDeliveryPromise returns the ItemDeliveryPromise field value if set, zero value otherwise.

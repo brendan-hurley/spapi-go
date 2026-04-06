@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the OrderAcknowledgement type satisfies the MappedNullable interface at compile time
@@ -25,7 +27,7 @@ type OrderAcknowledgement struct {
 	PurchaseOrderNumber string `json:"purchaseOrderNumber"`
 	SellingParty PartyIdentification `json:"sellingParty"`
 	// The date and time when the purchase order is acknowledged, in ISO-8601 date/time format.
-	AcknowledgementDate time.Time `json:"acknowledgementDate"`
+	AcknowledgementDate flextime.FlexTime `json:"acknowledgementDate"`
 	// A list of the items being acknowledged with associated details.
 	Items []OrderAcknowledgementItem `json:"items"`
 	AdditionalProperties map[string]interface{}
@@ -41,7 +43,7 @@ func NewOrderAcknowledgement(purchaseOrderNumber string, sellingParty PartyIdent
 	this := OrderAcknowledgement{}
 	this.PurchaseOrderNumber = purchaseOrderNumber
 	this.SellingParty = sellingParty
-	this.AcknowledgementDate = acknowledgementDate
+	this.AcknowledgementDate = flextime.FlexTime{Time: acknowledgementDate}
 	this.Items = items
 	return &this
 }
@@ -109,12 +111,12 @@ func (o *OrderAcknowledgement) GetAcknowledgementDate() time.Time {
 		return ret
 	}
 
-	return o.AcknowledgementDate
+	return o.AcknowledgementDate.Time
 }
 
 // GetAcknowledgementDateOk returns a tuple with the AcknowledgementDate field value
 // and a boolean to check if the value has been set.
-func (o *OrderAcknowledgement) GetAcknowledgementDateOk() (*time.Time, bool) {
+func (o *OrderAcknowledgement) GetAcknowledgementDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -123,7 +125,7 @@ func (o *OrderAcknowledgement) GetAcknowledgementDateOk() (*time.Time, bool) {
 
 // SetAcknowledgementDate sets field value
 func (o *OrderAcknowledgement) SetAcknowledgementDate(v time.Time) {
-	o.AcknowledgementDate = v
+	o.AcknowledgementDate = flextime.FlexTime{Time: v}
 }
 
 // GetItems returns the Items field value

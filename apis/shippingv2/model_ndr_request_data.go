@@ -14,6 +14,8 @@ package shippingv2
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the NdrRequestData type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ var _ MappedNullable = &NdrRequestData{}
 // NdrRequestData Additional information required for the NDR action that has been filed. If the NDR Action is RESCHEDULE, rescheduleDate is a required field. Otherwise, if the NDR Action is REATTEMPT, additionalAddressNotes is a required field. 
 type NdrRequestData struct {
 	// The date on which the Seller wants to reschedule shipment delivery, in ISO-8601 date/time format
-	RescheduleDate *time.Time `json:"rescheduleDate,omitempty"`
+	RescheduleDate *flextime.FlexTime `json:"rescheduleDate,omitempty"`
 	// Address notes to re-attempt delivery with.
 	AdditionalAddressNotes *string `json:"additionalAddressNotes,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -53,12 +55,12 @@ func (o *NdrRequestData) GetRescheduleDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.RescheduleDate
+	return o.RescheduleDate.Time
 }
 
 // GetRescheduleDateOk returns a tuple with the RescheduleDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NdrRequestData) GetRescheduleDateOk() (*time.Time, bool) {
+func (o *NdrRequestData) GetRescheduleDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.RescheduleDate) {
 		return nil, false
 	}
@@ -76,7 +78,7 @@ func (o *NdrRequestData) HasRescheduleDate() bool {
 
 // SetRescheduleDate gets a reference to the given time.Time and assigns it to the RescheduleDate field.
 func (o *NdrRequestData) SetRescheduleDate(v time.Time) {
-	o.RescheduleDate = &v
+	o.RescheduleDate = flextime.PtrFlexTime(v)
 }
 
 // GetAdditionalAddressNotes returns the AdditionalAddressNotes field value if set, zero value otherwise.

@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the FinancialEventGroup type satisfies the MappedNullable interface at compile time
@@ -29,16 +31,16 @@ type FinancialEventGroup struct {
 	OriginalTotal *Currency `json:"OriginalTotal,omitempty"`
 	ConvertedTotal *Currency `json:"ConvertedTotal,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	FundTransferDate *time.Time `json:"FundTransferDate,omitempty"`
+	FundTransferDate *flextime.FlexTime `json:"FundTransferDate,omitempty"`
 	// The trace identifier used by sellers to look up transactions externally.
 	TraceId *string `json:"TraceId,omitempty"`
 	// The account tail of the payment instrument.
 	AccountTail *string `json:"AccountTail,omitempty"`
 	BeginningBalance *Currency `json:"BeginningBalance,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	FinancialEventGroupStart *time.Time `json:"FinancialEventGroupStart,omitempty"`
+	FinancialEventGroupStart *flextime.FlexTime `json:"FinancialEventGroupStart,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	FinancialEventGroupEnd *time.Time `json:"FinancialEventGroupEnd,omitempty"`
+	FinancialEventGroupEnd *flextime.FlexTime `json:"FinancialEventGroupEnd,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -227,12 +229,12 @@ func (o *FinancialEventGroup) GetFundTransferDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.FundTransferDate
+	return o.FundTransferDate.Time
 }
 
 // GetFundTransferDateOk returns a tuple with the FundTransferDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FinancialEventGroup) GetFundTransferDateOk() (*time.Time, bool) {
+func (o *FinancialEventGroup) GetFundTransferDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.FundTransferDate) {
 		return nil, false
 	}
@@ -250,7 +252,7 @@ func (o *FinancialEventGroup) HasFundTransferDate() bool {
 
 // SetFundTransferDate gets a reference to the given time.Time and assigns it to the FundTransferDate field.
 func (o *FinancialEventGroup) SetFundTransferDate(v time.Time) {
-	o.FundTransferDate = &v
+	o.FundTransferDate = flextime.PtrFlexTime(v)
 }
 
 // GetTraceId returns the TraceId field value if set, zero value otherwise.
@@ -355,12 +357,12 @@ func (o *FinancialEventGroup) GetFinancialEventGroupStart() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.FinancialEventGroupStart
+	return o.FinancialEventGroupStart.Time
 }
 
 // GetFinancialEventGroupStartOk returns a tuple with the FinancialEventGroupStart field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FinancialEventGroup) GetFinancialEventGroupStartOk() (*time.Time, bool) {
+func (o *FinancialEventGroup) GetFinancialEventGroupStartOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.FinancialEventGroupStart) {
 		return nil, false
 	}
@@ -378,7 +380,7 @@ func (o *FinancialEventGroup) HasFinancialEventGroupStart() bool {
 
 // SetFinancialEventGroupStart gets a reference to the given time.Time and assigns it to the FinancialEventGroupStart field.
 func (o *FinancialEventGroup) SetFinancialEventGroupStart(v time.Time) {
-	o.FinancialEventGroupStart = &v
+	o.FinancialEventGroupStart = flextime.PtrFlexTime(v)
 }
 
 // GetFinancialEventGroupEnd returns the FinancialEventGroupEnd field value if set, zero value otherwise.
@@ -387,12 +389,12 @@ func (o *FinancialEventGroup) GetFinancialEventGroupEnd() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.FinancialEventGroupEnd
+	return o.FinancialEventGroupEnd.Time
 }
 
 // GetFinancialEventGroupEndOk returns a tuple with the FinancialEventGroupEnd field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FinancialEventGroup) GetFinancialEventGroupEndOk() (*time.Time, bool) {
+func (o *FinancialEventGroup) GetFinancialEventGroupEndOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.FinancialEventGroupEnd) {
 		return nil, false
 	}
@@ -410,7 +412,7 @@ func (o *FinancialEventGroup) HasFinancialEventGroupEnd() bool {
 
 // SetFinancialEventGroupEnd gets a reference to the given time.Time and assigns it to the FinancialEventGroupEnd field.
 func (o *FinancialEventGroup) SetFinancialEventGroupEnd(v time.Time) {
-	o.FinancialEventGroupEnd = &v
+	o.FinancialEventGroupEnd = flextime.PtrFlexTime(v)
 }
 
 func (o FinancialEventGroup) MarshalJSON() ([]byte, error) {

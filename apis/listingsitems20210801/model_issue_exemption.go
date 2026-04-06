@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the IssueExemption type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type IssueExemption struct {
 	// This field indicates the current exemption status for the listed enforcement actions. It can take values such as `EXEMPT`, signifying permanent exemption, `EXEMPT_UNTIL_EXPIRY_DATE` indicating temporary exemption until a specified date, or `NOT_EXEMPT` signifying no exemptions, and enforcement actions were already applied.
 	Status string `json:"status"`
 	// Represents the timestamp, in ISO 8601 format, that specifies the date when the temporary exemptions expires, and Amazon begins enforcing the listed actions.
-	ExpiryDate *time.Time `json:"expiryDate,omitempty"`
+	ExpiryDate *flextime.FlexTime `json:"expiryDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -78,12 +80,12 @@ func (o *IssueExemption) GetExpiryDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ExpiryDate
+	return o.ExpiryDate.Time
 }
 
 // GetExpiryDateOk returns a tuple with the ExpiryDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *IssueExemption) GetExpiryDateOk() (*time.Time, bool) {
+func (o *IssueExemption) GetExpiryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ExpiryDate) {
 		return nil, false
 	}
@@ -101,7 +103,7 @@ func (o *IssueExemption) HasExpiryDate() bool {
 
 // SetExpiryDate gets a reference to the given time.Time and assigns it to the ExpiryDate field.
 func (o *IssueExemption) SetExpiryDate(v time.Time) {
-	o.ExpiryDate = &v
+	o.ExpiryDate = flextime.PtrFlexTime(v)
 }
 
 func (o IssueExemption) MarshalJSON() ([]byte, error) {

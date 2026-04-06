@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the PackageTrackingDetails type satisfies the MappedNullable interface at compile time
@@ -34,9 +36,9 @@ type PackageTrackingDetails struct {
 	// The URL of the carrier's website.
 	CarrierURL *string `json:"carrierURL,omitempty"`
 	// Date timestamp
-	ShipDate *time.Time `json:"shipDate,omitempty"`
+	ShipDate *flextime.FlexTime `json:"shipDate,omitempty"`
 	// Date timestamp
-	EstimatedArrivalDate *time.Time `json:"estimatedArrivalDate,omitempty"`
+	EstimatedArrivalDate *flextime.FlexTime `json:"estimatedArrivalDate,omitempty"`
 	ShipToAddress *TrackingAddress `json:"shipToAddress,omitempty"`
 	CurrentStatus *CurrentStatus `json:"currentStatus,omitempty"`
 	// Description corresponding to the `CurrentStatus` value.
@@ -260,12 +262,12 @@ func (o *PackageTrackingDetails) GetShipDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ShipDate
+	return o.ShipDate.Time
 }
 
 // GetShipDateOk returns a tuple with the ShipDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PackageTrackingDetails) GetShipDateOk() (*time.Time, bool) {
+func (o *PackageTrackingDetails) GetShipDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ShipDate) {
 		return nil, false
 	}
@@ -283,7 +285,7 @@ func (o *PackageTrackingDetails) HasShipDate() bool {
 
 // SetShipDate gets a reference to the given time.Time and assigns it to the ShipDate field.
 func (o *PackageTrackingDetails) SetShipDate(v time.Time) {
-	o.ShipDate = &v
+	o.ShipDate = flextime.PtrFlexTime(v)
 }
 
 // GetEstimatedArrivalDate returns the EstimatedArrivalDate field value if set, zero value otherwise.
@@ -292,12 +294,12 @@ func (o *PackageTrackingDetails) GetEstimatedArrivalDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EstimatedArrivalDate
+	return o.EstimatedArrivalDate.Time
 }
 
 // GetEstimatedArrivalDateOk returns a tuple with the EstimatedArrivalDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PackageTrackingDetails) GetEstimatedArrivalDateOk() (*time.Time, bool) {
+func (o *PackageTrackingDetails) GetEstimatedArrivalDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EstimatedArrivalDate) {
 		return nil, false
 	}
@@ -315,7 +317,7 @@ func (o *PackageTrackingDetails) HasEstimatedArrivalDate() bool {
 
 // SetEstimatedArrivalDate gets a reference to the given time.Time and assigns it to the EstimatedArrivalDate field.
 func (o *PackageTrackingDetails) SetEstimatedArrivalDate(v time.Time) {
-	o.EstimatedArrivalDate = &v
+	o.EstimatedArrivalDate = flextime.PtrFlexTime(v)
 }
 
 // GetShipToAddress returns the ShipToAddress field value if set, zero value otherwise.

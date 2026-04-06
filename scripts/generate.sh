@@ -111,3 +111,10 @@ fi
 echo
 echo ">> applying FlexBool transformations"
 python3 "$script_dir/apply_flexbool.py" "$apis_dir"
+
+# Amazon also returns "" (empty string) for optional date-time fields.
+# Replace all time.Time struct fields with flextime.FlexTime which handles
+# both valid RFC 3339 timestamps and empty strings.
+echo
+echo ">> applying FlexTime transformations"
+python3 "$script_dir/apply_flextime.py" "$apis_dir"

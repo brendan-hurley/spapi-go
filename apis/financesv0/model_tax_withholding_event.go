@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TaxWithholdingEvent type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &TaxWithholdingEvent{}
 // TaxWithholdingEvent A tax withholding event on a seller's account.
 type TaxWithholdingEvent struct {
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	PostedDate *time.Time `json:"PostedDate,omitempty"`
+	PostedDate *flextime.FlexTime `json:"PostedDate,omitempty"`
 	BaseAmount *Currency `json:"BaseAmount,omitempty"`
 	WithheldAmount *Currency `json:"WithheldAmount,omitempty"`
 	TaxWithholdingPeriod *TaxWithholdingPeriod `json:"TaxWithholdingPeriod,omitempty"`
@@ -53,12 +55,12 @@ func (o *TaxWithholdingEvent) GetPostedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PostedDate
+	return o.PostedDate.Time
 }
 
 // GetPostedDateOk returns a tuple with the PostedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TaxWithholdingEvent) GetPostedDateOk() (*time.Time, bool) {
+func (o *TaxWithholdingEvent) GetPostedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PostedDate) {
 		return nil, false
 	}
@@ -76,7 +78,7 @@ func (o *TaxWithholdingEvent) HasPostedDate() bool {
 
 // SetPostedDate gets a reference to the given time.Time and assigns it to the PostedDate field.
 func (o *TaxWithholdingEvent) SetPostedDate(v time.Time) {
-	o.PostedDate = &v
+	o.PostedDate = flextime.PtrFlexTime(v)
 }
 
 // GetBaseAmount returns the BaseAmount field value if set, zero value otherwise.

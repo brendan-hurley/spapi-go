@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Shipment type satisfies the MappedNullable interface at compile time
@@ -40,9 +42,9 @@ type Shipment struct {
 	// The shipment tracking identifier provided by the carrier.
 	TrackingId *string `json:"TrackingId,omitempty"`
 	// Date-time formatted timestamp.
-	CreatedDate time.Time `json:"CreatedDate"`
+	CreatedDate flextime.FlexTime `json:"CreatedDate"`
 	// Date-time formatted timestamp.
-	LastUpdatedDate *time.Time `json:"LastUpdatedDate,omitempty"`
+	LastUpdatedDate *flextime.FlexTime `json:"LastUpdatedDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -65,7 +67,7 @@ func NewShipment(shipmentId string, amazonOrderId string, itemList []Item, shipF
 	this.ShippingService = shippingService
 	this.Label = label
 	this.Status = status
-	this.CreatedDate = createdDate
+	this.CreatedDate = flextime.FlexTime{Time: createdDate}
 	return &this
 }
 
@@ -412,12 +414,12 @@ func (o *Shipment) GetCreatedDate() time.Time {
 		return ret
 	}
 
-	return o.CreatedDate
+	return o.CreatedDate.Time
 }
 
 // GetCreatedDateOk returns a tuple with the CreatedDate field value
 // and a boolean to check if the value has been set.
-func (o *Shipment) GetCreatedDateOk() (*time.Time, bool) {
+func (o *Shipment) GetCreatedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -426,7 +428,7 @@ func (o *Shipment) GetCreatedDateOk() (*time.Time, bool) {
 
 // SetCreatedDate sets field value
 func (o *Shipment) SetCreatedDate(v time.Time) {
-	o.CreatedDate = v
+	o.CreatedDate = flextime.FlexTime{Time: v}
 }
 
 // GetLastUpdatedDate returns the LastUpdatedDate field value if set, zero value otherwise.
@@ -435,12 +437,12 @@ func (o *Shipment) GetLastUpdatedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.LastUpdatedDate
+	return o.LastUpdatedDate.Time
 }
 
 // GetLastUpdatedDateOk returns a tuple with the LastUpdatedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Shipment) GetLastUpdatedDateOk() (*time.Time, bool) {
+func (o *Shipment) GetLastUpdatedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.LastUpdatedDate) {
 		return nil, false
 	}
@@ -458,7 +460,7 @@ func (o *Shipment) HasLastUpdatedDate() bool {
 
 // SetLastUpdatedDate gets a reference to the given time.Time and assigns it to the LastUpdatedDate field.
 func (o *Shipment) SetLastUpdatedDate(v time.Time) {
-	o.LastUpdatedDate = &v
+	o.LastUpdatedDate = flextime.PtrFlexTime(v)
 }
 
 func (o Shipment) MarshalJSON() ([]byte, error) {

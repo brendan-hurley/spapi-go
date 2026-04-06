@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ProductAdsPaymentEvent type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &ProductAdsPaymentEvent{}
 // ProductAdsPaymentEvent A Sponsored Products payment event.
 type ProductAdsPaymentEvent struct {
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	PostedDate *time.Time `json:"postedDate,omitempty"`
+	PostedDate *flextime.FlexTime `json:"postedDate,omitempty"`
 	// Indicates if the transaction is for a charge or a refund.  Possible values:  * `charge`  * `refund`
 	TransactionType *string `json:"transactionType,omitempty"`
 	// The identifier for the invoice that includes the transaction.
@@ -57,12 +59,12 @@ func (o *ProductAdsPaymentEvent) GetPostedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PostedDate
+	return o.PostedDate.Time
 }
 
 // GetPostedDateOk returns a tuple with the PostedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ProductAdsPaymentEvent) GetPostedDateOk() (*time.Time, bool) {
+func (o *ProductAdsPaymentEvent) GetPostedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PostedDate) {
 		return nil, false
 	}
@@ -80,7 +82,7 @@ func (o *ProductAdsPaymentEvent) HasPostedDate() bool {
 
 // SetPostedDate gets a reference to the given time.Time and assigns it to the PostedDate field.
 func (o *ProductAdsPaymentEvent) SetPostedDate(v time.Time) {
-	o.PostedDate = &v
+	o.PostedDate = flextime.PtrFlexTime(v)
 }
 
 // GetTransactionType returns the TransactionType field value if set, zero value otherwise.

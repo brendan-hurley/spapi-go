@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the PackingOption type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type PackingOption struct {
 	// Discount for the offered option.
 	Discounts []Incentive `json:"discounts"`
 	// The time at which this packing option is no longer valid. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format with pattern `yyyy-MM-ddTHH:mm:ss.sssZ`.
-	Expiration *time.Time `json:"expiration,omitempty"`
+	Expiration *flextime.FlexTime `json:"expiration,omitempty"`
 	// Fee for the offered option.
 	Fees []Incentive `json:"fees"`
 	// Packing group IDs.
@@ -96,12 +98,12 @@ func (o *PackingOption) GetExpiration() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.Expiration
+	return o.Expiration.Time
 }
 
 // GetExpirationOk returns a tuple with the Expiration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PackingOption) GetExpirationOk() (*time.Time, bool) {
+func (o *PackingOption) GetExpirationOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.Expiration) {
 		return nil, false
 	}
@@ -119,7 +121,7 @@ func (o *PackingOption) HasExpiration() bool {
 
 // SetExpiration gets a reference to the given time.Time and assigns it to the Expiration field.
 func (o *PackingOption) SetExpiration(v time.Time) {
-	o.Expiration = &v
+	o.Expiration = flextime.PtrFlexTime(v)
 }
 
 // GetFees returns the Fees field value

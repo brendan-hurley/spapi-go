@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the FulfillmentOrder type satisfies the MappedNullable interface at compile time
@@ -28,7 +30,7 @@ type FulfillmentOrder struct {
 	// A fulfillment order identifier submitted with the `createFulfillmentOrder` operation. Displays as the order identifier in recipient-facing materials such as the packing slip.
 	DisplayableOrderId string `json:"displayableOrderId"`
 	// Date timestamp
-	DisplayableOrderDate time.Time `json:"displayableOrderDate"`
+	DisplayableOrderDate flextime.FlexTime `json:"displayableOrderDate"`
 	// A text block submitted with the `createFulfillmentOrder` operation. Displays in recipient-facing materials such as the packing slip.
 	DisplayableOrderComment string `json:"displayableOrderComment"`
 	ShippingSpeedCategory ShippingSpeedCategory `json:"shippingSpeedCategory"`
@@ -38,10 +40,10 @@ type FulfillmentOrder struct {
 	FulfillmentPolicy *FulfillmentPolicy `json:"fulfillmentPolicy,omitempty"`
 	CodSettings *CODSettings `json:"codSettings,omitempty"`
 	// Date timestamp
-	ReceivedDate time.Time `json:"receivedDate"`
+	ReceivedDate flextime.FlexTime `json:"receivedDate"`
 	FulfillmentOrderStatus FulfillmentOrderStatus `json:"fulfillmentOrderStatus"`
 	// Date timestamp
-	StatusUpdatedDate time.Time `json:"statusUpdatedDate"`
+	StatusUpdatedDate flextime.FlexTime `json:"statusUpdatedDate"`
 	// A list of email addresses that the seller provides that are used by Amazon to send ship-complete notifications to recipients on behalf of the seller.
 	NotificationEmails []string `json:"notificationEmails,omitempty"`
 	// A list of features and their fulfillment policies to apply to the order.
@@ -60,13 +62,13 @@ func NewFulfillmentOrder(sellerFulfillmentOrderId string, marketplaceId string, 
 	this.SellerFulfillmentOrderId = sellerFulfillmentOrderId
 	this.MarketplaceId = marketplaceId
 	this.DisplayableOrderId = displayableOrderId
-	this.DisplayableOrderDate = displayableOrderDate
+	this.DisplayableOrderDate = flextime.FlexTime{Time: displayableOrderDate}
 	this.DisplayableOrderComment = displayableOrderComment
 	this.ShippingSpeedCategory = shippingSpeedCategory
 	this.DestinationAddress = destinationAddress
-	this.ReceivedDate = receivedDate
+	this.ReceivedDate = flextime.FlexTime{Time: receivedDate}
 	this.FulfillmentOrderStatus = fulfillmentOrderStatus
-	this.StatusUpdatedDate = statusUpdatedDate
+	this.StatusUpdatedDate = flextime.FlexTime{Time: statusUpdatedDate}
 	return &this
 }
 
@@ -157,12 +159,12 @@ func (o *FulfillmentOrder) GetDisplayableOrderDate() time.Time {
 		return ret
 	}
 
-	return o.DisplayableOrderDate
+	return o.DisplayableOrderDate.Time
 }
 
 // GetDisplayableOrderDateOk returns a tuple with the DisplayableOrderDate field value
 // and a boolean to check if the value has been set.
-func (o *FulfillmentOrder) GetDisplayableOrderDateOk() (*time.Time, bool) {
+func (o *FulfillmentOrder) GetDisplayableOrderDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -171,7 +173,7 @@ func (o *FulfillmentOrder) GetDisplayableOrderDateOk() (*time.Time, bool) {
 
 // SetDisplayableOrderDate sets field value
 func (o *FulfillmentOrder) SetDisplayableOrderDate(v time.Time) {
-	o.DisplayableOrderDate = v
+	o.DisplayableOrderDate = flextime.FlexTime{Time: v}
 }
 
 // GetDisplayableOrderComment returns the DisplayableOrderComment field value
@@ -381,12 +383,12 @@ func (o *FulfillmentOrder) GetReceivedDate() time.Time {
 		return ret
 	}
 
-	return o.ReceivedDate
+	return o.ReceivedDate.Time
 }
 
 // GetReceivedDateOk returns a tuple with the ReceivedDate field value
 // and a boolean to check if the value has been set.
-func (o *FulfillmentOrder) GetReceivedDateOk() (*time.Time, bool) {
+func (o *FulfillmentOrder) GetReceivedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -395,7 +397,7 @@ func (o *FulfillmentOrder) GetReceivedDateOk() (*time.Time, bool) {
 
 // SetReceivedDate sets field value
 func (o *FulfillmentOrder) SetReceivedDate(v time.Time) {
-	o.ReceivedDate = v
+	o.ReceivedDate = flextime.FlexTime{Time: v}
 }
 
 // GetFulfillmentOrderStatus returns the FulfillmentOrderStatus field value
@@ -429,12 +431,12 @@ func (o *FulfillmentOrder) GetStatusUpdatedDate() time.Time {
 		return ret
 	}
 
-	return o.StatusUpdatedDate
+	return o.StatusUpdatedDate.Time
 }
 
 // GetStatusUpdatedDateOk returns a tuple with the StatusUpdatedDate field value
 // and a boolean to check if the value has been set.
-func (o *FulfillmentOrder) GetStatusUpdatedDateOk() (*time.Time, bool) {
+func (o *FulfillmentOrder) GetStatusUpdatedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -443,7 +445,7 @@ func (o *FulfillmentOrder) GetStatusUpdatedDateOk() (*time.Time, bool) {
 
 // SetStatusUpdatedDate sets field value
 func (o *FulfillmentOrder) SetStatusUpdatedDate(v time.Time) {
-	o.StatusUpdatedDate = v
+	o.StatusUpdatedDate = flextime.FlexTime{Time: v}
 }
 
 // GetNotificationEmails returns the NotificationEmails field value if set, zero value otherwise.

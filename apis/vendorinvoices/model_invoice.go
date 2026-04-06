@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Invoice type satisfies the MappedNullable interface at compile time
@@ -28,7 +30,7 @@ type Invoice struct {
 	// An additional unique reference number used for regulatory or other purposes.
 	ReferenceNumber *string `json:"referenceNumber,omitempty"`
 	// Defines a date and time according to ISO8601.
-	Date time.Time `json:"date"`
+	Date flextime.FlexTime `json:"date"`
 	RemitToParty PartyIdentification `json:"remitToParty"`
 	ShipToParty *PartyIdentification `json:"shipToParty,omitempty"`
 	ShipFromParty *PartyIdentification `json:"shipFromParty,omitempty"`
@@ -58,7 +60,7 @@ func NewInvoice(invoiceType string, id string, date time.Time, remitToParty Part
 	this := Invoice{}
 	this.InvoiceType = invoiceType
 	this.Id = id
-	this.Date = date
+	this.Date = flextime.FlexTime{Time: date}
 	this.RemitToParty = remitToParty
 	this.InvoiceTotal = invoiceTotal
 	return &this
@@ -159,12 +161,12 @@ func (o *Invoice) GetDate() time.Time {
 		return ret
 	}
 
-	return o.Date
+	return o.Date.Time
 }
 
 // GetDateOk returns a tuple with the Date field value
 // and a boolean to check if the value has been set.
-func (o *Invoice) GetDateOk() (*time.Time, bool) {
+func (o *Invoice) GetDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -173,7 +175,7 @@ func (o *Invoice) GetDateOk() (*time.Time, bool) {
 
 // SetDate sets field value
 func (o *Invoice) SetDate(v time.Time) {
-	o.Date = v
+	o.Date = flextime.FlexTime{Time: v}
 }
 
 // GetRemitToParty returns the RemitToParty field value

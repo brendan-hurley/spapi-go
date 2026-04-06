@@ -13,6 +13,8 @@ package finances20240619
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the PaymentsContext type satisfies the MappedNullable interface at compile time
@@ -27,7 +29,7 @@ type PaymentsContext struct {
 	// The reference number of the payment.
 	PaymentReference *string `json:"paymentReference,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	PaymentDate *time.Time `json:"paymentDate,omitempty"`
+	PaymentDate *flextime.FlexTime `json:"paymentDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -152,12 +154,12 @@ func (o *PaymentsContext) GetPaymentDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PaymentDate
+	return o.PaymentDate.Time
 }
 
 // GetPaymentDateOk returns a tuple with the PaymentDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PaymentsContext) GetPaymentDateOk() (*time.Time, bool) {
+func (o *PaymentsContext) GetPaymentDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PaymentDate) {
 		return nil, false
 	}
@@ -175,7 +177,7 @@ func (o *PaymentsContext) HasPaymentDate() bool {
 
 // SetPaymentDate gets a reference to the given time.Time and assigns it to the PaymentDate field.
 func (o *PaymentsContext) SetPaymentDate(v time.Time) {
-	o.PaymentDate = &v
+	o.PaymentDate = flextime.PtrFlexTime(v)
 }
 
 func (o PaymentsContext) MarshalJSON() ([]byte, error) {

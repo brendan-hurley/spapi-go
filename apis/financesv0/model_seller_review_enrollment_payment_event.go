@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the SellerReviewEnrollmentPaymentEvent type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &SellerReviewEnrollmentPaymentEvent{}
 // SellerReviewEnrollmentPaymentEvent A fee payment event for the Early Reviewer Program.
 type SellerReviewEnrollmentPaymentEvent struct {
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	PostedDate *time.Time `json:"PostedDate,omitempty"`
+	PostedDate *flextime.FlexTime `json:"PostedDate,omitempty"`
 	// An enrollment identifier.
 	EnrollmentId *string `json:"EnrollmentId,omitempty"`
 	// The Amazon Standard Identification Number (ASIN) of the item that was enrolled in the Early Reviewer Program.
@@ -57,12 +59,12 @@ func (o *SellerReviewEnrollmentPaymentEvent) GetPostedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PostedDate
+	return o.PostedDate.Time
 }
 
 // GetPostedDateOk returns a tuple with the PostedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SellerReviewEnrollmentPaymentEvent) GetPostedDateOk() (*time.Time, bool) {
+func (o *SellerReviewEnrollmentPaymentEvent) GetPostedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PostedDate) {
 		return nil, false
 	}
@@ -80,7 +82,7 @@ func (o *SellerReviewEnrollmentPaymentEvent) HasPostedDate() bool {
 
 // SetPostedDate gets a reference to the given time.Time and assigns it to the PostedDate field.
 func (o *SellerReviewEnrollmentPaymentEvent) SetPostedDate(v time.Time) {
-	o.PostedDate = &v
+	o.PostedDate = flextime.PtrFlexTime(v)
 }
 
 // GetEnrollmentId returns the EnrollmentId field value if set, zero value otherwise.

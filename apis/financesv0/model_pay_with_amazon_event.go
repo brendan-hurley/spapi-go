@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the PayWithAmazonEvent type satisfies the MappedNullable interface at compile time
@@ -23,7 +25,7 @@ type PayWithAmazonEvent struct {
 	// An order identifier that is specified by the seller.
 	SellerOrderId *string `json:"SellerOrderId,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	TransactionPostedDate *time.Time `json:"TransactionPostedDate,omitempty"`
+	TransactionPostedDate *flextime.FlexTime `json:"TransactionPostedDate,omitempty"`
 	// The type of business object.
 	BusinessObjectType *string `json:"BusinessObjectType,omitempty"`
 	// The sales channel for the transaction.
@@ -99,12 +101,12 @@ func (o *PayWithAmazonEvent) GetTransactionPostedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.TransactionPostedDate
+	return o.TransactionPostedDate.Time
 }
 
 // GetTransactionPostedDateOk returns a tuple with the TransactionPostedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PayWithAmazonEvent) GetTransactionPostedDateOk() (*time.Time, bool) {
+func (o *PayWithAmazonEvent) GetTransactionPostedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.TransactionPostedDate) {
 		return nil, false
 	}
@@ -122,7 +124,7 @@ func (o *PayWithAmazonEvent) HasTransactionPostedDate() bool {
 
 // SetTransactionPostedDate gets a reference to the given time.Time and assigns it to the TransactionPostedDate field.
 func (o *PayWithAmazonEvent) SetTransactionPostedDate(v time.Time) {
-	o.TransactionPostedDate = &v
+	o.TransactionPostedDate = flextime.PtrFlexTime(v)
 }
 
 // GetBusinessObjectType returns the BusinessObjectType field value if set, zero value otherwise.

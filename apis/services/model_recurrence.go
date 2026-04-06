@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Recurrence type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ var _ MappedNullable = &Recurrence{}
 // Recurrence Repeated occurrence of an event in a time range.
 type Recurrence struct {
 	// End time of the recurrence.
-	EndTime time.Time `json:"endTime"`
+	EndTime flextime.FlexTime `json:"endTime"`
 	// Days of the week when recurrence is valid. If the schedule is valid every Monday, input will only contain `MONDAY` in the list.
 	DaysOfWeek []DayOfWeek `json:"daysOfWeek,omitempty"`
 	// Days of the month when recurrence is valid.
@@ -38,7 +40,7 @@ type _Recurrence Recurrence
 // will change when the set of required properties is changed
 func NewRecurrence(endTime time.Time) *Recurrence {
 	this := Recurrence{}
-	this.EndTime = endTime
+	this.EndTime = flextime.FlexTime{Time: endTime}
 	return &this
 }
 
@@ -57,12 +59,12 @@ func (o *Recurrence) GetEndTime() time.Time {
 		return ret
 	}
 
-	return o.EndTime
+	return o.EndTime.Time
 }
 
 // GetEndTimeOk returns a tuple with the EndTime field value
 // and a boolean to check if the value has been set.
-func (o *Recurrence) GetEndTimeOk() (*time.Time, bool) {
+func (o *Recurrence) GetEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -71,7 +73,7 @@ func (o *Recurrence) GetEndTimeOk() (*time.Time, bool) {
 
 // SetEndTime sets field value
 func (o *Recurrence) SetEndTime(v time.Time) {
-	o.EndTime = v
+	o.EndTime = flextime.FlexTime{Time: v}
 }
 
 // GetDaysOfWeek returns the DaysOfWeek field value if set, zero value otherwise.

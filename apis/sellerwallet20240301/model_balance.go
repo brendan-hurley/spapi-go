@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Balance type satisfies the MappedNullable interface at compile time
@@ -29,7 +31,7 @@ type Balance struct {
 	// The Amazon Seller Wallet bank account currency code in ISO 4217 format.
 	BalanceCurrency string `json:"balanceCurrency"`
 	// The date of the most recent account balance update.
-	LastUpdateDate time.Time `json:"lastUpdateDate"`
+	LastUpdateDate flextime.FlexTime `json:"lastUpdateDate"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -44,7 +46,7 @@ func NewBalance(accountId string, balanceAmount float32, balanceCurrency string,
 	this.AccountId = accountId
 	this.BalanceAmount = balanceAmount
 	this.BalanceCurrency = balanceCurrency
-	this.LastUpdateDate = lastUpdateDate
+	this.LastUpdateDate = flextime.FlexTime{Time: lastUpdateDate}
 	return &this
 }
 
@@ -167,12 +169,12 @@ func (o *Balance) GetLastUpdateDate() time.Time {
 		return ret
 	}
 
-	return o.LastUpdateDate
+	return o.LastUpdateDate.Time
 }
 
 // GetLastUpdateDateOk returns a tuple with the LastUpdateDate field value
 // and a boolean to check if the value has been set.
-func (o *Balance) GetLastUpdateDateOk() (*time.Time, bool) {
+func (o *Balance) GetLastUpdateDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -181,7 +183,7 @@ func (o *Balance) GetLastUpdateDateOk() (*time.Time, bool) {
 
 // SetLastUpdateDate sets field value
 func (o *Balance) SetLastUpdateDate(v time.Time) {
-	o.LastUpdateDate = v
+	o.LastUpdateDate = flextime.FlexTime{Time: v}
 }
 
 func (o Balance) MarshalJSON() ([]byte, error) {

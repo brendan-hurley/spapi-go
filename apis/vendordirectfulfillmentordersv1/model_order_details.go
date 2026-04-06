@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the OrderDetails type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type OrderDetails struct {
 	// The customer order number.
 	CustomerOrderNumber string `json:"customerOrderNumber"`
 	// The date the order was placed. This field is expected to be in ISO-8601 date/time format, for example:2018-07-16T23:00:00Z/ 2018-07-16T23:00:00-05:00 /2018-07-16T23:00:00-08:00. If no time zone is specified, UTC should be assumed.
-	OrderDate time.Time `json:"orderDate"`
+	OrderDate flextime.FlexTime `json:"orderDate"`
 	// Current status of the order.
 	OrderStatus *string `json:"orderStatus,omitempty"`
 	ShipmentDetails ShipmentDetails `json:"shipmentDetails"`
@@ -47,7 +49,7 @@ type _OrderDetails OrderDetails
 func NewOrderDetails(customerOrderNumber string, orderDate time.Time, shipmentDetails ShipmentDetails, sellingParty PartyIdentification, shipFromParty PartyIdentification, shipToParty Address, billToParty PartyIdentification, items []OrderItem) *OrderDetails {
 	this := OrderDetails{}
 	this.CustomerOrderNumber = customerOrderNumber
-	this.OrderDate = orderDate
+	this.OrderDate = flextime.FlexTime{Time: orderDate}
 	this.ShipmentDetails = shipmentDetails
 	this.SellingParty = sellingParty
 	this.ShipFromParty = shipFromParty
@@ -96,12 +98,12 @@ func (o *OrderDetails) GetOrderDate() time.Time {
 		return ret
 	}
 
-	return o.OrderDate
+	return o.OrderDate.Time
 }
 
 // GetOrderDateOk returns a tuple with the OrderDate field value
 // and a boolean to check if the value has been set.
-func (o *OrderDetails) GetOrderDateOk() (*time.Time, bool) {
+func (o *OrderDetails) GetOrderDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -110,7 +112,7 @@ func (o *OrderDetails) GetOrderDateOk() (*time.Time, bool) {
 
 // SetOrderDate sets field value
 func (o *OrderDetails) SetOrderDate(v time.Time) {
-	o.OrderDate = v
+	o.OrderDate = flextime.FlexTime{Time: v}
 }
 
 // GetOrderStatus returns the OrderStatus field value if set, zero value otherwise.

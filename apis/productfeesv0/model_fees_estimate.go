@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the FeesEstimate type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ var _ MappedNullable = &FeesEstimate{}
 // FeesEstimate The total estimated fees for an item and a list of details.
 type FeesEstimate struct {
 	// The time at which the fees were estimated. This defaults to the time the request is made.
-	TimeOfFeesEstimation time.Time `json:"TimeOfFeesEstimation"`
+	TimeOfFeesEstimation flextime.FlexTime `json:"TimeOfFeesEstimation"`
 	TotalFeesEstimate *MoneyType `json:"TotalFeesEstimate,omitempty"`
 	// A list of other fees that contribute to a given fee.
 	FeeDetailList []FeeDetail `json:"FeeDetailList,omitempty"`
@@ -37,7 +39,7 @@ type _FeesEstimate FeesEstimate
 // will change when the set of required properties is changed
 func NewFeesEstimate(timeOfFeesEstimation time.Time) *FeesEstimate {
 	this := FeesEstimate{}
-	this.TimeOfFeesEstimation = timeOfFeesEstimation
+	this.TimeOfFeesEstimation = flextime.FlexTime{Time: timeOfFeesEstimation}
 	return &this
 }
 
@@ -56,12 +58,12 @@ func (o *FeesEstimate) GetTimeOfFeesEstimation() time.Time {
 		return ret
 	}
 
-	return o.TimeOfFeesEstimation
+	return o.TimeOfFeesEstimation.Time
 }
 
 // GetTimeOfFeesEstimationOk returns a tuple with the TimeOfFeesEstimation field value
 // and a boolean to check if the value has been set.
-func (o *FeesEstimate) GetTimeOfFeesEstimationOk() (*time.Time, bool) {
+func (o *FeesEstimate) GetTimeOfFeesEstimationOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,7 +72,7 @@ func (o *FeesEstimate) GetTimeOfFeesEstimationOk() (*time.Time, bool) {
 
 // SetTimeOfFeesEstimation sets field value
 func (o *FeesEstimate) SetTimeOfFeesEstimation(v time.Time) {
-	o.TimeOfFeesEstimation = v
+	o.TimeOfFeesEstimation = flextime.FlexTime{Time: v}
 }
 
 // GetTotalFeesEstimate returns the TotalFeesEstimate field value if set, zero value otherwise.

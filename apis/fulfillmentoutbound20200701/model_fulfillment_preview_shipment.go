@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the FulfillmentPreviewShipment type satisfies the MappedNullable interface at compile time
@@ -22,13 +24,13 @@ var _ MappedNullable = &FulfillmentPreviewShipment{}
 // FulfillmentPreviewShipment Delivery and item information for a shipment in a fulfillment order preview.
 type FulfillmentPreviewShipment struct {
 	// Date timestamp
-	EarliestShipDate *time.Time `json:"earliestShipDate,omitempty"`
+	EarliestShipDate *flextime.FlexTime `json:"earliestShipDate,omitempty"`
 	// Date timestamp
-	LatestShipDate *time.Time `json:"latestShipDate,omitempty"`
+	LatestShipDate *flextime.FlexTime `json:"latestShipDate,omitempty"`
 	// Date timestamp
-	EarliestArrivalDate *time.Time `json:"earliestArrivalDate,omitempty"`
+	EarliestArrivalDate *flextime.FlexTime `json:"earliestArrivalDate,omitempty"`
 	// Date timestamp
-	LatestArrivalDate *time.Time `json:"latestArrivalDate,omitempty"`
+	LatestArrivalDate *flextime.FlexTime `json:"latestArrivalDate,omitempty"`
 	// Provides additional insight into the shipment timeline when exact delivery dates are not able to be precomputed.
 	ShippingNotes []string `json:"shippingNotes,omitempty"`
 	// An array of fulfillment preview item information.
@@ -62,12 +64,12 @@ func (o *FulfillmentPreviewShipment) GetEarliestShipDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EarliestShipDate
+	return o.EarliestShipDate.Time
 }
 
 // GetEarliestShipDateOk returns a tuple with the EarliestShipDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FulfillmentPreviewShipment) GetEarliestShipDateOk() (*time.Time, bool) {
+func (o *FulfillmentPreviewShipment) GetEarliestShipDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EarliestShipDate) {
 		return nil, false
 	}
@@ -85,7 +87,7 @@ func (o *FulfillmentPreviewShipment) HasEarliestShipDate() bool {
 
 // SetEarliestShipDate gets a reference to the given time.Time and assigns it to the EarliestShipDate field.
 func (o *FulfillmentPreviewShipment) SetEarliestShipDate(v time.Time) {
-	o.EarliestShipDate = &v
+	o.EarliestShipDate = flextime.PtrFlexTime(v)
 }
 
 // GetLatestShipDate returns the LatestShipDate field value if set, zero value otherwise.
@@ -94,12 +96,12 @@ func (o *FulfillmentPreviewShipment) GetLatestShipDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.LatestShipDate
+	return o.LatestShipDate.Time
 }
 
 // GetLatestShipDateOk returns a tuple with the LatestShipDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FulfillmentPreviewShipment) GetLatestShipDateOk() (*time.Time, bool) {
+func (o *FulfillmentPreviewShipment) GetLatestShipDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.LatestShipDate) {
 		return nil, false
 	}
@@ -117,7 +119,7 @@ func (o *FulfillmentPreviewShipment) HasLatestShipDate() bool {
 
 // SetLatestShipDate gets a reference to the given time.Time and assigns it to the LatestShipDate field.
 func (o *FulfillmentPreviewShipment) SetLatestShipDate(v time.Time) {
-	o.LatestShipDate = &v
+	o.LatestShipDate = flextime.PtrFlexTime(v)
 }
 
 // GetEarliestArrivalDate returns the EarliestArrivalDate field value if set, zero value otherwise.
@@ -126,12 +128,12 @@ func (o *FulfillmentPreviewShipment) GetEarliestArrivalDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EarliestArrivalDate
+	return o.EarliestArrivalDate.Time
 }
 
 // GetEarliestArrivalDateOk returns a tuple with the EarliestArrivalDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FulfillmentPreviewShipment) GetEarliestArrivalDateOk() (*time.Time, bool) {
+func (o *FulfillmentPreviewShipment) GetEarliestArrivalDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EarliestArrivalDate) {
 		return nil, false
 	}
@@ -149,7 +151,7 @@ func (o *FulfillmentPreviewShipment) HasEarliestArrivalDate() bool {
 
 // SetEarliestArrivalDate gets a reference to the given time.Time and assigns it to the EarliestArrivalDate field.
 func (o *FulfillmentPreviewShipment) SetEarliestArrivalDate(v time.Time) {
-	o.EarliestArrivalDate = &v
+	o.EarliestArrivalDate = flextime.PtrFlexTime(v)
 }
 
 // GetLatestArrivalDate returns the LatestArrivalDate field value if set, zero value otherwise.
@@ -158,12 +160,12 @@ func (o *FulfillmentPreviewShipment) GetLatestArrivalDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.LatestArrivalDate
+	return o.LatestArrivalDate.Time
 }
 
 // GetLatestArrivalDateOk returns a tuple with the LatestArrivalDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FulfillmentPreviewShipment) GetLatestArrivalDateOk() (*time.Time, bool) {
+func (o *FulfillmentPreviewShipment) GetLatestArrivalDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.LatestArrivalDate) {
 		return nil, false
 	}
@@ -181,7 +183,7 @@ func (o *FulfillmentPreviewShipment) HasLatestArrivalDate() bool {
 
 // SetLatestArrivalDate gets a reference to the given time.Time and assigns it to the LatestArrivalDate field.
 func (o *FulfillmentPreviewShipment) SetLatestArrivalDate(v time.Time) {
-	o.LatestArrivalDate = &v
+	o.LatestArrivalDate = flextime.PtrFlexTime(v)
 }
 
 // GetShippingNotes returns the ShippingNotes field value if set, zero value otherwise.

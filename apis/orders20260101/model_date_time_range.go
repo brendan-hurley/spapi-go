@@ -13,6 +13,8 @@ package orders20260101
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the DateTimeRange type satisfies the MappedNullable interface at compile time
@@ -21,9 +23,9 @@ var _ MappedNullable = &DateTimeRange{}
 // DateTimeRange A time period with start and end boundaries.
 type DateTimeRange struct {
 	// The beginning of the time period, in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.
-	EarliestDateTime *time.Time `json:"earliestDateTime,omitempty"`
+	EarliestDateTime *flextime.FlexTime `json:"earliestDateTime,omitempty"`
 	// The end of the time period, in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.
-	LatestDateTime *time.Time `json:"latestDateTime,omitempty"`
+	LatestDateTime *flextime.FlexTime `json:"latestDateTime,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -52,12 +54,12 @@ func (o *DateTimeRange) GetEarliestDateTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EarliestDateTime
+	return o.EarliestDateTime.Time
 }
 
 // GetEarliestDateTimeOk returns a tuple with the EarliestDateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DateTimeRange) GetEarliestDateTimeOk() (*time.Time, bool) {
+func (o *DateTimeRange) GetEarliestDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EarliestDateTime) {
 		return nil, false
 	}
@@ -75,7 +77,7 @@ func (o *DateTimeRange) HasEarliestDateTime() bool {
 
 // SetEarliestDateTime gets a reference to the given time.Time and assigns it to the EarliestDateTime field.
 func (o *DateTimeRange) SetEarliestDateTime(v time.Time) {
-	o.EarliestDateTime = &v
+	o.EarliestDateTime = flextime.PtrFlexTime(v)
 }
 
 // GetLatestDateTime returns the LatestDateTime field value if set, zero value otherwise.
@@ -84,12 +86,12 @@ func (o *DateTimeRange) GetLatestDateTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.LatestDateTime
+	return o.LatestDateTime.Time
 }
 
 // GetLatestDateTimeOk returns a tuple with the LatestDateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DateTimeRange) GetLatestDateTimeOk() (*time.Time, bool) {
+func (o *DateTimeRange) GetLatestDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.LatestDateTime) {
 		return nil, false
 	}
@@ -107,7 +109,7 @@ func (o *DateTimeRange) HasLatestDateTime() bool {
 
 // SetLatestDateTime gets a reference to the given time.Time and assigns it to the LatestDateTime field.
 func (o *DateTimeRange) SetLatestDateTime(v time.Time) {
-	o.LatestDateTime = &v
+	o.LatestDateTime = flextime.PtrFlexTime(v)
 }
 
 func (o DateTimeRange) MarshalJSON() ([]byte, error) {

@@ -13,6 +13,8 @@ package shipping
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TimeRange type satisfies the MappedNullable interface at compile time
@@ -21,9 +23,9 @@ var _ MappedNullable = &TimeRange{}
 // TimeRange The time range.
 type TimeRange struct {
 	// The start date and time. This defaults to the current date and time.
-	Start *time.Time `json:"start,omitempty"`
+	Start *flextime.FlexTime `json:"start,omitempty"`
 	// The end date and time. This must come after the value of start. This defaults to the next business day from the start.
-	End *time.Time `json:"end,omitempty"`
+	End *flextime.FlexTime `json:"end,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -52,12 +54,12 @@ func (o *TimeRange) GetStart() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.Start
+	return o.Start.Time
 }
 
 // GetStartOk returns a tuple with the Start field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TimeRange) GetStartOk() (*time.Time, bool) {
+func (o *TimeRange) GetStartOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.Start) {
 		return nil, false
 	}
@@ -75,7 +77,7 @@ func (o *TimeRange) HasStart() bool {
 
 // SetStart gets a reference to the given time.Time and assigns it to the Start field.
 func (o *TimeRange) SetStart(v time.Time) {
-	o.Start = &v
+	o.Start = flextime.PtrFlexTime(v)
 }
 
 // GetEnd returns the End field value if set, zero value otherwise.
@@ -84,12 +86,12 @@ func (o *TimeRange) GetEnd() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.End
+	return o.End.Time
 }
 
 // GetEndOk returns a tuple with the End field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TimeRange) GetEndOk() (*time.Time, bool) {
+func (o *TimeRange) GetEndOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.End) {
 		return nil, false
 	}
@@ -107,7 +109,7 @@ func (o *TimeRange) HasEnd() bool {
 
 // SetEnd gets a reference to the given time.Time and assigns it to the End field.
 func (o *TimeRange) SetEnd(v time.Time) {
-	o.End = &v
+	o.End = flextime.PtrFlexTime(v)
 }
 
 func (o TimeRange) MarshalJSON() ([]byte, error) {

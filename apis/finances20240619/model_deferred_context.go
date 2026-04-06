@@ -13,6 +13,8 @@ package finances20240619
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the DeferredContext type satisfies the MappedNullable interface at compile time
@@ -23,7 +25,7 @@ type DeferredContext struct {
 	// The deferral policy applied to the transaction.  **Examples:** `B2B` (invoiced orders), `DD7` (delivery date policy)
 	DeferralReason *string `json:"deferralReason,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	MaturityDate *time.Time `json:"maturityDate,omitempty"`
+	MaturityDate *flextime.FlexTime `json:"maturityDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -84,12 +86,12 @@ func (o *DeferredContext) GetMaturityDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.MaturityDate
+	return o.MaturityDate.Time
 }
 
 // GetMaturityDateOk returns a tuple with the MaturityDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DeferredContext) GetMaturityDateOk() (*time.Time, bool) {
+func (o *DeferredContext) GetMaturityDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.MaturityDate) {
 		return nil, false
 	}
@@ -107,7 +109,7 @@ func (o *DeferredContext) HasMaturityDate() bool {
 
 // SetMaturityDate gets a reference to the given time.Time and assigns it to the MaturityDate field.
 func (o *DeferredContext) SetMaturityDate(v time.Time) {
-	o.MaturityDate = &v
+	o.MaturityDate = flextime.PtrFlexTime(v)
 }
 
 func (o DeferredContext) MarshalJSON() ([]byte, error) {

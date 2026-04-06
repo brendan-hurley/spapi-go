@@ -13,6 +13,8 @@ package shipmentinvoicingv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ShipmentDetail type satisfies the MappedNullable interface at compile time
@@ -27,7 +29,7 @@ type ShipmentDetail struct {
 	// The Amazon-defined identifier for the shipment.
 	AmazonShipmentId *string `json:"AmazonShipmentId,omitempty"`
 	// The date and time when the order was created.
-	PurchaseDate *time.Time `json:"PurchaseDate,omitempty"`
+	PurchaseDate *flextime.FlexTime `json:"PurchaseDate,omitempty"`
 	ShippingAddress *Address `json:"ShippingAddress,omitempty"`
 	// The list of payment method details.
 	PaymentMethodDetails []string `json:"PaymentMethodDetails,omitempty"`
@@ -171,12 +173,12 @@ func (o *ShipmentDetail) GetPurchaseDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PurchaseDate
+	return o.PurchaseDate.Time
 }
 
 // GetPurchaseDateOk returns a tuple with the PurchaseDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ShipmentDetail) GetPurchaseDateOk() (*time.Time, bool) {
+func (o *ShipmentDetail) GetPurchaseDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PurchaseDate) {
 		return nil, false
 	}
@@ -194,7 +196,7 @@ func (o *ShipmentDetail) HasPurchaseDate() bool {
 
 // SetPurchaseDate gets a reference to the given time.Time and assigns it to the PurchaseDate field.
 func (o *ShipmentDetail) SetPurchaseDate(v time.Time) {
-	o.PurchaseDate = &v
+	o.PurchaseDate = flextime.PtrFlexTime(v)
 }
 
 // GetShippingAddress returns the ShippingAddress field value if set, zero value otherwise.

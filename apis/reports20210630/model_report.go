@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Report type satisfies the MappedNullable interface at compile time
@@ -28,19 +30,19 @@ type Report struct {
 	// The report type. Refer to [Report Type Values](https://developer-docs.amazon.com/sp-api/docs/report-type-values) for more information.
 	ReportType string `json:"reportType"`
 	// The start of a date and time range used for selecting the data to report.
-	DataStartTime *time.Time `json:"dataStartTime,omitempty"`
+	DataStartTime *flextime.FlexTime `json:"dataStartTime,omitempty"`
 	// The end of a date and time range used for selecting the data to report.
-	DataEndTime *time.Time `json:"dataEndTime,omitempty"`
+	DataEndTime *flextime.FlexTime `json:"dataEndTime,omitempty"`
 	// The identifier of the report schedule that created this report (if any). This identifier is unique only in combination with a seller ID.
 	ReportScheduleId *string `json:"reportScheduleId,omitempty"`
 	// The date and time when the report was created.
-	CreatedTime time.Time `json:"createdTime"`
+	CreatedTime flextime.FlexTime `json:"createdTime"`
 	// The processing status of the report.
 	ProcessingStatus string `json:"processingStatus"`
 	// The date and time when the report processing started, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date time format.
-	ProcessingStartTime *time.Time `json:"processingStartTime,omitempty"`
+	ProcessingStartTime *flextime.FlexTime `json:"processingStartTime,omitempty"`
 	// The date and time when the report processing completed, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date time format.
-	ProcessingEndTime *time.Time `json:"processingEndTime,omitempty"`
+	ProcessingEndTime *flextime.FlexTime `json:"processingEndTime,omitempty"`
 	// The identifier for the report document. Pass this into the `getReportDocument` operation to get the information you will need to retrieve the report document's contents.
 	ReportDocumentId *string `json:"reportDocumentId,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -56,7 +58,7 @@ func NewReport(reportId string, reportType string, createdTime time.Time, proces
 	this := Report{}
 	this.ReportId = reportId
 	this.ReportType = reportType
-	this.CreatedTime = createdTime
+	this.CreatedTime = flextime.FlexTime{Time: createdTime}
 	this.ProcessingStatus = processingStatus
 	return &this
 }
@@ -155,12 +157,12 @@ func (o *Report) GetDataStartTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.DataStartTime
+	return o.DataStartTime.Time
 }
 
 // GetDataStartTimeOk returns a tuple with the DataStartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Report) GetDataStartTimeOk() (*time.Time, bool) {
+func (o *Report) GetDataStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.DataStartTime) {
 		return nil, false
 	}
@@ -178,7 +180,7 @@ func (o *Report) HasDataStartTime() bool {
 
 // SetDataStartTime gets a reference to the given time.Time and assigns it to the DataStartTime field.
 func (o *Report) SetDataStartTime(v time.Time) {
-	o.DataStartTime = &v
+	o.DataStartTime = flextime.PtrFlexTime(v)
 }
 
 // GetDataEndTime returns the DataEndTime field value if set, zero value otherwise.
@@ -187,12 +189,12 @@ func (o *Report) GetDataEndTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.DataEndTime
+	return o.DataEndTime.Time
 }
 
 // GetDataEndTimeOk returns a tuple with the DataEndTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Report) GetDataEndTimeOk() (*time.Time, bool) {
+func (o *Report) GetDataEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.DataEndTime) {
 		return nil, false
 	}
@@ -210,7 +212,7 @@ func (o *Report) HasDataEndTime() bool {
 
 // SetDataEndTime gets a reference to the given time.Time and assigns it to the DataEndTime field.
 func (o *Report) SetDataEndTime(v time.Time) {
-	o.DataEndTime = &v
+	o.DataEndTime = flextime.PtrFlexTime(v)
 }
 
 // GetReportScheduleId returns the ReportScheduleId field value if set, zero value otherwise.
@@ -252,12 +254,12 @@ func (o *Report) GetCreatedTime() time.Time {
 		return ret
 	}
 
-	return o.CreatedTime
+	return o.CreatedTime.Time
 }
 
 // GetCreatedTimeOk returns a tuple with the CreatedTime field value
 // and a boolean to check if the value has been set.
-func (o *Report) GetCreatedTimeOk() (*time.Time, bool) {
+func (o *Report) GetCreatedTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -266,7 +268,7 @@ func (o *Report) GetCreatedTimeOk() (*time.Time, bool) {
 
 // SetCreatedTime sets field value
 func (o *Report) SetCreatedTime(v time.Time) {
-	o.CreatedTime = v
+	o.CreatedTime = flextime.FlexTime{Time: v}
 }
 
 // GetProcessingStatus returns the ProcessingStatus field value
@@ -299,12 +301,12 @@ func (o *Report) GetProcessingStartTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ProcessingStartTime
+	return o.ProcessingStartTime.Time
 }
 
 // GetProcessingStartTimeOk returns a tuple with the ProcessingStartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Report) GetProcessingStartTimeOk() (*time.Time, bool) {
+func (o *Report) GetProcessingStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ProcessingStartTime) {
 		return nil, false
 	}
@@ -322,7 +324,7 @@ func (o *Report) HasProcessingStartTime() bool {
 
 // SetProcessingStartTime gets a reference to the given time.Time and assigns it to the ProcessingStartTime field.
 func (o *Report) SetProcessingStartTime(v time.Time) {
-	o.ProcessingStartTime = &v
+	o.ProcessingStartTime = flextime.PtrFlexTime(v)
 }
 
 // GetProcessingEndTime returns the ProcessingEndTime field value if set, zero value otherwise.
@@ -331,12 +333,12 @@ func (o *Report) GetProcessingEndTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ProcessingEndTime
+	return o.ProcessingEndTime.Time
 }
 
 // GetProcessingEndTimeOk returns a tuple with the ProcessingEndTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Report) GetProcessingEndTimeOk() (*time.Time, bool) {
+func (o *Report) GetProcessingEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ProcessingEndTime) {
 		return nil, false
 	}
@@ -354,7 +356,7 @@ func (o *Report) HasProcessingEndTime() bool {
 
 // SetProcessingEndTime gets a reference to the given time.Time and assigns it to the ProcessingEndTime field.
 func (o *Report) SetProcessingEndTime(v time.Time) {
-	o.ProcessingEndTime = &v
+	o.ProcessingEndTime = flextime.PtrFlexTime(v)
 }
 
 // GetReportDocumentId returns the ReportDocumentId field value if set, zero value otherwise.

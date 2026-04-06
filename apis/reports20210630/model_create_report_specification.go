@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the CreateReportSpecification type satisfies the MappedNullable interface at compile time
@@ -26,9 +28,9 @@ type CreateReportSpecification struct {
 	// The report type. Refer to [Report Type Values](https://developer-docs.amazon.com/sp-api/docs/report-type-values) for more information.
 	ReportType string `json:"reportType"`
 	// The start of a date and time range, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date time format, used for selecting the data to report. The default is now. The value must be prior to or equal to the current date and time. Not all report types make use of this.
-	DataStartTime *time.Time `json:"dataStartTime,omitempty"`
+	DataStartTime *flextime.FlexTime `json:"dataStartTime,omitempty"`
 	// The end of a date and time range, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date time format, used for selecting the data to report. The default is now. The value must be prior to or equal to the current date and time. Not all report types make use of this.
-	DataEndTime *time.Time `json:"dataEndTime,omitempty"`
+	DataEndTime *flextime.FlexTime `json:"dataEndTime,omitempty"`
 	// A list of marketplace identifiers. The report document's contents will contain data for all of the specified marketplaces, unless the report type indicates otherwise.
 	MarketplaceIds []string `json:"marketplaceIds"`
 	AdditionalProperties map[string]interface{}
@@ -117,12 +119,12 @@ func (o *CreateReportSpecification) GetDataStartTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.DataStartTime
+	return o.DataStartTime.Time
 }
 
 // GetDataStartTimeOk returns a tuple with the DataStartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateReportSpecification) GetDataStartTimeOk() (*time.Time, bool) {
+func (o *CreateReportSpecification) GetDataStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.DataStartTime) {
 		return nil, false
 	}
@@ -140,7 +142,7 @@ func (o *CreateReportSpecification) HasDataStartTime() bool {
 
 // SetDataStartTime gets a reference to the given time.Time and assigns it to the DataStartTime field.
 func (o *CreateReportSpecification) SetDataStartTime(v time.Time) {
-	o.DataStartTime = &v
+	o.DataStartTime = flextime.PtrFlexTime(v)
 }
 
 // GetDataEndTime returns the DataEndTime field value if set, zero value otherwise.
@@ -149,12 +151,12 @@ func (o *CreateReportSpecification) GetDataEndTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.DataEndTime
+	return o.DataEndTime.Time
 }
 
 // GetDataEndTimeOk returns a tuple with the DataEndTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateReportSpecification) GetDataEndTimeOk() (*time.Time, bool) {
+func (o *CreateReportSpecification) GetDataEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.DataEndTime) {
 		return nil, false
 	}
@@ -172,7 +174,7 @@ func (o *CreateReportSpecification) HasDataEndTime() bool {
 
 // SetDataEndTime gets a reference to the given time.Time and assigns it to the DataEndTime field.
 func (o *CreateReportSpecification) SetDataEndTime(v time.Time) {
-	o.DataEndTime = &v
+	o.DataEndTime = flextime.PtrFlexTime(v)
 }
 
 // GetMarketplaceIds returns the MarketplaceIds field value

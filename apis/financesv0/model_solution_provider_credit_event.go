@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the SolutionProviderCreditEvent type satisfies the MappedNullable interface at compile time
@@ -38,7 +40,7 @@ type SolutionProviderCreditEvent struct {
 	ProviderStoreName *string `json:"ProviderStoreName,omitempty"`
 	TransactionAmount *Currency `json:"TransactionAmount,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	TransactionCreationDate *time.Time `json:"TransactionCreationDate,omitempty"`
+	TransactionCreationDate *flextime.FlexTime `json:"TransactionCreationDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -355,12 +357,12 @@ func (o *SolutionProviderCreditEvent) GetTransactionCreationDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.TransactionCreationDate
+	return o.TransactionCreationDate.Time
 }
 
 // GetTransactionCreationDateOk returns a tuple with the TransactionCreationDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SolutionProviderCreditEvent) GetTransactionCreationDateOk() (*time.Time, bool) {
+func (o *SolutionProviderCreditEvent) GetTransactionCreationDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.TransactionCreationDate) {
 		return nil, false
 	}
@@ -378,7 +380,7 @@ func (o *SolutionProviderCreditEvent) HasTransactionCreationDate() bool {
 
 // SetTransactionCreationDate gets a reference to the given time.Time and assigns it to the TransactionCreationDate field.
 func (o *SolutionProviderCreditEvent) SetTransactionCreationDate(v time.Time) {
-	o.TransactionCreationDate = &v
+	o.TransactionCreationDate = flextime.PtrFlexTime(v)
 }
 
 func (o SolutionProviderCreditEvent) MarshalJSON() ([]byte, error) {

@@ -13,6 +13,8 @@ package vendorshipments
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the CollectFreightPickupDetails type satisfies the MappedNullable interface at compile time
@@ -21,11 +23,11 @@ var _ MappedNullable = &CollectFreightPickupDetails{}
 // CollectFreightPickupDetails Transport Request pickup date from Vendor Warehouse by Buyer
 type CollectFreightPickupDetails struct {
 	// Date on which the items can be picked up from vendor warehouse by Buyer used for WePay/Collect vendors.
-	RequestedPickUp *time.Time `json:"requestedPickUp,omitempty"`
+	RequestedPickUp *flextime.FlexTime `json:"requestedPickUp,omitempty"`
 	// Date on which the items are scheduled to be picked from vendor warehouse by Buyer used for WePay/Collect vendors.
-	ScheduledPickUp *time.Time `json:"scheduledPickUp,omitempty"`
+	ScheduledPickUp *flextime.FlexTime `json:"scheduledPickUp,omitempty"`
 	// Date on which the carrier is being scheduled to pickup items from vendor warehouse by Byer used for WePay/Collect vendors.
-	CarrierAssignmentDate *time.Time `json:"carrierAssignmentDate,omitempty"`
+	CarrierAssignmentDate *flextime.FlexTime `json:"carrierAssignmentDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -54,12 +56,12 @@ func (o *CollectFreightPickupDetails) GetRequestedPickUp() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.RequestedPickUp
+	return o.RequestedPickUp.Time
 }
 
 // GetRequestedPickUpOk returns a tuple with the RequestedPickUp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CollectFreightPickupDetails) GetRequestedPickUpOk() (*time.Time, bool) {
+func (o *CollectFreightPickupDetails) GetRequestedPickUpOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.RequestedPickUp) {
 		return nil, false
 	}
@@ -77,7 +79,7 @@ func (o *CollectFreightPickupDetails) HasRequestedPickUp() bool {
 
 // SetRequestedPickUp gets a reference to the given time.Time and assigns it to the RequestedPickUp field.
 func (o *CollectFreightPickupDetails) SetRequestedPickUp(v time.Time) {
-	o.RequestedPickUp = &v
+	o.RequestedPickUp = flextime.PtrFlexTime(v)
 }
 
 // GetScheduledPickUp returns the ScheduledPickUp field value if set, zero value otherwise.
@@ -86,12 +88,12 @@ func (o *CollectFreightPickupDetails) GetScheduledPickUp() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ScheduledPickUp
+	return o.ScheduledPickUp.Time
 }
 
 // GetScheduledPickUpOk returns a tuple with the ScheduledPickUp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CollectFreightPickupDetails) GetScheduledPickUpOk() (*time.Time, bool) {
+func (o *CollectFreightPickupDetails) GetScheduledPickUpOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ScheduledPickUp) {
 		return nil, false
 	}
@@ -109,7 +111,7 @@ func (o *CollectFreightPickupDetails) HasScheduledPickUp() bool {
 
 // SetScheduledPickUp gets a reference to the given time.Time and assigns it to the ScheduledPickUp field.
 func (o *CollectFreightPickupDetails) SetScheduledPickUp(v time.Time) {
-	o.ScheduledPickUp = &v
+	o.ScheduledPickUp = flextime.PtrFlexTime(v)
 }
 
 // GetCarrierAssignmentDate returns the CarrierAssignmentDate field value if set, zero value otherwise.
@@ -118,12 +120,12 @@ func (o *CollectFreightPickupDetails) GetCarrierAssignmentDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.CarrierAssignmentDate
+	return o.CarrierAssignmentDate.Time
 }
 
 // GetCarrierAssignmentDateOk returns a tuple with the CarrierAssignmentDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CollectFreightPickupDetails) GetCarrierAssignmentDateOk() (*time.Time, bool) {
+func (o *CollectFreightPickupDetails) GetCarrierAssignmentDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.CarrierAssignmentDate) {
 		return nil, false
 	}
@@ -141,7 +143,7 @@ func (o *CollectFreightPickupDetails) HasCarrierAssignmentDate() bool {
 
 // SetCarrierAssignmentDate gets a reference to the given time.Time and assigns it to the CarrierAssignmentDate field.
 func (o *CollectFreightPickupDetails) SetCarrierAssignmentDate(v time.Time) {
-	o.CarrierAssignmentDate = &v
+	o.CarrierAssignmentDate = flextime.PtrFlexTime(v)
 }
 
 func (o CollectFreightPickupDetails) MarshalJSON() ([]byte, error) {

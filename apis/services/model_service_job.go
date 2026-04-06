@@ -13,6 +13,8 @@ package services
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ServiceJob type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &ServiceJob{}
 // ServiceJob The job details of a service.
 type ServiceJob struct {
 	// The date and time of the creation of the job in ISO 8601 format.
-	CreateTime *time.Time `json:"createTime,omitempty"`
+	CreateTime *flextime.FlexTime `json:"createTime,omitempty"`
 	// Amazon identifier for the service job.
 	ServiceJobId *string `json:"serviceJobId,omitempty"`
 	// The status of the service job.
@@ -73,12 +75,12 @@ func (o *ServiceJob) GetCreateTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.CreateTime
+	return o.CreateTime.Time
 }
 
 // GetCreateTimeOk returns a tuple with the CreateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ServiceJob) GetCreateTimeOk() (*time.Time, bool) {
+func (o *ServiceJob) GetCreateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.CreateTime) {
 		return nil, false
 	}
@@ -96,7 +98,7 @@ func (o *ServiceJob) HasCreateTime() bool {
 
 // SetCreateTime gets a reference to the given time.Time and assigns it to the CreateTime field.
 func (o *ServiceJob) SetCreateTime(v time.Time) {
-	o.CreateTime = &v
+	o.CreateTime = flextime.PtrFlexTime(v)
 }
 
 // GetServiceJobId returns the ServiceJobId field value if set, zero value otherwise.

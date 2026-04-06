@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the AppointmentSlotTime type satisfies the MappedNullable interface at compile time
@@ -22,9 +24,9 @@ var _ MappedNullable = &AppointmentSlotTime{}
 // AppointmentSlotTime An appointment slot time with start and end.
 type AppointmentSlotTime struct {
 	// The end timestamp of the appointment in UTC.
-	EndTime time.Time `json:"endTime"`
+	EndTime flextime.FlexTime `json:"endTime"`
 	// The start timestamp of the appointment in UTC.
-	StartTime time.Time `json:"startTime"`
+	StartTime flextime.FlexTime `json:"startTime"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -36,8 +38,8 @@ type _AppointmentSlotTime AppointmentSlotTime
 // will change when the set of required properties is changed
 func NewAppointmentSlotTime(endTime time.Time, startTime time.Time) *AppointmentSlotTime {
 	this := AppointmentSlotTime{}
-	this.EndTime = endTime
-	this.StartTime = startTime
+	this.EndTime = flextime.FlexTime{Time: endTime}
+	this.StartTime = flextime.FlexTime{Time: startTime}
 	return &this
 }
 
@@ -56,12 +58,12 @@ func (o *AppointmentSlotTime) GetEndTime() time.Time {
 		return ret
 	}
 
-	return o.EndTime
+	return o.EndTime.Time
 }
 
 // GetEndTimeOk returns a tuple with the EndTime field value
 // and a boolean to check if the value has been set.
-func (o *AppointmentSlotTime) GetEndTimeOk() (*time.Time, bool) {
+func (o *AppointmentSlotTime) GetEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,7 +72,7 @@ func (o *AppointmentSlotTime) GetEndTimeOk() (*time.Time, bool) {
 
 // SetEndTime sets field value
 func (o *AppointmentSlotTime) SetEndTime(v time.Time) {
-	o.EndTime = v
+	o.EndTime = flextime.FlexTime{Time: v}
 }
 
 // GetStartTime returns the StartTime field value
@@ -80,12 +82,12 @@ func (o *AppointmentSlotTime) GetStartTime() time.Time {
 		return ret
 	}
 
-	return o.StartTime
+	return o.StartTime.Time
 }
 
 // GetStartTimeOk returns a tuple with the StartTime field value
 // and a boolean to check if the value has been set.
-func (o *AppointmentSlotTime) GetStartTimeOk() (*time.Time, bool) {
+func (o *AppointmentSlotTime) GetStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -94,7 +96,7 @@ func (o *AppointmentSlotTime) GetStartTimeOk() (*time.Time, bool) {
 
 // SetStartTime sets field value
 func (o *AppointmentSlotTime) SetStartTime(v time.Time) {
-	o.StartTime = v
+	o.StartTime = flextime.FlexTime{Time: v}
 }
 
 func (o AppointmentSlotTime) MarshalJSON() ([]byte, error) {

@@ -13,6 +13,8 @@ package vendorshipments
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ShipmentStatusDetails type satisfies the MappedNullable interface at compile time
@@ -23,7 +25,7 @@ type ShipmentStatusDetails struct {
 	// Current status of the shipment on whether it is picked up or scheduled.
 	ShipmentStatus *string `json:"shipmentStatus,omitempty"`
 	// Date and time on last status update received for the shipment
-	ShipmentStatusDate *time.Time `json:"shipmentStatusDate,omitempty"`
+	ShipmentStatusDate *flextime.FlexTime `json:"shipmentStatusDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -84,12 +86,12 @@ func (o *ShipmentStatusDetails) GetShipmentStatusDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ShipmentStatusDate
+	return o.ShipmentStatusDate.Time
 }
 
 // GetShipmentStatusDateOk returns a tuple with the ShipmentStatusDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ShipmentStatusDetails) GetShipmentStatusDateOk() (*time.Time, bool) {
+func (o *ShipmentStatusDetails) GetShipmentStatusDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ShipmentStatusDate) {
 		return nil, false
 	}
@@ -107,7 +109,7 @@ func (o *ShipmentStatusDetails) HasShipmentStatusDate() bool {
 
 // SetShipmentStatusDate gets a reference to the given time.Time and assigns it to the ShipmentStatusDate field.
 func (o *ShipmentStatusDetails) SetShipmentStatusDate(v time.Time) {
-	o.ShipmentStatusDate = &v
+	o.ShipmentStatusDate = flextime.PtrFlexTime(v)
 }
 
 func (o ShipmentStatusDetails) MarshalJSON() ([]byte, error) {

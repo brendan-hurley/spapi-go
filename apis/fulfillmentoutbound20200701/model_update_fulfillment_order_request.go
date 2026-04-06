@@ -13,6 +13,8 @@ package fulfillmentoutbound20200701
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the UpdateFulfillmentOrderRequest type satisfies the MappedNullable interface at compile time
@@ -25,7 +27,7 @@ type UpdateFulfillmentOrderRequest struct {
 	// A fulfillment order identifier that the seller creates. This value displays as the order identifier in recipient-facing materials such as the outbound shipment packing slip. The value of `DisplayableOrderId` should match the order identifier that the seller provides to the recipient. The seller can use the `SellerFulfillmentOrderId` for this value or they can specify an alternate value if they want the recipient to reference an alternate order identifier.
 	DisplayableOrderId *string `json:"displayableOrderId,omitempty"`
 	// Date timestamp
-	DisplayableOrderDate *time.Time `json:"displayableOrderDate,omitempty"`
+	DisplayableOrderDate *flextime.FlexTime `json:"displayableOrderDate,omitempty"`
 	// Order-specific text that appears in recipient-facing materials such as the outbound shipment packing slip.
 	DisplayableOrderComment *string `json:"displayableOrderComment,omitempty"`
 	ShippingSpeedCategory *ShippingSpeedCategory `json:"shippingSpeedCategory,omitempty"`
@@ -132,12 +134,12 @@ func (o *UpdateFulfillmentOrderRequest) GetDisplayableOrderDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.DisplayableOrderDate
+	return o.DisplayableOrderDate.Time
 }
 
 // GetDisplayableOrderDateOk returns a tuple with the DisplayableOrderDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateFulfillmentOrderRequest) GetDisplayableOrderDateOk() (*time.Time, bool) {
+func (o *UpdateFulfillmentOrderRequest) GetDisplayableOrderDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.DisplayableOrderDate) {
 		return nil, false
 	}
@@ -155,7 +157,7 @@ func (o *UpdateFulfillmentOrderRequest) HasDisplayableOrderDate() bool {
 
 // SetDisplayableOrderDate gets a reference to the given time.Time and assigns it to the DisplayableOrderDate field.
 func (o *UpdateFulfillmentOrderRequest) SetDisplayableOrderDate(v time.Time) {
-	o.DisplayableOrderDate = &v
+	o.DisplayableOrderDate = flextime.PtrFlexTime(v)
 }
 
 // GetDisplayableOrderComment returns the DisplayableOrderComment field value if set, zero value otherwise.

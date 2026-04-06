@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TaxWithholdingPeriod type satisfies the MappedNullable interface at compile time
@@ -21,9 +23,9 @@ var _ MappedNullable = &TaxWithholdingPeriod{}
 // TaxWithholdingPeriod The period during which tax withholding on a seller's account is calculated.
 type TaxWithholdingPeriod struct {
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	StartDate *time.Time `json:"StartDate,omitempty"`
+	StartDate *flextime.FlexTime `json:"StartDate,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	EndDate *time.Time `json:"EndDate,omitempty"`
+	EndDate *flextime.FlexTime `json:"EndDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -52,12 +54,12 @@ func (o *TaxWithholdingPeriod) GetStartDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.StartDate
+	return o.StartDate.Time
 }
 
 // GetStartDateOk returns a tuple with the StartDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TaxWithholdingPeriod) GetStartDateOk() (*time.Time, bool) {
+func (o *TaxWithholdingPeriod) GetStartDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.StartDate) {
 		return nil, false
 	}
@@ -75,7 +77,7 @@ func (o *TaxWithholdingPeriod) HasStartDate() bool {
 
 // SetStartDate gets a reference to the given time.Time and assigns it to the StartDate field.
 func (o *TaxWithholdingPeriod) SetStartDate(v time.Time) {
-	o.StartDate = &v
+	o.StartDate = flextime.PtrFlexTime(v)
 }
 
 // GetEndDate returns the EndDate field value if set, zero value otherwise.
@@ -84,12 +86,12 @@ func (o *TaxWithholdingPeriod) GetEndDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EndDate
+	return o.EndDate.Time
 }
 
 // GetEndDateOk returns a tuple with the EndDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TaxWithholdingPeriod) GetEndDateOk() (*time.Time, bool) {
+func (o *TaxWithholdingPeriod) GetEndDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EndDate) {
 		return nil, false
 	}
@@ -107,7 +109,7 @@ func (o *TaxWithholdingPeriod) HasEndDate() bool {
 
 // SetEndDate gets a reference to the given time.Time and assigns it to the EndDate field.
 func (o *TaxWithholdingPeriod) SetEndDate(v time.Time) {
-	o.EndDate = &v
+	o.EndDate = flextime.PtrFlexTime(v)
 }
 
 func (o TaxWithholdingPeriod) MarshalJSON() ([]byte, error) {

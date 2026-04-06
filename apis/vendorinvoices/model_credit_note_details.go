@@ -13,6 +13,8 @@ package vendorinvoices
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the CreditNoteDetails type satisfies the MappedNullable interface at compile time
@@ -27,7 +29,7 @@ type CreditNoteDetails struct {
 	// Identifies the Returns Notice Number. Mandatory for all Returns Credit Notes.
 	ReturnsReferenceNumber *string `json:"returnsReferenceNumber,omitempty"`
 	// Defines a date and time according to ISO8601.
-	GoodsReturnDate *time.Time `json:"goodsReturnDate,omitempty"`
+	GoodsReturnDate *flextime.FlexTime `json:"goodsReturnDate,omitempty"`
 	// Identifies the Returned Merchandise Authorization ID, if generated.
 	RmaId *string `json:"rmaId,omitempty"`
 	// Identifies the COOP reference used for COOP agreement. Failure to provide the COOP reference number or the Debit Note number may lead to a rejection of the Credit Note.
@@ -158,12 +160,12 @@ func (o *CreditNoteDetails) GetGoodsReturnDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.GoodsReturnDate
+	return o.GoodsReturnDate.Time
 }
 
 // GetGoodsReturnDateOk returns a tuple with the GoodsReturnDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreditNoteDetails) GetGoodsReturnDateOk() (*time.Time, bool) {
+func (o *CreditNoteDetails) GetGoodsReturnDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.GoodsReturnDate) {
 		return nil, false
 	}
@@ -181,7 +183,7 @@ func (o *CreditNoteDetails) HasGoodsReturnDate() bool {
 
 // SetGoodsReturnDate gets a reference to the given time.Time and assigns it to the GoodsReturnDate field.
 func (o *CreditNoteDetails) SetGoodsReturnDate(v time.Time) {
-	o.GoodsReturnDate = &v
+	o.GoodsReturnDate = flextime.PtrFlexTime(v)
 }
 
 // GetRmaId returns the RmaId field value if set, zero value otherwise.

@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the DateRange type satisfies the MappedNullable interface at compile time
@@ -22,9 +24,9 @@ var _ MappedNullable = &DateRange{}
 // DateRange The time range within which something (for example, a delivery) will occur.
 type DateRange struct {
 	// Date timestamp
-	Earliest time.Time `json:"earliest"`
+	Earliest flextime.FlexTime `json:"earliest"`
 	// Date timestamp
-	Latest time.Time `json:"latest"`
+	Latest flextime.FlexTime `json:"latest"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -36,8 +38,8 @@ type _DateRange DateRange
 // will change when the set of required properties is changed
 func NewDateRange(earliest time.Time, latest time.Time) *DateRange {
 	this := DateRange{}
-	this.Earliest = earliest
-	this.Latest = latest
+	this.Earliest = flextime.FlexTime{Time: earliest}
+	this.Latest = flextime.FlexTime{Time: latest}
 	return &this
 }
 
@@ -56,12 +58,12 @@ func (o *DateRange) GetEarliest() time.Time {
 		return ret
 	}
 
-	return o.Earliest
+	return o.Earliest.Time
 }
 
 // GetEarliestOk returns a tuple with the Earliest field value
 // and a boolean to check if the value has been set.
-func (o *DateRange) GetEarliestOk() (*time.Time, bool) {
+func (o *DateRange) GetEarliestOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,7 +72,7 @@ func (o *DateRange) GetEarliestOk() (*time.Time, bool) {
 
 // SetEarliest sets field value
 func (o *DateRange) SetEarliest(v time.Time) {
-	o.Earliest = v
+	o.Earliest = flextime.FlexTime{Time: v}
 }
 
 // GetLatest returns the Latest field value
@@ -80,12 +82,12 @@ func (o *DateRange) GetLatest() time.Time {
 		return ret
 	}
 
-	return o.Latest
+	return o.Latest.Time
 }
 
 // GetLatestOk returns a tuple with the Latest field value
 // and a boolean to check if the value has been set.
-func (o *DateRange) GetLatestOk() (*time.Time, bool) {
+func (o *DateRange) GetLatestOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -94,7 +96,7 @@ func (o *DateRange) GetLatestOk() (*time.Time, bool) {
 
 // SetLatest sets field value
 func (o *DateRange) SetLatest(v time.Time) {
-	o.Latest = v
+	o.Latest = flextime.FlexTime{Time: v}
 }
 
 func (o DateRange) MarshalJSON() ([]byte, error) {

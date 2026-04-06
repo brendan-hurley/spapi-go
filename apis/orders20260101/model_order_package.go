@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the OrderPackage type satisfies the MappedNullable interface at compile time
@@ -24,12 +26,12 @@ type OrderPackage struct {
 	// A unique identifier for this package within the context of the order.
 	PackageReferenceId string `json:"packageReferenceId"`
 	// The exact time when this shipping package was created and prepared for shipment. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.
-	CreatedTime *time.Time `json:"createdTime,omitempty"`
+	CreatedTime *flextime.FlexTime `json:"createdTime,omitempty"`
 	PackageStatus *PackageStatus `json:"packageStatus,omitempty"`
 	// The carrier responsible for transporting this package to the customer.
 	Carrier *string `json:"carrier,omitempty"`
 	// The exact time when this package was handed over to the carrier and began its journey to the customer. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.
-	ShipTime *time.Time `json:"shipTime,omitempty"`
+	ShipTime *flextime.FlexTime `json:"shipTime,omitempty"`
 	// The specific shipping method or service used for delivering this package.
 	ShippingService *string `json:"shippingService,omitempty"`
 	// The carrier-provided tracking number that customers can use to monitor the package's delivery progress.
@@ -90,12 +92,12 @@ func (o *OrderPackage) GetCreatedTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.CreatedTime
+	return o.CreatedTime.Time
 }
 
 // GetCreatedTimeOk returns a tuple with the CreatedTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrderPackage) GetCreatedTimeOk() (*time.Time, bool) {
+func (o *OrderPackage) GetCreatedTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.CreatedTime) {
 		return nil, false
 	}
@@ -113,7 +115,7 @@ func (o *OrderPackage) HasCreatedTime() bool {
 
 // SetCreatedTime gets a reference to the given time.Time and assigns it to the CreatedTime field.
 func (o *OrderPackage) SetCreatedTime(v time.Time) {
-	o.CreatedTime = &v
+	o.CreatedTime = flextime.PtrFlexTime(v)
 }
 
 // GetPackageStatus returns the PackageStatus field value if set, zero value otherwise.
@@ -186,12 +188,12 @@ func (o *OrderPackage) GetShipTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ShipTime
+	return o.ShipTime.Time
 }
 
 // GetShipTimeOk returns a tuple with the ShipTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrderPackage) GetShipTimeOk() (*time.Time, bool) {
+func (o *OrderPackage) GetShipTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ShipTime) {
 		return nil, false
 	}
@@ -209,7 +211,7 @@ func (o *OrderPackage) HasShipTime() bool {
 
 // SetShipTime gets a reference to the given time.Time and assigns it to the ShipTime field.
 func (o *OrderPackage) SetShipTime(v time.Time) {
-	o.ShipTime = &v
+	o.ShipTime = flextime.PtrFlexTime(v)
 }
 
 // GetShippingService returns the ShippingService field value if set, zero value otherwise.

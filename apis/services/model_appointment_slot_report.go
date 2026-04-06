@@ -13,6 +13,8 @@ package services
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the AppointmentSlotReport type satisfies the MappedNullable interface at compile time
@@ -23,9 +25,9 @@ type AppointmentSlotReport struct {
 	// Defines the type of slots.
 	SchedulingType *string `json:"schedulingType,omitempty"`
 	// Start Time from which the appointment slots are generated in ISO 8601 format.
-	StartTime *time.Time `json:"startTime,omitempty"`
+	StartTime *flextime.FlexTime `json:"startTime,omitempty"`
 	// End Time up to which the appointment slots are generated in ISO 8601 format.
-	EndTime *time.Time `json:"endTime,omitempty"`
+	EndTime *flextime.FlexTime `json:"endTime,omitempty"`
 	// A list of time windows along with associated capacity in which the service can be performed.
 	AppointmentSlots []AppointmentSlot `json:"appointmentSlots,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -88,12 +90,12 @@ func (o *AppointmentSlotReport) GetStartTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.StartTime
+	return o.StartTime.Time
 }
 
 // GetStartTimeOk returns a tuple with the StartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AppointmentSlotReport) GetStartTimeOk() (*time.Time, bool) {
+func (o *AppointmentSlotReport) GetStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.StartTime) {
 		return nil, false
 	}
@@ -111,7 +113,7 @@ func (o *AppointmentSlotReport) HasStartTime() bool {
 
 // SetStartTime gets a reference to the given time.Time and assigns it to the StartTime field.
 func (o *AppointmentSlotReport) SetStartTime(v time.Time) {
-	o.StartTime = &v
+	o.StartTime = flextime.PtrFlexTime(v)
 }
 
 // GetEndTime returns the EndTime field value if set, zero value otherwise.
@@ -120,12 +122,12 @@ func (o *AppointmentSlotReport) GetEndTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EndTime
+	return o.EndTime.Time
 }
 
 // GetEndTimeOk returns a tuple with the EndTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AppointmentSlotReport) GetEndTimeOk() (*time.Time, bool) {
+func (o *AppointmentSlotReport) GetEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EndTime) {
 		return nil, false
 	}
@@ -143,7 +145,7 @@ func (o *AppointmentSlotReport) HasEndTime() bool {
 
 // SetEndTime gets a reference to the given time.Time and assigns it to the EndTime field.
 func (o *AppointmentSlotReport) SetEndTime(v time.Time) {
-	o.EndTime = &v
+	o.EndTime = flextime.PtrFlexTime(v)
 }
 
 // GetAppointmentSlots returns the AppointmentSlots field value if set, zero value otherwise.

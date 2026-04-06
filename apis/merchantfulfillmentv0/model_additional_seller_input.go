@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/brendan-hurley/spapi-go/flextime"
+
 	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
@@ -31,7 +33,7 @@ type AdditionalSellerInput struct {
 	// The value when the data type is integer.
 	ValueAsInteger *int32 `json:"ValueAsInteger,omitempty"`
 	// Date-time formatted timestamp.
-	ValueAsTimestamp *time.Time `json:"ValueAsTimestamp,omitempty"`
+	ValueAsTimestamp *flextime.FlexTime `json:"ValueAsTimestamp,omitempty"`
 	ValueAsAddress *Address `json:"ValueAsAddress,omitempty"`
 	ValueAsWeight *Weight `json:"ValueAsWeight,omitempty"`
 	ValueAsDimension *Length `json:"ValueAsDimension,omitempty"`
@@ -192,12 +194,12 @@ func (o *AdditionalSellerInput) GetValueAsTimestamp() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ValueAsTimestamp
+	return o.ValueAsTimestamp.Time
 }
 
 // GetValueAsTimestampOk returns a tuple with the ValueAsTimestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AdditionalSellerInput) GetValueAsTimestampOk() (*time.Time, bool) {
+func (o *AdditionalSellerInput) GetValueAsTimestampOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ValueAsTimestamp) {
 		return nil, false
 	}
@@ -215,7 +217,7 @@ func (o *AdditionalSellerInput) HasValueAsTimestamp() bool {
 
 // SetValueAsTimestamp gets a reference to the given time.Time and assigns it to the ValueAsTimestamp field.
 func (o *AdditionalSellerInput) SetValueAsTimestamp(v time.Time) {
-	o.ValueAsTimestamp = &v
+	o.ValueAsTimestamp = flextime.PtrFlexTime(v)
 }
 
 // GetValueAsAddress returns the ValueAsAddress field value if set, zero value otherwise.

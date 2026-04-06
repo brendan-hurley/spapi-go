@@ -13,6 +13,8 @@ package services
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Poa type satisfies the MappedNullable interface at compile time
@@ -26,7 +28,7 @@ type Poa struct {
 	// The identifier of the technician who uploaded the POA.
 	UploadingTechnician *string `json:"uploadingTechnician,omitempty" validate:"regexp=^[A-Z0-9]*$"`
 	// The date and time when the POA was uploaded in ISO 8601 format.
-	UploadTime *time.Time `json:"uploadTime,omitempty"`
+	UploadTime *flextime.FlexTime `json:"uploadTime,omitempty"`
 	// The type of POA uploaded.
 	PoaType *string `json:"poaType,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -153,12 +155,12 @@ func (o *Poa) GetUploadTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.UploadTime
+	return o.UploadTime.Time
 }
 
 // GetUploadTimeOk returns a tuple with the UploadTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Poa) GetUploadTimeOk() (*time.Time, bool) {
+func (o *Poa) GetUploadTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.UploadTime) {
 		return nil, false
 	}
@@ -176,7 +178,7 @@ func (o *Poa) HasUploadTime() bool {
 
 // SetUploadTime gets a reference to the given time.Time and assigns it to the UploadTime field.
 func (o *Poa) SetUploadTime(v time.Time) {
-	o.UploadTime = &v
+	o.UploadTime = flextime.PtrFlexTime(v)
 }
 
 // GetPoaType returns the PoaType field value if set, zero value otherwise.

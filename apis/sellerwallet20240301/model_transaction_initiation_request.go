@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TransactionInitiationRequest type satisfies the MappedNullable interface at compile time
@@ -34,7 +36,7 @@ type TransactionInitiationRequest struct {
 	SourceAmount Currency `json:"sourceAmount"`
 	TransferRateDetails *TransferRatePreview `json:"transferRateDetails,omitempty"`
 	// The time at which the transaction was initiated in [ISO 8601 date time format](https://developer-docs.amazon.com/sp-api/docs/iso-8601).
-	RequestTime time.Time `json:"requestTime"`
+	RequestTime flextime.FlexTime `json:"requestTime"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -49,7 +51,7 @@ func NewTransactionInitiationRequest(sourceAccountId string, destinationTransact
 	this.SourceAccountId = sourceAccountId
 	this.DestinationTransactionInstrument = destinationTransactionInstrument
 	this.SourceAmount = sourceAmount
-	this.RequestTime = requestTime
+	this.RequestTime = flextime.FlexTime{Time: requestTime}
 	return &this
 }
 
@@ -300,12 +302,12 @@ func (o *TransactionInitiationRequest) GetRequestTime() time.Time {
 		return ret
 	}
 
-	return o.RequestTime
+	return o.RequestTime.Time
 }
 
 // GetRequestTimeOk returns a tuple with the RequestTime field value
 // and a boolean to check if the value has been set.
-func (o *TransactionInitiationRequest) GetRequestTimeOk() (*time.Time, bool) {
+func (o *TransactionInitiationRequest) GetRequestTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -314,7 +316,7 @@ func (o *TransactionInitiationRequest) GetRequestTimeOk() (*time.Time, bool) {
 
 // SetRequestTime sets field value
 func (o *TransactionInitiationRequest) SetRequestTime(v time.Time) {
-	o.RequestTime = v
+	o.RequestTime = flextime.FlexTime{Time: v}
 }
 
 func (o TransactionInitiationRequest) MarshalJSON() ([]byte, error) {

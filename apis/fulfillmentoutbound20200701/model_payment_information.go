@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the PaymentInformation type satisfies the MappedNullable interface at compile time
@@ -26,7 +28,7 @@ type PaymentInformation struct {
 	// The transaction mode of this payment.
 	PaymentMode string `json:"paymentMode"`
 	// Date timestamp
-	PaymentDate time.Time `json:"paymentDate"`
+	PaymentDate flextime.FlexTime `json:"paymentDate"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -40,7 +42,7 @@ func NewPaymentInformation(paymentTransactionId string, paymentMode string, paym
 	this := PaymentInformation{}
 	this.PaymentTransactionId = paymentTransactionId
 	this.PaymentMode = paymentMode
-	this.PaymentDate = paymentDate
+	this.PaymentDate = flextime.FlexTime{Time: paymentDate}
 	return &this
 }
 
@@ -107,12 +109,12 @@ func (o *PaymentInformation) GetPaymentDate() time.Time {
 		return ret
 	}
 
-	return o.PaymentDate
+	return o.PaymentDate.Time
 }
 
 // GetPaymentDateOk returns a tuple with the PaymentDate field value
 // and a boolean to check if the value has been set.
-func (o *PaymentInformation) GetPaymentDateOk() (*time.Time, bool) {
+func (o *PaymentInformation) GetPaymentDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -121,7 +123,7 @@ func (o *PaymentInformation) GetPaymentDateOk() (*time.Time, bool) {
 
 // SetPaymentDate sets field value
 func (o *PaymentInformation) SetPaymentDate(v time.Time) {
-	o.PaymentDate = v
+	o.PaymentDate = flextime.FlexTime{Time: v}
 }
 
 func (o PaymentInformation) MarshalJSON() ([]byte, error) {

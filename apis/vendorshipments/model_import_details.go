@@ -13,6 +13,8 @@ package vendorshipments
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ImportDetails type satisfies the MappedNullable interface at compile time
@@ -29,7 +31,7 @@ type ImportDetails struct {
 	ImportContainers *string `json:"importContainers,omitempty"`
 	BillableWeight *Weight `json:"billableWeight,omitempty"`
 	// Date on which the shipment is expected to be shipped. This value should not be in the past and not more than 60 days out in the future.
-	EstimatedShipByDate *time.Time `json:"estimatedShipByDate,omitempty"`
+	EstimatedShipByDate *flextime.FlexTime `json:"estimatedShipByDate,omitempty"`
 	// Identification of the instructions on how specified item/carton/pallet should be handled.
 	HandlingInstructions *string `json:"handlingInstructions,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -220,12 +222,12 @@ func (o *ImportDetails) GetEstimatedShipByDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EstimatedShipByDate
+	return o.EstimatedShipByDate.Time
 }
 
 // GetEstimatedShipByDateOk returns a tuple with the EstimatedShipByDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ImportDetails) GetEstimatedShipByDateOk() (*time.Time, bool) {
+func (o *ImportDetails) GetEstimatedShipByDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EstimatedShipByDate) {
 		return nil, false
 	}
@@ -243,7 +245,7 @@ func (o *ImportDetails) HasEstimatedShipByDate() bool {
 
 // SetEstimatedShipByDate gets a reference to the given time.Time and assigns it to the EstimatedShipByDate field.
 func (o *ImportDetails) SetEstimatedShipByDate(v time.Time) {
-	o.EstimatedShipByDate = &v
+	o.EstimatedShipByDate = flextime.PtrFlexTime(v)
 }
 
 // GetHandlingInstructions returns the HandlingInstructions field value if set, zero value otherwise.

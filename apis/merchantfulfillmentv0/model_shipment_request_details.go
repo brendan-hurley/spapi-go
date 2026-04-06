@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ShipmentRequestDetails type satisfies the MappedNullable interface at compile time
@@ -31,9 +33,9 @@ type ShipmentRequestDetails struct {
 	PackageDimensions PackageDimensions `json:"PackageDimensions"`
 	Weight Weight `json:"Weight"`
 	// Date-time formatted timestamp.
-	MustArriveByDate *time.Time `json:"MustArriveByDate,omitempty"`
+	MustArriveByDate *flextime.FlexTime `json:"MustArriveByDate,omitempty"`
 	// Date-time formatted timestamp.
-	ShipDate *time.Time `json:"ShipDate,omitempty"`
+	ShipDate *flextime.FlexTime `json:"ShipDate,omitempty"`
 	ShippingServiceOptions ShippingServiceOptions `json:"ShippingServiceOptions"`
 	LabelCustomization *LabelCustomization `json:"LabelCustomization,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -222,12 +224,12 @@ func (o *ShipmentRequestDetails) GetMustArriveByDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.MustArriveByDate
+	return o.MustArriveByDate.Time
 }
 
 // GetMustArriveByDateOk returns a tuple with the MustArriveByDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ShipmentRequestDetails) GetMustArriveByDateOk() (*time.Time, bool) {
+func (o *ShipmentRequestDetails) GetMustArriveByDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.MustArriveByDate) {
 		return nil, false
 	}
@@ -245,7 +247,7 @@ func (o *ShipmentRequestDetails) HasMustArriveByDate() bool {
 
 // SetMustArriveByDate gets a reference to the given time.Time and assigns it to the MustArriveByDate field.
 func (o *ShipmentRequestDetails) SetMustArriveByDate(v time.Time) {
-	o.MustArriveByDate = &v
+	o.MustArriveByDate = flextime.PtrFlexTime(v)
 }
 
 // GetShipDate returns the ShipDate field value if set, zero value otherwise.
@@ -254,12 +256,12 @@ func (o *ShipmentRequestDetails) GetShipDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ShipDate
+	return o.ShipDate.Time
 }
 
 // GetShipDateOk returns a tuple with the ShipDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ShipmentRequestDetails) GetShipDateOk() (*time.Time, bool) {
+func (o *ShipmentRequestDetails) GetShipDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ShipDate) {
 		return nil, false
 	}
@@ -277,7 +279,7 @@ func (o *ShipmentRequestDetails) HasShipDate() bool {
 
 // SetShipDate gets a reference to the given time.Time and assigns it to the ShipDate field.
 func (o *ShipmentRequestDetails) SetShipDate(v time.Time) {
-	o.ShipDate = &v
+	o.ShipDate = flextime.PtrFlexTime(v)
 }
 
 // GetShippingServiceOptions returns the ShippingServiceOptions field value

@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the InboundPlanSummary type satisfies the MappedNullable interface at compile time
@@ -22,11 +24,11 @@ var _ MappedNullable = &InboundPlanSummary{}
 // InboundPlanSummary A light-weight inbound plan.
 type InboundPlanSummary struct {
 	// The time at which the inbound plan was created. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format with pattern `yyyy-MM-ddTHH:mm:ssZ`.
-	CreatedAt time.Time `json:"createdAt"`
+	CreatedAt flextime.FlexTime `json:"createdAt"`
 	// Identifier of an inbound plan.
 	InboundPlanId string `json:"inboundPlanId" validate:"regexp=^[a-zA-Z0-9-]*$"`
 	// The time at which the inbound plan was last updated. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format with pattern `yyyy-MM-ddTHH:mm:ssZ`.
-	LastUpdatedAt time.Time `json:"lastUpdatedAt"`
+	LastUpdatedAt flextime.FlexTime `json:"lastUpdatedAt"`
 	// A list of marketplace IDs.
 	MarketplaceIds []string `json:"marketplaceIds"`
 	// Human-readable name of the inbound plan.
@@ -45,9 +47,9 @@ type _InboundPlanSummary InboundPlanSummary
 // will change when the set of required properties is changed
 func NewInboundPlanSummary(createdAt time.Time, inboundPlanId string, lastUpdatedAt time.Time, marketplaceIds []string, name string, sourceAddress Address, status string) *InboundPlanSummary {
 	this := InboundPlanSummary{}
-	this.CreatedAt = createdAt
+	this.CreatedAt = flextime.FlexTime{Time: createdAt}
 	this.InboundPlanId = inboundPlanId
-	this.LastUpdatedAt = lastUpdatedAt
+	this.LastUpdatedAt = flextime.FlexTime{Time: lastUpdatedAt}
 	this.MarketplaceIds = marketplaceIds
 	this.Name = name
 	this.SourceAddress = sourceAddress
@@ -70,12 +72,12 @@ func (o *InboundPlanSummary) GetCreatedAt() time.Time {
 		return ret
 	}
 
-	return o.CreatedAt
+	return o.CreatedAt.Time
 }
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
-func (o *InboundPlanSummary) GetCreatedAtOk() (*time.Time, bool) {
+func (o *InboundPlanSummary) GetCreatedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -84,7 +86,7 @@ func (o *InboundPlanSummary) GetCreatedAtOk() (*time.Time, bool) {
 
 // SetCreatedAt sets field value
 func (o *InboundPlanSummary) SetCreatedAt(v time.Time) {
-	o.CreatedAt = v
+	o.CreatedAt = flextime.FlexTime{Time: v}
 }
 
 // GetInboundPlanId returns the InboundPlanId field value
@@ -118,12 +120,12 @@ func (o *InboundPlanSummary) GetLastUpdatedAt() time.Time {
 		return ret
 	}
 
-	return o.LastUpdatedAt
+	return o.LastUpdatedAt.Time
 }
 
 // GetLastUpdatedAtOk returns a tuple with the LastUpdatedAt field value
 // and a boolean to check if the value has been set.
-func (o *InboundPlanSummary) GetLastUpdatedAtOk() (*time.Time, bool) {
+func (o *InboundPlanSummary) GetLastUpdatedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -132,7 +134,7 @@ func (o *InboundPlanSummary) GetLastUpdatedAtOk() (*time.Time, bool) {
 
 // SetLastUpdatedAt sets field value
 func (o *InboundPlanSummary) SetLastUpdatedAt(v time.Time) {
-	o.LastUpdatedAt = v
+	o.LastUpdatedAt = flextime.FlexTime{Time: v}
 }
 
 // GetMarketplaceIds returns the MarketplaceIds field value

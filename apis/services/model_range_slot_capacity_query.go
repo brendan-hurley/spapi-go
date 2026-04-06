@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the RangeSlotCapacityQuery type satisfies the MappedNullable interface at compile time
@@ -24,9 +26,9 @@ type RangeSlotCapacityQuery struct {
 	// An array of capacity types which are being requested. Default value is `[SCHEDULED_CAPACITY]`.
 	CapacityTypes []CapacityType `json:"capacityTypes,omitempty"`
 	// Start date time from which the capacity slots are being requested in ISO 8601 format.
-	StartDateTime time.Time `json:"startDateTime"`
+	StartDateTime flextime.FlexTime `json:"startDateTime"`
 	// End date time up to which the capacity slots are being requested in ISO 8601 format.
-	EndDateTime time.Time `json:"endDateTime"`
+	EndDateTime flextime.FlexTime `json:"endDateTime"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -38,8 +40,8 @@ type _RangeSlotCapacityQuery RangeSlotCapacityQuery
 // will change when the set of required properties is changed
 func NewRangeSlotCapacityQuery(startDateTime time.Time, endDateTime time.Time) *RangeSlotCapacityQuery {
 	this := RangeSlotCapacityQuery{}
-	this.StartDateTime = startDateTime
-	this.EndDateTime = endDateTime
+	this.StartDateTime = flextime.FlexTime{Time: startDateTime}
+	this.EndDateTime = flextime.FlexTime{Time: endDateTime}
 	return &this
 }
 
@@ -90,12 +92,12 @@ func (o *RangeSlotCapacityQuery) GetStartDateTime() time.Time {
 		return ret
 	}
 
-	return o.StartDateTime
+	return o.StartDateTime.Time
 }
 
 // GetStartDateTimeOk returns a tuple with the StartDateTime field value
 // and a boolean to check if the value has been set.
-func (o *RangeSlotCapacityQuery) GetStartDateTimeOk() (*time.Time, bool) {
+func (o *RangeSlotCapacityQuery) GetStartDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -104,7 +106,7 @@ func (o *RangeSlotCapacityQuery) GetStartDateTimeOk() (*time.Time, bool) {
 
 // SetStartDateTime sets field value
 func (o *RangeSlotCapacityQuery) SetStartDateTime(v time.Time) {
-	o.StartDateTime = v
+	o.StartDateTime = flextime.FlexTime{Time: v}
 }
 
 // GetEndDateTime returns the EndDateTime field value
@@ -114,12 +116,12 @@ func (o *RangeSlotCapacityQuery) GetEndDateTime() time.Time {
 		return ret
 	}
 
-	return o.EndDateTime
+	return o.EndDateTime.Time
 }
 
 // GetEndDateTimeOk returns a tuple with the EndDateTime field value
 // and a boolean to check if the value has been set.
-func (o *RangeSlotCapacityQuery) GetEndDateTimeOk() (*time.Time, bool) {
+func (o *RangeSlotCapacityQuery) GetEndDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -128,7 +130,7 @@ func (o *RangeSlotCapacityQuery) GetEndDateTimeOk() (*time.Time, bool) {
 
 // SetEndDateTime sets field value
 func (o *RangeSlotCapacityQuery) SetEndDateTime(v time.Time) {
-	o.EndDateTime = v
+	o.EndDateTime = flextime.FlexTime{Time: v}
 }
 
 func (o RangeSlotCapacityQuery) MarshalJSON() ([]byte, error) {

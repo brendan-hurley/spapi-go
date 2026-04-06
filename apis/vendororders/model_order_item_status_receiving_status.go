@@ -13,6 +13,8 @@ package vendororders
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the OrderItemStatusReceivingStatus type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type OrderItemStatusReceivingStatus struct {
 	ReceiveStatus *string `json:"receiveStatus,omitempty"`
 	ReceivedQuantity *ItemQuantity `json:"receivedQuantity,omitempty"`
 	// The date when the most recent item was received at the buyer's warehouse. Must be in ISO-8601 date/time format.
-	LastReceiveDate *time.Time `json:"lastReceiveDate,omitempty"`
+	LastReceiveDate *flextime.FlexTime `json:"lastReceiveDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -117,12 +119,12 @@ func (o *OrderItemStatusReceivingStatus) GetLastReceiveDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.LastReceiveDate
+	return o.LastReceiveDate.Time
 }
 
 // GetLastReceiveDateOk returns a tuple with the LastReceiveDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrderItemStatusReceivingStatus) GetLastReceiveDateOk() (*time.Time, bool) {
+func (o *OrderItemStatusReceivingStatus) GetLastReceiveDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.LastReceiveDate) {
 		return nil, false
 	}
@@ -140,7 +142,7 @@ func (o *OrderItemStatusReceivingStatus) HasLastReceiveDate() bool {
 
 // SetLastReceiveDate gets a reference to the given time.Time and assigns it to the LastReceiveDate field.
 func (o *OrderItemStatusReceivingStatus) SetLastReceiveDate(v time.Time) {
-	o.LastReceiveDate = &v
+	o.LastReceiveDate = flextime.PtrFlexTime(v)
 }
 
 func (o OrderItemStatusReceivingStatus) MarshalJSON() ([]byte, error) {

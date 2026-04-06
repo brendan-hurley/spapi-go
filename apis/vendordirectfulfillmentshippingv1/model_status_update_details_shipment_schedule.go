@@ -13,6 +13,8 @@ package vendordirectfulfillmentshippingv1
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the StatusUpdateDetailsShipmentSchedule type satisfies the MappedNullable interface at compile time
@@ -21,11 +23,11 @@ var _ MappedNullable = &StatusUpdateDetailsShipmentSchedule{}
 // StatusUpdateDetailsShipmentSchedule Details for the scheduled delivery timeline for a shipment, including the estimated delivery date and time, as well as the start and end times of the appointment window for delivery.
 type StatusUpdateDetailsShipmentSchedule struct {
 	// Date on which the shipment is expected to reach the customer delivery location. This field is expected to be in ISO-8601 date/time format, with UTC time zone or UTC offset. For example, 2020-07-16T23:00:00Z or 2020-07-16T23:00:00+01:00.
-	EstimatedDeliveryDateTime *time.Time `json:"estimatedDeliveryDateTime,omitempty"`
+	EstimatedDeliveryDateTime *flextime.FlexTime `json:"estimatedDeliveryDateTime,omitempty"`
 	// This field indicates the date and time at the start of the appointment window scheduled to deliver the shipment. This field is expected to be in ISO-8601 date/time format, with UTC time zone or UTC offset. For example, 2020-07-16T23:00:00Z or 2020-07-16T23:00:00+01:00.
-	ApptWindowStartDateTime *time.Time `json:"apptWindowStartDateTime,omitempty"`
+	ApptWindowStartDateTime *flextime.FlexTime `json:"apptWindowStartDateTime,omitempty"`
 	// This field indicates the date and time at the end of the appointment window scheduled to deliver the shipment. This field is expected to be in ISO-8601 date/time format, with UTC time zone or UTC offset. For example, 2020-07-16T23:00:00Z or 2020-07-16T23:00:00+01:00.
-	ApptWindowEndDateTime *time.Time `json:"apptWindowEndDateTime,omitempty"`
+	ApptWindowEndDateTime *flextime.FlexTime `json:"apptWindowEndDateTime,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -54,12 +56,12 @@ func (o *StatusUpdateDetailsShipmentSchedule) GetEstimatedDeliveryDateTime() tim
 		var ret time.Time
 		return ret
 	}
-	return *o.EstimatedDeliveryDateTime
+	return o.EstimatedDeliveryDateTime.Time
 }
 
 // GetEstimatedDeliveryDateTimeOk returns a tuple with the EstimatedDeliveryDateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *StatusUpdateDetailsShipmentSchedule) GetEstimatedDeliveryDateTimeOk() (*time.Time, bool) {
+func (o *StatusUpdateDetailsShipmentSchedule) GetEstimatedDeliveryDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EstimatedDeliveryDateTime) {
 		return nil, false
 	}
@@ -77,7 +79,7 @@ func (o *StatusUpdateDetailsShipmentSchedule) HasEstimatedDeliveryDateTime() boo
 
 // SetEstimatedDeliveryDateTime gets a reference to the given time.Time and assigns it to the EstimatedDeliveryDateTime field.
 func (o *StatusUpdateDetailsShipmentSchedule) SetEstimatedDeliveryDateTime(v time.Time) {
-	o.EstimatedDeliveryDateTime = &v
+	o.EstimatedDeliveryDateTime = flextime.PtrFlexTime(v)
 }
 
 // GetApptWindowStartDateTime returns the ApptWindowStartDateTime field value if set, zero value otherwise.
@@ -86,12 +88,12 @@ func (o *StatusUpdateDetailsShipmentSchedule) GetApptWindowStartDateTime() time.
 		var ret time.Time
 		return ret
 	}
-	return *o.ApptWindowStartDateTime
+	return o.ApptWindowStartDateTime.Time
 }
 
 // GetApptWindowStartDateTimeOk returns a tuple with the ApptWindowStartDateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *StatusUpdateDetailsShipmentSchedule) GetApptWindowStartDateTimeOk() (*time.Time, bool) {
+func (o *StatusUpdateDetailsShipmentSchedule) GetApptWindowStartDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ApptWindowStartDateTime) {
 		return nil, false
 	}
@@ -109,7 +111,7 @@ func (o *StatusUpdateDetailsShipmentSchedule) HasApptWindowStartDateTime() bool 
 
 // SetApptWindowStartDateTime gets a reference to the given time.Time and assigns it to the ApptWindowStartDateTime field.
 func (o *StatusUpdateDetailsShipmentSchedule) SetApptWindowStartDateTime(v time.Time) {
-	o.ApptWindowStartDateTime = &v
+	o.ApptWindowStartDateTime = flextime.PtrFlexTime(v)
 }
 
 // GetApptWindowEndDateTime returns the ApptWindowEndDateTime field value if set, zero value otherwise.
@@ -118,12 +120,12 @@ func (o *StatusUpdateDetailsShipmentSchedule) GetApptWindowEndDateTime() time.Ti
 		var ret time.Time
 		return ret
 	}
-	return *o.ApptWindowEndDateTime
+	return o.ApptWindowEndDateTime.Time
 }
 
 // GetApptWindowEndDateTimeOk returns a tuple with the ApptWindowEndDateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *StatusUpdateDetailsShipmentSchedule) GetApptWindowEndDateTimeOk() (*time.Time, bool) {
+func (o *StatusUpdateDetailsShipmentSchedule) GetApptWindowEndDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ApptWindowEndDateTime) {
 		return nil, false
 	}
@@ -141,7 +143,7 @@ func (o *StatusUpdateDetailsShipmentSchedule) HasApptWindowEndDateTime() bool {
 
 // SetApptWindowEndDateTime gets a reference to the given time.Time and assigns it to the ApptWindowEndDateTime field.
 func (o *StatusUpdateDetailsShipmentSchedule) SetApptWindowEndDateTime(v time.Time) {
-	o.ApptWindowEndDateTime = &v
+	o.ApptWindowEndDateTime = flextime.PtrFlexTime(v)
 }
 
 func (o StatusUpdateDetailsShipmentSchedule) MarshalJSON() ([]byte, error) {

@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ReplenishmentOrder type satisfies the MappedNullable interface at compile time
@@ -22,9 +24,9 @@ var _ MappedNullable = &ReplenishmentOrder{}
 // ReplenishmentOrder Represents an AWD replenishment order.
 type ReplenishmentOrder struct {
 	// Date on which this replenishment order was confirmed.
-	ConfirmedOn *time.Time `json:"confirmedOn,omitempty"`
+	ConfirmedOn *flextime.FlexTime `json:"confirmedOn,omitempty"`
 	// Date on which this replenishment order was created.
-	CreatedAt *time.Time `json:"createdAt,omitempty"`
+	CreatedAt *flextime.FlexTime `json:"createdAt,omitempty"`
 	// Distribution errors associated with the order related to the products or packages to replenish. This field will be populated if the order has products or packages which failed validation.
 	DistributionIneligibleReasons []DistributionIneligibleReason `json:"distributionIneligibleReasons,omitempty"`
 	// List of product units that are eligible for replenishment.
@@ -39,7 +41,7 @@ type ReplenishmentOrder struct {
 	// Outbound product units that are shipped after the execution has completed post confirmation.
 	ShippedProducts []DistributionProduct `json:"shippedProducts,omitempty"`
 	// Date on which this replenishment order was last updated.
-	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	UpdatedAt *flextime.FlexTime `json:"updatedAt,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -71,12 +73,12 @@ func (o *ReplenishmentOrder) GetConfirmedOn() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ConfirmedOn
+	return o.ConfirmedOn.Time
 }
 
 // GetConfirmedOnOk returns a tuple with the ConfirmedOn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ReplenishmentOrder) GetConfirmedOnOk() (*time.Time, bool) {
+func (o *ReplenishmentOrder) GetConfirmedOnOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ConfirmedOn) {
 		return nil, false
 	}
@@ -94,7 +96,7 @@ func (o *ReplenishmentOrder) HasConfirmedOn() bool {
 
 // SetConfirmedOn gets a reference to the given time.Time and assigns it to the ConfirmedOn field.
 func (o *ReplenishmentOrder) SetConfirmedOn(v time.Time) {
-	o.ConfirmedOn = &v
+	o.ConfirmedOn = flextime.PtrFlexTime(v)
 }
 
 // GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
@@ -103,12 +105,12 @@ func (o *ReplenishmentOrder) GetCreatedAt() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.CreatedAt
+	return o.CreatedAt.Time
 }
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ReplenishmentOrder) GetCreatedAtOk() (*time.Time, bool) {
+func (o *ReplenishmentOrder) GetCreatedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
@@ -126,7 +128,7 @@ func (o *ReplenishmentOrder) HasCreatedAt() bool {
 
 // SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
 func (o *ReplenishmentOrder) SetCreatedAt(v time.Time) {
-	o.CreatedAt = &v
+	o.CreatedAt = flextime.PtrFlexTime(v)
 }
 
 // GetDistributionIneligibleReasons returns the DistributionIneligibleReasons field value if set, zero value otherwise.
@@ -335,12 +337,12 @@ func (o *ReplenishmentOrder) GetUpdatedAt() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.UpdatedAt
+	return o.UpdatedAt.Time
 }
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ReplenishmentOrder) GetUpdatedAtOk() (*time.Time, bool) {
+func (o *ReplenishmentOrder) GetUpdatedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
@@ -358,7 +360,7 @@ func (o *ReplenishmentOrder) HasUpdatedAt() bool {
 
 // SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
 func (o *ReplenishmentOrder) SetUpdatedAt(v time.Time) {
-	o.UpdatedAt = &v
+	o.UpdatedAt = flextime.PtrFlexTime(v)
 }
 
 func (o ReplenishmentOrder) MarshalJSON() ([]byte, error) {

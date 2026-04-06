@@ -13,6 +13,8 @@ package messaging
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the CreateWarrantyRequest type satisfies the MappedNullable interface at compile time
@@ -23,9 +25,9 @@ type CreateWarrantyRequest struct {
 	// Attachments to include in the message to the buyer. If any text is included in the attachment, the text must be written in the buyer's language of preference, which can be retrieved from the GetAttributes operation.
 	Attachments []Attachment `json:"attachments,omitempty"`
 	// The start date of the warranty coverage to include in the message to the buyer.
-	CoverageStartDate *time.Time `json:"coverageStartDate,omitempty"`
+	CoverageStartDate *flextime.FlexTime `json:"coverageStartDate,omitempty"`
 	// The end date of the warranty coverage to include in the message to the buyer.
-	CoverageEndDate *time.Time `json:"coverageEndDate,omitempty"`
+	CoverageEndDate *flextime.FlexTime `json:"coverageEndDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -86,12 +88,12 @@ func (o *CreateWarrantyRequest) GetCoverageStartDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.CoverageStartDate
+	return o.CoverageStartDate.Time
 }
 
 // GetCoverageStartDateOk returns a tuple with the CoverageStartDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateWarrantyRequest) GetCoverageStartDateOk() (*time.Time, bool) {
+func (o *CreateWarrantyRequest) GetCoverageStartDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.CoverageStartDate) {
 		return nil, false
 	}
@@ -109,7 +111,7 @@ func (o *CreateWarrantyRequest) HasCoverageStartDate() bool {
 
 // SetCoverageStartDate gets a reference to the given time.Time and assigns it to the CoverageStartDate field.
 func (o *CreateWarrantyRequest) SetCoverageStartDate(v time.Time) {
-	o.CoverageStartDate = &v
+	o.CoverageStartDate = flextime.PtrFlexTime(v)
 }
 
 // GetCoverageEndDate returns the CoverageEndDate field value if set, zero value otherwise.
@@ -118,12 +120,12 @@ func (o *CreateWarrantyRequest) GetCoverageEndDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.CoverageEndDate
+	return o.CoverageEndDate.Time
 }
 
 // GetCoverageEndDateOk returns a tuple with the CoverageEndDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateWarrantyRequest) GetCoverageEndDateOk() (*time.Time, bool) {
+func (o *CreateWarrantyRequest) GetCoverageEndDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.CoverageEndDate) {
 		return nil, false
 	}
@@ -141,7 +143,7 @@ func (o *CreateWarrantyRequest) HasCoverageEndDate() bool {
 
 // SetCoverageEndDate gets a reference to the given time.Time and assigns it to the CoverageEndDate field.
 func (o *CreateWarrantyRequest) SetCoverageEndDate(v time.Time) {
-	o.CoverageEndDate = &v
+	o.CoverageEndDate = flextime.PtrFlexTime(v)
 }
 
 func (o CreateWarrantyRequest) MarshalJSON() ([]byte, error) {

@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TDSReimbursementEvent type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &TDSReimbursementEvent{}
 // TDSReimbursementEvent An event related to a Tax-Deducted-at-Source (TDS) reimbursement.
 type TDSReimbursementEvent struct {
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	PostedDate *time.Time `json:"PostedDate,omitempty"`
+	PostedDate *flextime.FlexTime `json:"PostedDate,omitempty"`
 	// The Tax-Deducted-at-Source (TDS) identifier.
 	TDSOrderId *string `json:"TDSOrderId,omitempty"`
 	ReimbursedAmount *Currency `json:"ReimbursedAmount,omitempty"`
@@ -53,12 +55,12 @@ func (o *TDSReimbursementEvent) GetPostedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PostedDate
+	return o.PostedDate.Time
 }
 
 // GetPostedDateOk returns a tuple with the PostedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TDSReimbursementEvent) GetPostedDateOk() (*time.Time, bool) {
+func (o *TDSReimbursementEvent) GetPostedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PostedDate) {
 		return nil, false
 	}
@@ -76,7 +78,7 @@ func (o *TDSReimbursementEvent) HasPostedDate() bool {
 
 // SetPostedDate gets a reference to the given time.Time and assigns it to the PostedDate field.
 func (o *TDSReimbursementEvent) SetPostedDate(v time.Time) {
-	o.PostedDate = &v
+	o.PostedDate = flextime.PtrFlexTime(v)
 }
 
 // GetTDSOrderId returns the TDSOrderId field value if set, zero value otherwise.

@@ -13,6 +13,8 @@ package fbainventory
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the InventorySummary type satisfies the MappedNullable interface at compile time
@@ -30,7 +32,7 @@ type InventorySummary struct {
 	Condition *string `json:"condition,omitempty"`
 	InventoryDetails *InventoryDetails `json:"inventoryDetails,omitempty"`
 	// The date and time that any quantity was last updated.
-	LastUpdatedTime *time.Time `json:"lastUpdatedTime,omitempty"`
+	LastUpdatedTime *flextime.FlexTime `json:"lastUpdatedTime,omitempty"`
 	// The localized language product title of the item within the specific marketplace.
 	ProductName *string `json:"productName,omitempty"`
 	// The total number of units in an inbound shipment or in Amazon fulfillment centers.
@@ -225,12 +227,12 @@ func (o *InventorySummary) GetLastUpdatedTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.LastUpdatedTime
+	return o.LastUpdatedTime.Time
 }
 
 // GetLastUpdatedTimeOk returns a tuple with the LastUpdatedTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InventorySummary) GetLastUpdatedTimeOk() (*time.Time, bool) {
+func (o *InventorySummary) GetLastUpdatedTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.LastUpdatedTime) {
 		return nil, false
 	}
@@ -248,7 +250,7 @@ func (o *InventorySummary) HasLastUpdatedTime() bool {
 
 // SetLastUpdatedTime gets a reference to the given time.Time and assigns it to the LastUpdatedTime field.
 func (o *InventorySummary) SetLastUpdatedTime(v time.Time) {
-	o.LastUpdatedTime = &v
+	o.LastUpdatedTime = flextime.PtrFlexTime(v)
 }
 
 // GetProductName returns the ProductName field value if set, zero value otherwise.

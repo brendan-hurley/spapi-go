@@ -15,6 +15,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the OneClickShipmentRequest type satisfies the MappedNullable interface at compile time
@@ -26,7 +28,7 @@ type OneClickShipmentRequest struct {
 	ShipFrom Address `json:"shipFrom"`
 	ReturnTo *Address `json:"returnTo,omitempty"`
 	// The ship date and time (the requested pickup). This defaults to the current date and time.
-	ShipDate *time.Time `json:"shipDate,omitempty"`
+	ShipDate *flextime.FlexTime `json:"shipDate,omitempty"`
 	GoodsOwner *GoodsOwner `json:"goodsOwner,omitempty"`
 	// A list of packages to be shipped through a shipping service offering.
 	Packages []Package `json:"packages"`
@@ -160,12 +162,12 @@ func (o *OneClickShipmentRequest) GetShipDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ShipDate
+	return o.ShipDate.Time
 }
 
 // GetShipDateOk returns a tuple with the ShipDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OneClickShipmentRequest) GetShipDateOk() (*time.Time, bool) {
+func (o *OneClickShipmentRequest) GetShipDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ShipDate) {
 		return nil, false
 	}
@@ -183,7 +185,7 @@ func (o *OneClickShipmentRequest) HasShipDate() bool {
 
 // SetShipDate gets a reference to the given time.Time and assigns it to the ShipDate field.
 func (o *OneClickShipmentRequest) SetShipDate(v time.Time) {
-	o.ShipDate = &v
+	o.ShipDate = flextime.PtrFlexTime(v)
 }
 
 // GetGoodsOwner returns the GoodsOwner field value if set, zero value otherwise.

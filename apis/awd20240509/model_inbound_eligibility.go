@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the InboundEligibility type satisfies the MappedNullable interface at compile time
@@ -26,7 +28,7 @@ type InboundEligibility struct {
 	// Details on SKU eligibility for each inbound package.
 	PackagesToInbound []SkuEligibility `json:"packagesToInbound"`
 	// Timestamp when the eligibility check is performed.
-	PreviewedAt time.Time `json:"previewedAt"`
+	PreviewedAt flextime.FlexTime `json:"previewedAt"`
 	Status InboundEligibilityStatus `json:"status"`
 	AdditionalProperties map[string]interface{}
 }
@@ -40,7 +42,7 @@ type _InboundEligibility InboundEligibility
 func NewInboundEligibility(packagesToInbound []SkuEligibility, previewedAt time.Time, status InboundEligibilityStatus) *InboundEligibility {
 	this := InboundEligibility{}
 	this.PackagesToInbound = packagesToInbound
-	this.PreviewedAt = previewedAt
+	this.PreviewedAt = flextime.FlexTime{Time: previewedAt}
 	this.Status = status
 	return &this
 }
@@ -116,12 +118,12 @@ func (o *InboundEligibility) GetPreviewedAt() time.Time {
 		return ret
 	}
 
-	return o.PreviewedAt
+	return o.PreviewedAt.Time
 }
 
 // GetPreviewedAtOk returns a tuple with the PreviewedAt field value
 // and a boolean to check if the value has been set.
-func (o *InboundEligibility) GetPreviewedAtOk() (*time.Time, bool) {
+func (o *InboundEligibility) GetPreviewedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -130,7 +132,7 @@ func (o *InboundEligibility) GetPreviewedAtOk() (*time.Time, bool) {
 
 // SetPreviewedAt sets field value
 func (o *InboundEligibility) SetPreviewedAt(v time.Time) {
-	o.PreviewedAt = v
+	o.PreviewedAt = flextime.FlexTime{Time: v}
 }
 
 // GetStatus returns the Status field value

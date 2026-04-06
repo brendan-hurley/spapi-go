@@ -13,6 +13,8 @@ package fulfillmentoutbound20200701
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the DeliveryOffer type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &DeliveryOffer{}
 // DeliveryOffer An available offer for delivery of a product.
 type DeliveryOffer struct {
 	// Date timestamp
-	ExpiresAt *time.Time `json:"expiresAt,omitempty"`
+	ExpiresAt *flextime.FlexTime `json:"expiresAt,omitempty"`
 	DateRange *DateRange `json:"dateRange,omitempty"`
 	Policy *DeliveryPolicy `json:"policy,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -52,12 +54,12 @@ func (o *DeliveryOffer) GetExpiresAt() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ExpiresAt
+	return o.ExpiresAt.Time
 }
 
 // GetExpiresAtOk returns a tuple with the ExpiresAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DeliveryOffer) GetExpiresAtOk() (*time.Time, bool) {
+func (o *DeliveryOffer) GetExpiresAtOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ExpiresAt) {
 		return nil, false
 	}
@@ -75,7 +77,7 @@ func (o *DeliveryOffer) HasExpiresAt() bool {
 
 // SetExpiresAt gets a reference to the given time.Time and assigns it to the ExpiresAt field.
 func (o *DeliveryOffer) SetExpiresAt(v time.Time) {
-	o.ExpiresAt = &v
+	o.ExpiresAt = flextime.PtrFlexTime(v)
 }
 
 // GetDateRange returns the DateRange field value if set, zero value otherwise.

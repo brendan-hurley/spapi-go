@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the FailedAdhocDisbursementEvent type satisfies the MappedNullable interface at compile time
@@ -32,7 +34,7 @@ type FailedAdhocDisbursementEvent struct {
 	Status *string `json:"Status,omitempty"`
 	TransferAmount *Currency `json:"TransferAmount,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	PostedDate *time.Time `json:"PostedDate,omitempty"`
+	PostedDate *flextime.FlexTime `json:"PostedDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -253,12 +255,12 @@ func (o *FailedAdhocDisbursementEvent) GetPostedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PostedDate
+	return o.PostedDate.Time
 }
 
 // GetPostedDateOk returns a tuple with the PostedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FailedAdhocDisbursementEvent) GetPostedDateOk() (*time.Time, bool) {
+func (o *FailedAdhocDisbursementEvent) GetPostedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PostedDate) {
 		return nil, false
 	}
@@ -276,7 +278,7 @@ func (o *FailedAdhocDisbursementEvent) HasPostedDate() bool {
 
 // SetPostedDate gets a reference to the given time.Time and assigns it to the PostedDate field.
 func (o *FailedAdhocDisbursementEvent) SetPostedDate(v time.Time) {
-	o.PostedDate = &v
+	o.PostedDate = flextime.PtrFlexTime(v)
 }
 
 func (o FailedAdhocDisbursementEvent) MarshalJSON() ([]byte, error) {

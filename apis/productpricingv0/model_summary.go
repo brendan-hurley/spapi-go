@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Summary type satisfies the MappedNullable interface at compile time
@@ -37,7 +39,7 @@ type Summary struct {
 	// A list that contains the total number of offers that are eligible for the Buy Box for the given conditions and fulfillment channels.
 	BuyBoxEligibleOffers []OfferCountType `json:"BuyBoxEligibleOffers,omitempty"`
 	// When the status is ActiveButTooSoonForProcessing, this is the time when the offers will be available for processing.
-	OffersAvailableTime *time.Time `json:"OffersAvailableTime,omitempty"`
+	OffersAvailableTime *flextime.FlexTime `json:"OffersAvailableTime,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -347,12 +349,12 @@ func (o *Summary) GetOffersAvailableTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.OffersAvailableTime
+	return o.OffersAvailableTime.Time
 }
 
 // GetOffersAvailableTimeOk returns a tuple with the OffersAvailableTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Summary) GetOffersAvailableTimeOk() (*time.Time, bool) {
+func (o *Summary) GetOffersAvailableTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.OffersAvailableTime) {
 		return nil, false
 	}
@@ -370,7 +372,7 @@ func (o *Summary) HasOffersAvailableTime() bool {
 
 // SetOffersAvailableTime gets a reference to the given time.Time and assigns it to the OffersAvailableTime field.
 func (o *Summary) SetOffersAvailableTime(v time.Time) {
-	o.OffersAvailableTime = &v
+	o.OffersAvailableTime = flextime.PtrFlexTime(v)
 }
 
 func (o Summary) MarshalJSON() ([]byte, error) {

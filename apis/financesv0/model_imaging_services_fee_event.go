@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ImagingServicesFeeEvent type satisfies the MappedNullable interface at compile time
@@ -25,7 +27,7 @@ type ImagingServicesFeeEvent struct {
 	// The Amazon Standard Identification Number (ASIN) of the item for which the imaging service was requested.
 	ASIN *string `json:"ASIN,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	PostedDate *time.Time `json:"PostedDate,omitempty"`
+	PostedDate *flextime.FlexTime `json:"PostedDate,omitempty"`
 	// A list of fee component information.
 	FeeList []FeeComponent `json:"FeeList,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -120,12 +122,12 @@ func (o *ImagingServicesFeeEvent) GetPostedDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PostedDate
+	return o.PostedDate.Time
 }
 
 // GetPostedDateOk returns a tuple with the PostedDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ImagingServicesFeeEvent) GetPostedDateOk() (*time.Time, bool) {
+func (o *ImagingServicesFeeEvent) GetPostedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PostedDate) {
 		return nil, false
 	}
@@ -143,7 +145,7 @@ func (o *ImagingServicesFeeEvent) HasPostedDate() bool {
 
 // SetPostedDate gets a reference to the given time.Time and assigns it to the PostedDate field.
 func (o *ImagingServicesFeeEvent) SetPostedDate(v time.Time) {
-	o.PostedDate = &v
+	o.PostedDate = flextime.PtrFlexTime(v)
 }
 
 // GetFeeList returns the FeeList field value if set, zero value otherwise.

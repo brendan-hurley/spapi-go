@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ItemSummaryByMarketplace type satisfies the MappedNullable interface at compile time
@@ -36,9 +38,9 @@ type ItemSummaryByMarketplace struct {
 	// The name or title associated with an Amazon catalog item.
 	ItemName *string `json:"itemName,omitempty"`
 	// The date the listings item was created in ISO 8601 format.
-	CreatedDate time.Time `json:"createdDate"`
+	CreatedDate flextime.FlexTime `json:"createdDate"`
 	// The date the listings item was last updated in ISO 8601 format.
-	LastUpdatedDate time.Time `json:"lastUpdatedDate"`
+	LastUpdatedDate flextime.FlexTime `json:"lastUpdatedDate"`
 	MainImage *ItemImage `json:"mainImage,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -54,8 +56,8 @@ func NewItemSummaryByMarketplace(marketplaceId string, productType string, statu
 	this.MarketplaceId = marketplaceId
 	this.ProductType = productType
 	this.Status = status
-	this.CreatedDate = createdDate
-	this.LastUpdatedDate = lastUpdatedDate
+	this.CreatedDate = flextime.FlexTime{Time: createdDate}
+	this.LastUpdatedDate = flextime.FlexTime{Time: lastUpdatedDate}
 	return &this
 }
 
@@ -274,12 +276,12 @@ func (o *ItemSummaryByMarketplace) GetCreatedDate() time.Time {
 		return ret
 	}
 
-	return o.CreatedDate
+	return o.CreatedDate.Time
 }
 
 // GetCreatedDateOk returns a tuple with the CreatedDate field value
 // and a boolean to check if the value has been set.
-func (o *ItemSummaryByMarketplace) GetCreatedDateOk() (*time.Time, bool) {
+func (o *ItemSummaryByMarketplace) GetCreatedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -288,7 +290,7 @@ func (o *ItemSummaryByMarketplace) GetCreatedDateOk() (*time.Time, bool) {
 
 // SetCreatedDate sets field value
 func (o *ItemSummaryByMarketplace) SetCreatedDate(v time.Time) {
-	o.CreatedDate = v
+	o.CreatedDate = flextime.FlexTime{Time: v}
 }
 
 // GetLastUpdatedDate returns the LastUpdatedDate field value
@@ -298,12 +300,12 @@ func (o *ItemSummaryByMarketplace) GetLastUpdatedDate() time.Time {
 		return ret
 	}
 
-	return o.LastUpdatedDate
+	return o.LastUpdatedDate.Time
 }
 
 // GetLastUpdatedDateOk returns a tuple with the LastUpdatedDate field value
 // and a boolean to check if the value has been set.
-func (o *ItemSummaryByMarketplace) GetLastUpdatedDateOk() (*time.Time, bool) {
+func (o *ItemSummaryByMarketplace) GetLastUpdatedDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -312,7 +314,7 @@ func (o *ItemSummaryByMarketplace) GetLastUpdatedDateOk() (*time.Time, bool) {
 
 // SetLastUpdatedDate sets field value
 func (o *ItemSummaryByMarketplace) SetLastUpdatedDate(v time.Time) {
-	o.LastUpdatedDate = v
+	o.LastUpdatedDate = flextime.FlexTime{Time: v}
 }
 
 // GetMainImage returns the MainImage field value if set, zero value otherwise.

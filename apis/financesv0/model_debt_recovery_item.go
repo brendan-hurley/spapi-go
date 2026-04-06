@@ -13,6 +13,8 @@ package financesv0
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the DebtRecoveryItem type satisfies the MappedNullable interface at compile time
@@ -23,9 +25,9 @@ type DebtRecoveryItem struct {
 	RecoveryAmount *Currency `json:"RecoveryAmount,omitempty"`
 	OriginalAmount *Currency `json:"OriginalAmount,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	GroupBeginDate *time.Time `json:"GroupBeginDate,omitempty"`
+	GroupBeginDate *flextime.FlexTime `json:"GroupBeginDate,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	GroupEndDate *time.Time `json:"GroupEndDate,omitempty"`
+	GroupEndDate *flextime.FlexTime `json:"GroupEndDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -118,12 +120,12 @@ func (o *DebtRecoveryItem) GetGroupBeginDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.GroupBeginDate
+	return o.GroupBeginDate.Time
 }
 
 // GetGroupBeginDateOk returns a tuple with the GroupBeginDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DebtRecoveryItem) GetGroupBeginDateOk() (*time.Time, bool) {
+func (o *DebtRecoveryItem) GetGroupBeginDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.GroupBeginDate) {
 		return nil, false
 	}
@@ -141,7 +143,7 @@ func (o *DebtRecoveryItem) HasGroupBeginDate() bool {
 
 // SetGroupBeginDate gets a reference to the given time.Time and assigns it to the GroupBeginDate field.
 func (o *DebtRecoveryItem) SetGroupBeginDate(v time.Time) {
-	o.GroupBeginDate = &v
+	o.GroupBeginDate = flextime.PtrFlexTime(v)
 }
 
 // GetGroupEndDate returns the GroupEndDate field value if set, zero value otherwise.
@@ -150,12 +152,12 @@ func (o *DebtRecoveryItem) GetGroupEndDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.GroupEndDate
+	return o.GroupEndDate.Time
 }
 
 // GetGroupEndDateOk returns a tuple with the GroupEndDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DebtRecoveryItem) GetGroupEndDateOk() (*time.Time, bool) {
+func (o *DebtRecoveryItem) GetGroupEndDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.GroupEndDate) {
 		return nil, false
 	}
@@ -173,7 +175,7 @@ func (o *DebtRecoveryItem) HasGroupEndDate() bool {
 
 // SetGroupEndDate gets a reference to the given time.Time and assigns it to the GroupEndDate field.
 func (o *DebtRecoveryItem) SetGroupEndDate(v time.Time) {
-	o.GroupEndDate = &v
+	o.GroupEndDate = flextime.PtrFlexTime(v)
 }
 
 func (o DebtRecoveryItem) MarshalJSON() ([]byte, error) {

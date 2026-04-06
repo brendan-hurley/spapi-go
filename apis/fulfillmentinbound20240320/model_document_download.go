@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the DocumentDownload type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type DocumentDownload struct {
 	// The type of download. Possible values: `URL`.
 	DownloadType string `json:"downloadType"`
 	// The URI's expiration time. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format with pattern `yyyy-MM-ddTHH:mm:ss.sssZ`.
-	Expiration *time.Time `json:"expiration,omitempty"`
+	Expiration *flextime.FlexTime `json:"expiration,omitempty"`
 	// Uniform resource identifier to identify where the document is located.
 	Uri string `json:"uri"`
 	AdditionalProperties map[string]interface{}
@@ -81,12 +83,12 @@ func (o *DocumentDownload) GetExpiration() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.Expiration
+	return o.Expiration.Time
 }
 
 // GetExpirationOk returns a tuple with the Expiration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DocumentDownload) GetExpirationOk() (*time.Time, bool) {
+func (o *DocumentDownload) GetExpirationOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.Expiration) {
 		return nil, false
 	}
@@ -104,7 +106,7 @@ func (o *DocumentDownload) HasExpiration() bool {
 
 // SetExpiration gets a reference to the given time.Time and assigns it to the Expiration field.
 func (o *DocumentDownload) SetExpiration(v time.Time) {
-	o.Expiration = &v
+	o.Expiration = flextime.PtrFlexTime(v)
 }
 
 // GetUri returns the Uri field value

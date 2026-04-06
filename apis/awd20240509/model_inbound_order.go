@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the InboundOrder type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ var _ MappedNullable = &InboundOrder{}
 // InboundOrder Represents an AWD inbound order.
 type InboundOrder struct {
 	// Date when this order was created.
-	CreatedAt time.Time `json:"createdAt"`
+	CreatedAt flextime.FlexTime `json:"createdAt"`
 	DestinationDetails *DestinationDetails `json:"destinationDetails,omitempty"`
 	// Reference ID that can be used to correlate the order with partner resources.
 	ExternalReferenceId *string `json:"externalReferenceId,omitempty"`
@@ -34,7 +36,7 @@ type InboundOrder struct {
 	PackagesToInbound []DistributionPackageQuantity `json:"packagesToInbound"`
 	Preferences *InboundPreferences `json:"preferences,omitempty"`
 	// Date when this order was last updated.
-	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	UpdatedAt *flextime.FlexTime `json:"updatedAt,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -46,7 +48,7 @@ type _InboundOrder InboundOrder
 // will change when the set of required properties is changed
 func NewInboundOrder(createdAt time.Time, orderId string, orderStatus InboundStatus, originAddress Address, packagesToInbound []DistributionPackageQuantity) *InboundOrder {
 	this := InboundOrder{}
-	this.CreatedAt = createdAt
+	this.CreatedAt = flextime.FlexTime{Time: createdAt}
 	this.OrderId = orderId
 	this.OrderStatus = orderStatus
 	this.OriginAddress = originAddress
@@ -69,12 +71,12 @@ func (o *InboundOrder) GetCreatedAt() time.Time {
 		return ret
 	}
 
-	return o.CreatedAt
+	return o.CreatedAt.Time
 }
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
-func (o *InboundOrder) GetCreatedAtOk() (*time.Time, bool) {
+func (o *InboundOrder) GetCreatedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -83,7 +85,7 @@ func (o *InboundOrder) GetCreatedAtOk() (*time.Time, bool) {
 
 // SetCreatedAt sets field value
 func (o *InboundOrder) SetCreatedAt(v time.Time) {
-	o.CreatedAt = v
+	o.CreatedAt = flextime.FlexTime{Time: v}
 }
 
 // GetDestinationDetails returns the DestinationDetails field value if set, zero value otherwise.
@@ -284,12 +286,12 @@ func (o *InboundOrder) GetUpdatedAt() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.UpdatedAt
+	return o.UpdatedAt.Time
 }
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InboundOrder) GetUpdatedAtOk() (*time.Time, bool) {
+func (o *InboundOrder) GetUpdatedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
@@ -307,7 +309,7 @@ func (o *InboundOrder) HasUpdatedAt() bool {
 
 // SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
 func (o *InboundOrder) SetUpdatedAt(v time.Time) {
-	o.UpdatedAt = &v
+	o.UpdatedAt = flextime.PtrFlexTime(v)
 }
 
 func (o InboundOrder) MarshalJSON() ([]byte, error) {

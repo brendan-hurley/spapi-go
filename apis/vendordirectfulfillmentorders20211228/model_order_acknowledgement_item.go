@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the OrderAcknowledgementItem type satisfies the MappedNullable interface at compile time
@@ -26,7 +28,7 @@ type OrderAcknowledgementItem struct {
 	// The vendor's order number for this order.
 	VendorOrderNumber string `json:"vendorOrderNumber"`
 	// The date and time when the order is acknowledged, in ISO-8601 date/time format. For example: 2018-07-16T23:00:00Z / 2018-07-16T23:00:00-05:00 / 2018-07-16T23:00:00-08:00.
-	AcknowledgementDate time.Time `json:"acknowledgementDate"`
+	AcknowledgementDate flextime.FlexTime `json:"acknowledgementDate"`
 	AcknowledgementStatus AcknowledgementStatus `json:"acknowledgementStatus"`
 	SellingParty PartyIdentification `json:"sellingParty"`
 	ShipFromParty PartyIdentification `json:"shipFromParty"`
@@ -45,7 +47,7 @@ func NewOrderAcknowledgementItem(purchaseOrderNumber string, vendorOrderNumber s
 	this := OrderAcknowledgementItem{}
 	this.PurchaseOrderNumber = purchaseOrderNumber
 	this.VendorOrderNumber = vendorOrderNumber
-	this.AcknowledgementDate = acknowledgementDate
+	this.AcknowledgementDate = flextime.FlexTime{Time: acknowledgementDate}
 	this.AcknowledgementStatus = acknowledgementStatus
 	this.SellingParty = sellingParty
 	this.ShipFromParty = shipFromParty
@@ -116,12 +118,12 @@ func (o *OrderAcknowledgementItem) GetAcknowledgementDate() time.Time {
 		return ret
 	}
 
-	return o.AcknowledgementDate
+	return o.AcknowledgementDate.Time
 }
 
 // GetAcknowledgementDateOk returns a tuple with the AcknowledgementDate field value
 // and a boolean to check if the value has been set.
-func (o *OrderAcknowledgementItem) GetAcknowledgementDateOk() (*time.Time, bool) {
+func (o *OrderAcknowledgementItem) GetAcknowledgementDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -130,7 +132,7 @@ func (o *OrderAcknowledgementItem) GetAcknowledgementDateOk() (*time.Time, bool)
 
 // SetAcknowledgementDate sets field value
 func (o *OrderAcknowledgementItem) SetAcknowledgementDate(v time.Time) {
-	o.AcknowledgementDate = v
+	o.AcknowledgementDate = flextime.FlexTime{Time: v}
 }
 
 // GetAcknowledgementStatus returns the AcknowledgementStatus field value

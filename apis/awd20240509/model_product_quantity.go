@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ProductQuantity type satisfies the MappedNullable interface at compile time
@@ -28,7 +30,7 @@ type ProductQuantity struct {
 	// The seller or merchant SKU.
 	Sku string `json:"sku"`
 	// The expiration date for the SKU. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	Expiration *time.Time `json:"expiration,omitempty"`
+	Expiration *flextime.FlexTime `json:"expiration,omitempty"`
 	PrepDetails *PrepDetails `json:"prepDetails,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -140,12 +142,12 @@ func (o *ProductQuantity) GetExpiration() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.Expiration
+	return o.Expiration.Time
 }
 
 // GetExpirationOk returns a tuple with the Expiration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ProductQuantity) GetExpirationOk() (*time.Time, bool) {
+func (o *ProductQuantity) GetExpirationOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.Expiration) {
 		return nil, false
 	}
@@ -163,7 +165,7 @@ func (o *ProductQuantity) HasExpiration() bool {
 
 // SetExpiration gets a reference to the given time.Time and assigns it to the Expiration field.
 func (o *ProductQuantity) SetExpiration(v time.Time) {
-	o.Expiration = &v
+	o.Expiration = flextime.PtrFlexTime(v)
 }
 
 // GetPrepDetails returns the PrepDetails field value if set, zero value otherwise.

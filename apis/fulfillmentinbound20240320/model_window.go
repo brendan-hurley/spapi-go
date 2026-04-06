@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Window type satisfies the MappedNullable interface at compile time
@@ -22,11 +24,11 @@ var _ MappedNullable = &Window{}
 // Window Contains a start and end DateTime representing a time range.
 type Window struct {
 	// The timestamp at which this Window can no longer be edited.
-	EditableUntil *time.Time `json:"editableUntil,omitempty"`
+	EditableUntil *flextime.FlexTime `json:"editableUntil,omitempty"`
 	// The end timestamp of the window.
-	End time.Time `json:"end"`
+	End flextime.FlexTime `json:"end"`
 	// The start timestamp of the window.
-	Start time.Time `json:"start"`
+	Start flextime.FlexTime `json:"start"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -38,8 +40,8 @@ type _Window Window
 // will change when the set of required properties is changed
 func NewWindow(end time.Time, start time.Time) *Window {
 	this := Window{}
-	this.End = end
-	this.Start = start
+	this.End = flextime.FlexTime{Time: end}
+	this.Start = flextime.FlexTime{Time: start}
 	return &this
 }
 
@@ -57,12 +59,12 @@ func (o *Window) GetEditableUntil() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EditableUntil
+	return o.EditableUntil.Time
 }
 
 // GetEditableUntilOk returns a tuple with the EditableUntil field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Window) GetEditableUntilOk() (*time.Time, bool) {
+func (o *Window) GetEditableUntilOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EditableUntil) {
 		return nil, false
 	}
@@ -80,7 +82,7 @@ func (o *Window) HasEditableUntil() bool {
 
 // SetEditableUntil gets a reference to the given time.Time and assigns it to the EditableUntil field.
 func (o *Window) SetEditableUntil(v time.Time) {
-	o.EditableUntil = &v
+	o.EditableUntil = flextime.PtrFlexTime(v)
 }
 
 // GetEnd returns the End field value
@@ -90,12 +92,12 @@ func (o *Window) GetEnd() time.Time {
 		return ret
 	}
 
-	return o.End
+	return o.End.Time
 }
 
 // GetEndOk returns a tuple with the End field value
 // and a boolean to check if the value has been set.
-func (o *Window) GetEndOk() (*time.Time, bool) {
+func (o *Window) GetEndOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -104,7 +106,7 @@ func (o *Window) GetEndOk() (*time.Time, bool) {
 
 // SetEnd sets field value
 func (o *Window) SetEnd(v time.Time) {
-	o.End = v
+	o.End = flextime.FlexTime{Time: v}
 }
 
 // GetStart returns the Start field value
@@ -114,12 +116,12 @@ func (o *Window) GetStart() time.Time {
 		return ret
 	}
 
-	return o.Start
+	return o.Start.Time
 }
 
 // GetStartOk returns a tuple with the Start field value
 // and a boolean to check if the value has been set.
-func (o *Window) GetStartOk() (*time.Time, bool) {
+func (o *Window) GetStartOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -128,7 +130,7 @@ func (o *Window) GetStartOk() (*time.Time, bool) {
 
 // SetStart sets field value
 func (o *Window) SetStart(v time.Time) {
-	o.Start = v
+	o.Start = flextime.FlexTime{Time: v}
 }
 
 func (o Window) MarshalJSON() ([]byte, error) {

@@ -13,6 +13,8 @@ package fulfillmentinbound20240320
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the SelfShipAppointmentSlotsAvailability type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &SelfShipAppointmentSlotsAvailability{}
 // SelfShipAppointmentSlotsAvailability The self ship appointment time slots availability and an expiration date for which the slots can be scheduled.
 type SelfShipAppointmentSlotsAvailability struct {
 	// The time at which the self ship appointment slot expires. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format.
-	ExpiresAt *time.Time `json:"expiresAt,omitempty"`
+	ExpiresAt *flextime.FlexTime `json:"expiresAt,omitempty"`
 	// A list of appointment slots.
 	Slots []AppointmentSlot `json:"slots,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -52,12 +54,12 @@ func (o *SelfShipAppointmentSlotsAvailability) GetExpiresAt() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ExpiresAt
+	return o.ExpiresAt.Time
 }
 
 // GetExpiresAtOk returns a tuple with the ExpiresAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SelfShipAppointmentSlotsAvailability) GetExpiresAtOk() (*time.Time, bool) {
+func (o *SelfShipAppointmentSlotsAvailability) GetExpiresAtOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ExpiresAt) {
 		return nil, false
 	}
@@ -75,7 +77,7 @@ func (o *SelfShipAppointmentSlotsAvailability) HasExpiresAt() bool {
 
 // SetExpiresAt gets a reference to the given time.Time and assigns it to the ExpiresAt field.
 func (o *SelfShipAppointmentSlotsAvailability) SetExpiresAt(v time.Time) {
-	o.ExpiresAt = &v
+	o.ExpiresAt = flextime.PtrFlexTime(v)
 }
 
 // GetSlots returns the Slots field value if set, zero value otherwise.

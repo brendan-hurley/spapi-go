@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the GetRatesRequest type satisfies the MappedNullable interface at compile time
@@ -26,7 +28,7 @@ type GetRatesRequest struct {
 	// A list of service types that can be used to send the shipment.
 	ServiceTypes []ServiceType `json:"serviceTypes"`
 	// The start date and time. This defaults to the current date and time.
-	ShipDate *time.Time `json:"shipDate,omitempty"`
+	ShipDate *flextime.FlexTime `json:"shipDate,omitempty"`
 	// A list of container specifications.
 	ContainerSpecifications []ContainerSpecification `json:"containerSpecifications"`
 	AdditionalProperties map[string]interface{}
@@ -133,12 +135,12 @@ func (o *GetRatesRequest) GetShipDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ShipDate
+	return o.ShipDate.Time
 }
 
 // GetShipDateOk returns a tuple with the ShipDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetRatesRequest) GetShipDateOk() (*time.Time, bool) {
+func (o *GetRatesRequest) GetShipDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ShipDate) {
 		return nil, false
 	}
@@ -156,7 +158,7 @@ func (o *GetRatesRequest) HasShipDate() bool {
 
 // SetShipDate gets a reference to the given time.Time and assigns it to the ShipDate field.
 func (o *GetRatesRequest) SetShipDate(v time.Time) {
-	o.ShipDate = &v
+	o.ShipDate = flextime.PtrFlexTime(v)
 }
 
 // GetContainerSpecifications returns the ContainerSpecifications field value

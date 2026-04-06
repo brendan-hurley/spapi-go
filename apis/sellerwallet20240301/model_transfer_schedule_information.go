@@ -13,6 +13,8 @@ package sellerwallet20240301
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TransferScheduleInformation type satisfies the MappedNullable interface at compile time
@@ -21,9 +23,9 @@ var _ MappedNullable = &TransferScheduleInformation{}
 // TransferScheduleInformation Mandatory information for initiating a schedule transfer.
 type TransferScheduleInformation struct {
 	// The start date of the scheduled transfer.
-	ScheduleStartDate *time.Time `json:"scheduleStartDate,omitempty"`
+	ScheduleStartDate *flextime.FlexTime `json:"scheduleStartDate,omitempty"`
 	// The end date of the scheduled transfer.
-	ScheduleEndDate *time.Time `json:"scheduleEndDate,omitempty"`
+	ScheduleEndDate *flextime.FlexTime `json:"scheduleEndDate,omitempty"`
 	ScheduleExpression *ScheduleExpression `json:"scheduleExpression,omitempty"`
 	ScheduleType *ScheduleTransferType `json:"scheduleType,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -54,12 +56,12 @@ func (o *TransferScheduleInformation) GetScheduleStartDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ScheduleStartDate
+	return o.ScheduleStartDate.Time
 }
 
 // GetScheduleStartDateOk returns a tuple with the ScheduleStartDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransferScheduleInformation) GetScheduleStartDateOk() (*time.Time, bool) {
+func (o *TransferScheduleInformation) GetScheduleStartDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ScheduleStartDate) {
 		return nil, false
 	}
@@ -77,7 +79,7 @@ func (o *TransferScheduleInformation) HasScheduleStartDate() bool {
 
 // SetScheduleStartDate gets a reference to the given time.Time and assigns it to the ScheduleStartDate field.
 func (o *TransferScheduleInformation) SetScheduleStartDate(v time.Time) {
-	o.ScheduleStartDate = &v
+	o.ScheduleStartDate = flextime.PtrFlexTime(v)
 }
 
 // GetScheduleEndDate returns the ScheduleEndDate field value if set, zero value otherwise.
@@ -86,12 +88,12 @@ func (o *TransferScheduleInformation) GetScheduleEndDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ScheduleEndDate
+	return o.ScheduleEndDate.Time
 }
 
 // GetScheduleEndDateOk returns a tuple with the ScheduleEndDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TransferScheduleInformation) GetScheduleEndDateOk() (*time.Time, bool) {
+func (o *TransferScheduleInformation) GetScheduleEndDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ScheduleEndDate) {
 		return nil, false
 	}
@@ -109,7 +111,7 @@ func (o *TransferScheduleInformation) HasScheduleEndDate() bool {
 
 // SetScheduleEndDate gets a reference to the given time.Time and assigns it to the ScheduleEndDate field.
 func (o *TransferScheduleInformation) SetScheduleEndDate(v time.Time) {
-	o.ScheduleEndDate = &v
+	o.ScheduleEndDate = flextime.PtrFlexTime(v)
 }
 
 // GetScheduleExpression returns the ScheduleExpression field value if set, zero value otherwise.

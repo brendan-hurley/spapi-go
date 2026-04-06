@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ContentUpdatePreview type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type ContentUpdatePreview struct {
 	// Identifier of a content update preview.
 	ContentUpdatePreviewId string `json:"contentUpdatePreviewId" validate:"regexp=^[a-zA-Z0-9-]*$"`
 	// The time at which the content update expires. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime format with pattern `yyyy-MM-ddTHH:mm:ss.sssZ`.
-	Expiration time.Time `json:"expiration"`
+	Expiration flextime.FlexTime `json:"expiration"`
 	RequestedUpdates RequestedUpdates `json:"requestedUpdates"`
 	TransportationOption TransportationOption `json:"transportationOption"`
 	AdditionalProperties map[string]interface{}
@@ -39,7 +41,7 @@ type _ContentUpdatePreview ContentUpdatePreview
 func NewContentUpdatePreview(contentUpdatePreviewId string, expiration time.Time, requestedUpdates RequestedUpdates, transportationOption TransportationOption) *ContentUpdatePreview {
 	this := ContentUpdatePreview{}
 	this.ContentUpdatePreviewId = contentUpdatePreviewId
-	this.Expiration = expiration
+	this.Expiration = flextime.FlexTime{Time: expiration}
 	this.RequestedUpdates = requestedUpdates
 	this.TransportationOption = transportationOption
 	return &this
@@ -84,12 +86,12 @@ func (o *ContentUpdatePreview) GetExpiration() time.Time {
 		return ret
 	}
 
-	return o.Expiration
+	return o.Expiration.Time
 }
 
 // GetExpirationOk returns a tuple with the Expiration field value
 // and a boolean to check if the value has been set.
-func (o *ContentUpdatePreview) GetExpirationOk() (*time.Time, bool) {
+func (o *ContentUpdatePreview) GetExpirationOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -98,7 +100,7 @@ func (o *ContentUpdatePreview) GetExpirationOk() (*time.Time, bool) {
 
 // SetExpiration sets field value
 func (o *ContentUpdatePreview) SetExpiration(v time.Time) {
-	o.Expiration = v
+	o.Expiration = flextime.FlexTime{Time: v}
 }
 
 // GetRequestedUpdates returns the RequestedUpdates field value

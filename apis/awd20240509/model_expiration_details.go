@@ -13,6 +13,8 @@ package awd20240509
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ExpirationDetails type satisfies the MappedNullable interface at compile time
@@ -21,7 +23,7 @@ var _ MappedNullable = &ExpirationDetails{}
 // ExpirationDetails The expiration details of the inventory. This object will only appear if the details parameter in the request is set to `SHOW`.
 type ExpirationDetails struct {
 	// The expiration date of the SKU.
-	Expiration *time.Time `json:"expiration,omitempty"`
+	Expiration *flextime.FlexTime `json:"expiration,omitempty"`
 	// The quantity that is present in AWD.
 	OnhandQuantity *int64 `json:"onhandQuantity,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -52,12 +54,12 @@ func (o *ExpirationDetails) GetExpiration() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.Expiration
+	return o.Expiration.Time
 }
 
 // GetExpirationOk returns a tuple with the Expiration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ExpirationDetails) GetExpirationOk() (*time.Time, bool) {
+func (o *ExpirationDetails) GetExpirationOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.Expiration) {
 		return nil, false
 	}
@@ -75,7 +77,7 @@ func (o *ExpirationDetails) HasExpiration() bool {
 
 // SetExpiration gets a reference to the given time.Time and assigns it to the Expiration field.
 func (o *ExpirationDetails) SetExpiration(v time.Time) {
-	o.Expiration = &v
+	o.Expiration = flextime.PtrFlexTime(v)
 }
 
 // GetOnhandQuantity returns the OnhandQuantity field value if set, zero value otherwise.

@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the PrescriptionDetail type satisfies the MappedNullable interface at compile time
@@ -24,7 +26,7 @@ type PrescriptionDetail struct {
 	// The identifier for the prescription used to verify the regulated product.
 	PrescriptionId string `json:"prescriptionId"`
 	// The expiration date of the prescription used to verify the regulated product, in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date time format.
-	ExpirationDate time.Time `json:"expirationDate"`
+	ExpirationDate flextime.FlexTime `json:"expirationDate"`
 	// The number of units in each fill as provided in the prescription.
 	WrittenQuantity int32 `json:"writtenQuantity"`
 	// The total number of refills written in the original prescription used to verify the regulated product. If a prescription originally had no refills, this value must be 0.
@@ -47,7 +49,7 @@ type _PrescriptionDetail PrescriptionDetail
 func NewPrescriptionDetail(prescriptionId string, expirationDate time.Time, writtenQuantity int32, totalRefillsAuthorized int32, refillsRemaining int32, clinicId string, usageInstructions string) *PrescriptionDetail {
 	this := PrescriptionDetail{}
 	this.PrescriptionId = prescriptionId
-	this.ExpirationDate = expirationDate
+	this.ExpirationDate = flextime.FlexTime{Time: expirationDate}
 	this.WrittenQuantity = writtenQuantity
 	this.TotalRefillsAuthorized = totalRefillsAuthorized
 	this.RefillsRemaining = refillsRemaining
@@ -95,12 +97,12 @@ func (o *PrescriptionDetail) GetExpirationDate() time.Time {
 		return ret
 	}
 
-	return o.ExpirationDate
+	return o.ExpirationDate.Time
 }
 
 // GetExpirationDateOk returns a tuple with the ExpirationDate field value
 // and a boolean to check if the value has been set.
-func (o *PrescriptionDetail) GetExpirationDateOk() (*time.Time, bool) {
+func (o *PrescriptionDetail) GetExpirationDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -109,7 +111,7 @@ func (o *PrescriptionDetail) GetExpirationDateOk() (*time.Time, bool) {
 
 // SetExpirationDate sets field value
 func (o *PrescriptionDetail) SetExpirationDate(v time.Time) {
-	o.ExpirationDate = v
+	o.ExpirationDate = flextime.FlexTime{Time: v}
 }
 
 // GetWrittenQuantity returns the WrittenQuantity field value

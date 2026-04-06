@@ -13,6 +13,8 @@ package services
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the FulfillmentTime type satisfies the MappedNullable interface at compile time
@@ -21,9 +23,9 @@ var _ MappedNullable = &FulfillmentTime{}
 // FulfillmentTime Input for fulfillment time details
 type FulfillmentTime struct {
 	// The date, time in UTC of the fulfillment start time in ISO 8601 format.
-	StartTime *time.Time `json:"startTime,omitempty"`
+	StartTime *flextime.FlexTime `json:"startTime,omitempty"`
 	// The date, time in UTC of the fulfillment end time in ISO 8601 format.
-	EndTime *time.Time `json:"endTime,omitempty"`
+	EndTime *flextime.FlexTime `json:"endTime,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -52,12 +54,12 @@ func (o *FulfillmentTime) GetStartTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.StartTime
+	return o.StartTime.Time
 }
 
 // GetStartTimeOk returns a tuple with the StartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FulfillmentTime) GetStartTimeOk() (*time.Time, bool) {
+func (o *FulfillmentTime) GetStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.StartTime) {
 		return nil, false
 	}
@@ -75,7 +77,7 @@ func (o *FulfillmentTime) HasStartTime() bool {
 
 // SetStartTime gets a reference to the given time.Time and assigns it to the StartTime field.
 func (o *FulfillmentTime) SetStartTime(v time.Time) {
-	o.StartTime = &v
+	o.StartTime = flextime.PtrFlexTime(v)
 }
 
 // GetEndTime returns the EndTime field value if set, zero value otherwise.
@@ -84,12 +86,12 @@ func (o *FulfillmentTime) GetEndTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EndTime
+	return o.EndTime.Time
 }
 
 // GetEndTimeOk returns a tuple with the EndTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FulfillmentTime) GetEndTimeOk() (*time.Time, bool) {
+func (o *FulfillmentTime) GetEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EndTime) {
 		return nil, false
 	}
@@ -107,7 +109,7 @@ func (o *FulfillmentTime) HasEndTime() bool {
 
 // SetEndTime gets a reference to the given time.Time and assigns it to the EndTime field.
 func (o *FulfillmentTime) SetEndTime(v time.Time) {
-	o.EndTime = &v
+	o.EndTime = flextime.PtrFlexTime(v)
 }
 
 func (o FulfillmentTime) MarshalJSON() ([]byte, error) {

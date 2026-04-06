@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Context type satisfies the MappedNullable interface at compile time
@@ -42,15 +44,15 @@ type Context struct {
 	// The reference number of the payment.
 	PaymentReference *string `json:"paymentReference,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	PaymentDate *time.Time `json:"paymentDate,omitempty"`
+	PaymentDate *flextime.FlexTime `json:"paymentDate,omitempty"`
 	// The deferral policy applied to the transaction.  **Examples:** `B2B` (invoiced orders), `DD7` (delivery date policy)
 	DeferralReason *string `json:"deferralReason,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	MaturityDate *time.Time `json:"maturityDate,omitempty"`
+	MaturityDate *flextime.FlexTime `json:"maturityDate,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	StartTime *time.Time `json:"startTime,omitempty"`
+	StartTime *flextime.FlexTime `json:"startTime,omitempty"`
 	// A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	EndTime *time.Time `json:"endTime,omitempty"`
+	EndTime *flextime.FlexTime `json:"endTime,omitempty"`
 	ContextType string `json:"contextType"`
 	AdditionalProperties map[string]interface{}
 }
@@ -401,12 +403,12 @@ func (o *Context) GetPaymentDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PaymentDate
+	return o.PaymentDate.Time
 }
 
 // GetPaymentDateOk returns a tuple with the PaymentDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Context) GetPaymentDateOk() (*time.Time, bool) {
+func (o *Context) GetPaymentDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PaymentDate) {
 		return nil, false
 	}
@@ -424,7 +426,7 @@ func (o *Context) HasPaymentDate() bool {
 
 // SetPaymentDate gets a reference to the given time.Time and assigns it to the PaymentDate field.
 func (o *Context) SetPaymentDate(v time.Time) {
-	o.PaymentDate = &v
+	o.PaymentDate = flextime.PtrFlexTime(v)
 }
 
 // GetDeferralReason returns the DeferralReason field value if set, zero value otherwise.
@@ -465,12 +467,12 @@ func (o *Context) GetMaturityDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.MaturityDate
+	return o.MaturityDate.Time
 }
 
 // GetMaturityDateOk returns a tuple with the MaturityDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Context) GetMaturityDateOk() (*time.Time, bool) {
+func (o *Context) GetMaturityDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.MaturityDate) {
 		return nil, false
 	}
@@ -488,7 +490,7 @@ func (o *Context) HasMaturityDate() bool {
 
 // SetMaturityDate gets a reference to the given time.Time and assigns it to the MaturityDate field.
 func (o *Context) SetMaturityDate(v time.Time) {
-	o.MaturityDate = &v
+	o.MaturityDate = flextime.PtrFlexTime(v)
 }
 
 // GetStartTime returns the StartTime field value if set, zero value otherwise.
@@ -497,12 +499,12 @@ func (o *Context) GetStartTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.StartTime
+	return o.StartTime.Time
 }
 
 // GetStartTimeOk returns a tuple with the StartTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Context) GetStartTimeOk() (*time.Time, bool) {
+func (o *Context) GetStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.StartTime) {
 		return nil, false
 	}
@@ -520,7 +522,7 @@ func (o *Context) HasStartTime() bool {
 
 // SetStartTime gets a reference to the given time.Time and assigns it to the StartTime field.
 func (o *Context) SetStartTime(v time.Time) {
-	o.StartTime = &v
+	o.StartTime = flextime.PtrFlexTime(v)
 }
 
 // GetEndTime returns the EndTime field value if set, zero value otherwise.
@@ -529,12 +531,12 @@ func (o *Context) GetEndTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EndTime
+	return o.EndTime.Time
 }
 
 // GetEndTimeOk returns a tuple with the EndTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Context) GetEndTimeOk() (*time.Time, bool) {
+func (o *Context) GetEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EndTime) {
 		return nil, false
 	}
@@ -552,7 +554,7 @@ func (o *Context) HasEndTime() bool {
 
 // SetEndTime gets a reference to the given time.Time and assigns it to the EndTime field.
 func (o *Context) SetEndTime(v time.Time) {
-	o.EndTime = &v
+	o.EndTime = flextime.PtrFlexTime(v)
 }
 
 // GetContextType returns the ContextType field value

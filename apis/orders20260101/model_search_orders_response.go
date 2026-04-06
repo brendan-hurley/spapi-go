@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the SearchOrdersResponse type satisfies the MappedNullable interface at compile time
@@ -25,9 +27,9 @@ type SearchOrdersResponse struct {
 	Orders []Order `json:"orders"`
 	Pagination *Pagination `json:"pagination,omitempty"`
 	// Only orders updated before the specified time are returned. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
-	LastUpdatedBefore *time.Time `json:"lastUpdatedBefore,omitempty"`
+	LastUpdatedBefore *flextime.FlexTime `json:"lastUpdatedBefore,omitempty"`
 	// Only orders placed before the specified time are returned. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
-	CreatedBefore *time.Time `json:"createdBefore,omitempty"`
+	CreatedBefore *flextime.FlexTime `json:"createdBefore,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -113,12 +115,12 @@ func (o *SearchOrdersResponse) GetLastUpdatedBefore() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.LastUpdatedBefore
+	return o.LastUpdatedBefore.Time
 }
 
 // GetLastUpdatedBeforeOk returns a tuple with the LastUpdatedBefore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SearchOrdersResponse) GetLastUpdatedBeforeOk() (*time.Time, bool) {
+func (o *SearchOrdersResponse) GetLastUpdatedBeforeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.LastUpdatedBefore) {
 		return nil, false
 	}
@@ -136,7 +138,7 @@ func (o *SearchOrdersResponse) HasLastUpdatedBefore() bool {
 
 // SetLastUpdatedBefore gets a reference to the given time.Time and assigns it to the LastUpdatedBefore field.
 func (o *SearchOrdersResponse) SetLastUpdatedBefore(v time.Time) {
-	o.LastUpdatedBefore = &v
+	o.LastUpdatedBefore = flextime.PtrFlexTime(v)
 }
 
 // GetCreatedBefore returns the CreatedBefore field value if set, zero value otherwise.
@@ -145,12 +147,12 @@ func (o *SearchOrdersResponse) GetCreatedBefore() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.CreatedBefore
+	return o.CreatedBefore.Time
 }
 
 // GetCreatedBeforeOk returns a tuple with the CreatedBefore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SearchOrdersResponse) GetCreatedBeforeOk() (*time.Time, bool) {
+func (o *SearchOrdersResponse) GetCreatedBeforeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.CreatedBefore) {
 		return nil, false
 	}
@@ -168,7 +170,7 @@ func (o *SearchOrdersResponse) HasCreatedBefore() bool {
 
 // SetCreatedBefore gets a reference to the given time.Time and assigns it to the CreatedBefore field.
 func (o *SearchOrdersResponse) SetCreatedBefore(v time.Time) {
-	o.CreatedBefore = &v
+	o.CreatedBefore = flextime.PtrFlexTime(v)
 }
 
 func (o SearchOrdersResponse) MarshalJSON() ([]byte, error) {

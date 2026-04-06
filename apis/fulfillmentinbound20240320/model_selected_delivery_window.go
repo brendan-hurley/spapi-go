@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the SelectedDeliveryWindow type satisfies the MappedNullable interface at compile time
@@ -26,11 +28,11 @@ type SelectedDeliveryWindow struct {
 	// Identifier of a delivery window option. A delivery window option represent one option for when a shipment is expected to be delivered.
 	DeliveryWindowOptionId string `json:"deliveryWindowOptionId" validate:"regexp=^[a-zA-Z0-9-]*$"`
 	// The timestamp at which this Window can no longer be edited.
-	EditableUntil *time.Time `json:"editableUntil,omitempty"`
+	EditableUntil *flextime.FlexTime `json:"editableUntil,omitempty"`
 	// The end timestamp of the window.
-	EndDate time.Time `json:"endDate"`
+	EndDate flextime.FlexTime `json:"endDate"`
 	// The start timestamp of the window.
-	StartDate time.Time `json:"startDate"`
+	StartDate flextime.FlexTime `json:"startDate"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -44,8 +46,8 @@ func NewSelectedDeliveryWindow(availabilityType string, deliveryWindowOptionId s
 	this := SelectedDeliveryWindow{}
 	this.AvailabilityType = availabilityType
 	this.DeliveryWindowOptionId = deliveryWindowOptionId
-	this.EndDate = endDate
-	this.StartDate = startDate
+	this.EndDate = flextime.FlexTime{Time: endDate}
+	this.StartDate = flextime.FlexTime{Time: startDate}
 	return &this
 }
 
@@ -111,12 +113,12 @@ func (o *SelectedDeliveryWindow) GetEditableUntil() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EditableUntil
+	return o.EditableUntil.Time
 }
 
 // GetEditableUntilOk returns a tuple with the EditableUntil field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SelectedDeliveryWindow) GetEditableUntilOk() (*time.Time, bool) {
+func (o *SelectedDeliveryWindow) GetEditableUntilOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EditableUntil) {
 		return nil, false
 	}
@@ -134,7 +136,7 @@ func (o *SelectedDeliveryWindow) HasEditableUntil() bool {
 
 // SetEditableUntil gets a reference to the given time.Time and assigns it to the EditableUntil field.
 func (o *SelectedDeliveryWindow) SetEditableUntil(v time.Time) {
-	o.EditableUntil = &v
+	o.EditableUntil = flextime.PtrFlexTime(v)
 }
 
 // GetEndDate returns the EndDate field value
@@ -144,12 +146,12 @@ func (o *SelectedDeliveryWindow) GetEndDate() time.Time {
 		return ret
 	}
 
-	return o.EndDate
+	return o.EndDate.Time
 }
 
 // GetEndDateOk returns a tuple with the EndDate field value
 // and a boolean to check if the value has been set.
-func (o *SelectedDeliveryWindow) GetEndDateOk() (*time.Time, bool) {
+func (o *SelectedDeliveryWindow) GetEndDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -158,7 +160,7 @@ func (o *SelectedDeliveryWindow) GetEndDateOk() (*time.Time, bool) {
 
 // SetEndDate sets field value
 func (o *SelectedDeliveryWindow) SetEndDate(v time.Time) {
-	o.EndDate = v
+	o.EndDate = flextime.FlexTime{Time: v}
 }
 
 // GetStartDate returns the StartDate field value
@@ -168,12 +170,12 @@ func (o *SelectedDeliveryWindow) GetStartDate() time.Time {
 		return ret
 	}
 
-	return o.StartDate
+	return o.StartDate.Time
 }
 
 // GetStartDateOk returns a tuple with the StartDate field value
 // and a boolean to check if the value has been set.
-func (o *SelectedDeliveryWindow) GetStartDateOk() (*time.Time, bool) {
+func (o *SelectedDeliveryWindow) GetStartDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -182,7 +184,7 @@ func (o *SelectedDeliveryWindow) GetStartDateOk() (*time.Time, bool) {
 
 // SetStartDate sets field value
 func (o *SelectedDeliveryWindow) SetStartDate(v time.Time) {
-	o.StartDate = v
+	o.StartDate = flextime.FlexTime{Time: v}
 }
 
 func (o SelectedDeliveryWindow) MarshalJSON() ([]byte, error) {

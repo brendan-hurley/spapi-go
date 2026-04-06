@@ -14,6 +14,8 @@ package shippingv2
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TimeWindow type satisfies the MappedNullable interface at compile time
@@ -22,9 +24,9 @@ var _ MappedNullable = &TimeWindow{}
 // TimeWindow The start and end time that specifies the time interval of an event.
 type TimeWindow struct {
 	// The start time of the time window.
-	Start *time.Time `json:"start,omitempty"`
+	Start *flextime.FlexTime `json:"start,omitempty"`
 	// The end time of the time window.
-	End *time.Time `json:"end,omitempty"`
+	End *flextime.FlexTime `json:"end,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -53,12 +55,12 @@ func (o *TimeWindow) GetStart() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.Start
+	return o.Start.Time
 }
 
 // GetStartOk returns a tuple with the Start field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TimeWindow) GetStartOk() (*time.Time, bool) {
+func (o *TimeWindow) GetStartOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.Start) {
 		return nil, false
 	}
@@ -76,7 +78,7 @@ func (o *TimeWindow) HasStart() bool {
 
 // SetStart gets a reference to the given time.Time and assigns it to the Start field.
 func (o *TimeWindow) SetStart(v time.Time) {
-	o.Start = &v
+	o.Start = flextime.PtrFlexTime(v)
 }
 
 // GetEnd returns the End field value if set, zero value otherwise.
@@ -85,12 +87,12 @@ func (o *TimeWindow) GetEnd() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.End
+	return o.End.Time
 }
 
 // GetEndOk returns a tuple with the End field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TimeWindow) GetEndOk() (*time.Time, bool) {
+func (o *TimeWindow) GetEndOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.End) {
 		return nil, false
 	}
@@ -108,7 +110,7 @@ func (o *TimeWindow) HasEnd() bool {
 
 // SetEnd gets a reference to the given time.Time and assigns it to the End field.
 func (o *TimeWindow) SetEnd(v time.Time) {
-	o.End = &v
+	o.End = flextime.PtrFlexTime(v)
 }
 
 func (o TimeWindow) MarshalJSON() ([]byte, error) {

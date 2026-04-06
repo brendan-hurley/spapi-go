@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ReportSchedule type satisfies the MappedNullable interface at compile time
@@ -32,7 +34,7 @@ type ReportSchedule struct {
 	// An <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> period value that indicates how often a report should be created.
 	Period string `json:"period"`
 	// The date and time when the schedule will create its next report, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date time format.
-	NextReportCreationTime *time.Time `json:"nextReportCreationTime,omitempty"`
+	NextReportCreationTime *flextime.FlexTime `json:"nextReportCreationTime,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -200,12 +202,12 @@ func (o *ReportSchedule) GetNextReportCreationTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.NextReportCreationTime
+	return o.NextReportCreationTime.Time
 }
 
 // GetNextReportCreationTimeOk returns a tuple with the NextReportCreationTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ReportSchedule) GetNextReportCreationTimeOk() (*time.Time, bool) {
+func (o *ReportSchedule) GetNextReportCreationTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.NextReportCreationTime) {
 		return nil, false
 	}
@@ -223,7 +225,7 @@ func (o *ReportSchedule) HasNextReportCreationTime() bool {
 
 // SetNextReportCreationTime gets a reference to the given time.Time and assigns it to the NextReportCreationTime field.
 func (o *ReportSchedule) SetNextReportCreationTime(v time.Time) {
-	o.NextReportCreationTime = &v
+	o.NextReportCreationTime = flextime.PtrFlexTime(v)
 }
 
 func (o ReportSchedule) MarshalJSON() ([]byte, error) {

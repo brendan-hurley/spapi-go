@@ -13,6 +13,8 @@ package vendordirectfulfillmentorders20211228
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the ScheduledDeliveryShipment type satisfies the MappedNullable interface at compile time
@@ -23,9 +25,9 @@ type ScheduledDeliveryShipment struct {
 	// Scheduled delivery service type.
 	ScheduledDeliveryServiceType *string `json:"scheduledDeliveryServiceType,omitempty"`
 	// Earliest nominated delivery date for the scheduled delivery.
-	EarliestNominatedDeliveryDate *time.Time `json:"earliestNominatedDeliveryDate,omitempty"`
+	EarliestNominatedDeliveryDate *flextime.FlexTime `json:"earliestNominatedDeliveryDate,omitempty"`
 	// Latest nominated delivery date for the scheduled delivery.
-	LatestNominatedDeliveryDate *time.Time `json:"latestNominatedDeliveryDate,omitempty"`
+	LatestNominatedDeliveryDate *flextime.FlexTime `json:"latestNominatedDeliveryDate,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -86,12 +88,12 @@ func (o *ScheduledDeliveryShipment) GetEarliestNominatedDeliveryDate() time.Time
 		var ret time.Time
 		return ret
 	}
-	return *o.EarliestNominatedDeliveryDate
+	return o.EarliestNominatedDeliveryDate.Time
 }
 
 // GetEarliestNominatedDeliveryDateOk returns a tuple with the EarliestNominatedDeliveryDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ScheduledDeliveryShipment) GetEarliestNominatedDeliveryDateOk() (*time.Time, bool) {
+func (o *ScheduledDeliveryShipment) GetEarliestNominatedDeliveryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EarliestNominatedDeliveryDate) {
 		return nil, false
 	}
@@ -109,7 +111,7 @@ func (o *ScheduledDeliveryShipment) HasEarliestNominatedDeliveryDate() bool {
 
 // SetEarliestNominatedDeliveryDate gets a reference to the given time.Time and assigns it to the EarliestNominatedDeliveryDate field.
 func (o *ScheduledDeliveryShipment) SetEarliestNominatedDeliveryDate(v time.Time) {
-	o.EarliestNominatedDeliveryDate = &v
+	o.EarliestNominatedDeliveryDate = flextime.PtrFlexTime(v)
 }
 
 // GetLatestNominatedDeliveryDate returns the LatestNominatedDeliveryDate field value if set, zero value otherwise.
@@ -118,12 +120,12 @@ func (o *ScheduledDeliveryShipment) GetLatestNominatedDeliveryDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.LatestNominatedDeliveryDate
+	return o.LatestNominatedDeliveryDate.Time
 }
 
 // GetLatestNominatedDeliveryDateOk returns a tuple with the LatestNominatedDeliveryDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ScheduledDeliveryShipment) GetLatestNominatedDeliveryDateOk() (*time.Time, bool) {
+func (o *ScheduledDeliveryShipment) GetLatestNominatedDeliveryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.LatestNominatedDeliveryDate) {
 		return nil, false
 	}
@@ -141,7 +143,7 @@ func (o *ScheduledDeliveryShipment) HasLatestNominatedDeliveryDate() bool {
 
 // SetLatestNominatedDeliveryDate gets a reference to the given time.Time and assigns it to the LatestNominatedDeliveryDate field.
 func (o *ScheduledDeliveryShipment) SetLatestNominatedDeliveryDate(v time.Time) {
-	o.LatestNominatedDeliveryDate = &v
+	o.LatestNominatedDeliveryDate = flextime.PtrFlexTime(v)
 }
 
 func (o ScheduledDeliveryShipment) MarshalJSON() ([]byte, error) {

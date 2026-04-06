@@ -13,6 +13,8 @@ package shipping
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Rate type satisfies the MappedNullable interface at compile time
@@ -25,7 +27,7 @@ type Rate struct {
 	TotalCharge *Currency `json:"totalCharge,omitempty"`
 	BilledWeight *Weight `json:"billedWeight,omitempty"`
 	// The time after which the offering will expire.
-	ExpirationTime *time.Time `json:"expirationTime,omitempty"`
+	ExpirationTime *flextime.FlexTime `json:"expirationTime,omitempty"`
 	ServiceType *ServiceType `json:"serviceType,omitempty"`
 	Promise *ShippingPromiseSet `json:"promise,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -152,12 +154,12 @@ func (o *Rate) GetExpirationTime() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ExpirationTime
+	return o.ExpirationTime.Time
 }
 
 // GetExpirationTimeOk returns a tuple with the ExpirationTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Rate) GetExpirationTimeOk() (*time.Time, bool) {
+func (o *Rate) GetExpirationTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ExpirationTime) {
 		return nil, false
 	}
@@ -175,7 +177,7 @@ func (o *Rate) HasExpirationTime() bool {
 
 // SetExpirationTime gets a reference to the given time.Time and assigns it to the ExpirationTime field.
 func (o *Rate) SetExpirationTime(v time.Time) {
-	o.ExpirationTime = &v
+	o.ExpirationTime = flextime.PtrFlexTime(v)
 }
 
 // GetServiceType returns the ServiceType field value if set, zero value otherwise.

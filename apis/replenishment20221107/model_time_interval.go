@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TimeInterval type satisfies the MappedNullable interface at compile time
@@ -22,9 +24,9 @@ var _ MappedNullable = &TimeInterval{}
 // TimeInterval A date-time interval in ISO 8601 format which is used to compute metrics. Only the date is required, but you must pass the complete date and time value. For example, November 11, 2022 should be passed as \"2022-11-11T00:00:00Z\". Note that only data for the trailing 2 years is supported.   **Note**: The `listOfferMetrics` operation only supports a time interval which covers a single unit of the aggregation frequency. For example, for a MONTH aggregation frequency, the duration of the interval between the startDate and endDate can not be more than 1 month.
 type TimeInterval struct {
 	// When this object is used as a request parameter, the specified `startDate` is adjusted based on the aggregation frequency.  * For `WEEK` the metric is computed from the first day of the week (Sunday, based on ISO 8601) that contains the `startDate`. * For `MONTH` the metric is computed from the first day of the month that contains the `startDate`. * For `QUARTER` the metric is computed from the first day of the quarter that contains the `startDate`. * For `YEAR` the metric is computed from the first day of the year that contains the `startDate`.
-	StartDate time.Time `json:"startDate"`
+	StartDate flextime.FlexTime `json:"startDate"`
 	// When this object is used as a request parameter, the specified `endDate` is adjusted based on the aggregation frequency.  * For `WEEK` the metric is computed up to the last day of the week (Sunday, based on ISO 8601) that contains the `endDate`. * For `MONTH`, the metric is computed up to the last day that contains the `endDate`. * For `QUARTER` the metric is computed up to the last day of the quarter that contains the `endDate`. * For `YEAR` the metric is computed up to the last day of the year that contains the `endDate`.  Note: The end date may be adjusted to a lower value based on the data available in our system.
-	EndDate time.Time `json:"endDate"`
+	EndDate flextime.FlexTime `json:"endDate"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -36,8 +38,8 @@ type _TimeInterval TimeInterval
 // will change when the set of required properties is changed
 func NewTimeInterval(startDate time.Time, endDate time.Time) *TimeInterval {
 	this := TimeInterval{}
-	this.StartDate = startDate
-	this.EndDate = endDate
+	this.StartDate = flextime.FlexTime{Time: startDate}
+	this.EndDate = flextime.FlexTime{Time: endDate}
 	return &this
 }
 
@@ -56,12 +58,12 @@ func (o *TimeInterval) GetStartDate() time.Time {
 		return ret
 	}
 
-	return o.StartDate
+	return o.StartDate.Time
 }
 
 // GetStartDateOk returns a tuple with the StartDate field value
 // and a boolean to check if the value has been set.
-func (o *TimeInterval) GetStartDateOk() (*time.Time, bool) {
+func (o *TimeInterval) GetStartDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,7 +72,7 @@ func (o *TimeInterval) GetStartDateOk() (*time.Time, bool) {
 
 // SetStartDate sets field value
 func (o *TimeInterval) SetStartDate(v time.Time) {
-	o.StartDate = v
+	o.StartDate = flextime.FlexTime{Time: v}
 }
 
 // GetEndDate returns the EndDate field value
@@ -80,12 +82,12 @@ func (o *TimeInterval) GetEndDate() time.Time {
 		return ret
 	}
 
-	return o.EndDate
+	return o.EndDate.Time
 }
 
 // GetEndDateOk returns a tuple with the EndDate field value
 // and a boolean to check if the value has been set.
-func (o *TimeInterval) GetEndDateOk() (*time.Time, bool) {
+func (o *TimeInterval) GetEndDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -94,7 +96,7 @@ func (o *TimeInterval) GetEndDateOk() (*time.Time, bool) {
 
 // SetEndDate sets field value
 func (o *TimeInterval) SetEndDate(v time.Time) {
-	o.EndDate = v
+	o.EndDate = flextime.FlexTime{Time: v}
 }
 
 func (o TimeInterval) MarshalJSON() ([]byte, error) {

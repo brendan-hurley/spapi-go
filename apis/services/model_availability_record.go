@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the AvailabilityRecord type satisfies the MappedNullable interface at compile time
@@ -22,9 +24,9 @@ var _ MappedNullable = &AvailabilityRecord{}
 // AvailabilityRecord `AvailabilityRecord` to represent the capacity of a resource over a time range.
 type AvailabilityRecord struct {
 	// Denotes the time from when the resource is available in a day in ISO-8601 format.
-	StartTime time.Time `json:"startTime"`
+	StartTime flextime.FlexTime `json:"startTime"`
 	// Denotes the time till when the resource is available in a day in ISO-8601 format.
-	EndTime time.Time `json:"endTime"`
+	EndTime flextime.FlexTime `json:"endTime"`
 	Recurrence *Recurrence `json:"recurrence,omitempty"`
 	// Signifies the capacity of a resource which is available.
 	Capacity *int32 `json:"capacity,omitempty"`
@@ -39,8 +41,8 @@ type _AvailabilityRecord AvailabilityRecord
 // will change when the set of required properties is changed
 func NewAvailabilityRecord(startTime time.Time, endTime time.Time) *AvailabilityRecord {
 	this := AvailabilityRecord{}
-	this.StartTime = startTime
-	this.EndTime = endTime
+	this.StartTime = flextime.FlexTime{Time: startTime}
+	this.EndTime = flextime.FlexTime{Time: endTime}
 	return &this
 }
 
@@ -59,12 +61,12 @@ func (o *AvailabilityRecord) GetStartTime() time.Time {
 		return ret
 	}
 
-	return o.StartTime
+	return o.StartTime.Time
 }
 
 // GetStartTimeOk returns a tuple with the StartTime field value
 // and a boolean to check if the value has been set.
-func (o *AvailabilityRecord) GetStartTimeOk() (*time.Time, bool) {
+func (o *AvailabilityRecord) GetStartTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -73,7 +75,7 @@ func (o *AvailabilityRecord) GetStartTimeOk() (*time.Time, bool) {
 
 // SetStartTime sets field value
 func (o *AvailabilityRecord) SetStartTime(v time.Time) {
-	o.StartTime = v
+	o.StartTime = flextime.FlexTime{Time: v}
 }
 
 // GetEndTime returns the EndTime field value
@@ -83,12 +85,12 @@ func (o *AvailabilityRecord) GetEndTime() time.Time {
 		return ret
 	}
 
-	return o.EndTime
+	return o.EndTime.Time
 }
 
 // GetEndTimeOk returns a tuple with the EndTime field value
 // and a boolean to check if the value has been set.
-func (o *AvailabilityRecord) GetEndTimeOk() (*time.Time, bool) {
+func (o *AvailabilityRecord) GetEndTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -97,7 +99,7 @@ func (o *AvailabilityRecord) GetEndTimeOk() (*time.Time, bool) {
 
 // SetEndTime sets field value
 func (o *AvailabilityRecord) SetEndTime(v time.Time) {
-	o.EndTime = v
+	o.EndTime = flextime.FlexTime{Time: v}
 }
 
 // GetRecurrence returns the Recurrence field value if set, zero value otherwise.

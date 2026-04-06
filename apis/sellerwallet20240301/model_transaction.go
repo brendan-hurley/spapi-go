@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Transaction type satisfies the MappedNullable interface at compile time
@@ -28,13 +30,13 @@ type Transaction struct {
 	TransactionType TransactionType `json:"transactionType"`
 	TransactionStatus TransactionStatus `json:"transactionStatus"`
 	// The date when the transaction was initiated.
-	TransactionRequestDate time.Time `json:"transactionRequestDate"`
+	TransactionRequestDate flextime.FlexTime `json:"transactionRequestDate"`
 	// The expected completion date of the transaction.
-	ExpectedCompletionDate *time.Time `json:"expectedCompletionDate,omitempty"`
+	ExpectedCompletionDate *flextime.FlexTime `json:"expectedCompletionDate,omitempty"`
 	// The transaction's completion date.
-	TransactionActualCompletionDate *time.Time `json:"transactionActualCompletionDate,omitempty"`
+	TransactionActualCompletionDate *flextime.FlexTime `json:"transactionActualCompletionDate,omitempty"`
 	// The date of the most recent account balance update.
-	LastUpdateDate time.Time `json:"lastUpdateDate"`
+	LastUpdateDate flextime.FlexTime `json:"lastUpdateDate"`
 	// The Amazon Seller Wallet customer who requested the transaction.
 	RequesterName *string `json:"requesterName,omitempty"`
 	// The transaction initiation source. This value is either the Amazon portal or PISP name that the customer used to start the transaction.
@@ -63,8 +65,8 @@ func NewTransaction(accountId string, transactionId string, transactionType Tran
 	this.TransactionId = transactionId
 	this.TransactionType = transactionType
 	this.TransactionStatus = transactionStatus
-	this.TransactionRequestDate = transactionRequestDate
-	this.LastUpdateDate = lastUpdateDate
+	this.TransactionRequestDate = flextime.FlexTime{Time: transactionRequestDate}
+	this.LastUpdateDate = flextime.FlexTime{Time: lastUpdateDate}
 	this.TransactionRequesterSource = transactionRequesterSource
 	this.TransactionDescription = transactionDescription
 	this.TransactionDestinationAccount = transactionDestinationAccount
@@ -184,12 +186,12 @@ func (o *Transaction) GetTransactionRequestDate() time.Time {
 		return ret
 	}
 
-	return o.TransactionRequestDate
+	return o.TransactionRequestDate.Time
 }
 
 // GetTransactionRequestDateOk returns a tuple with the TransactionRequestDate field value
 // and a boolean to check if the value has been set.
-func (o *Transaction) GetTransactionRequestDateOk() (*time.Time, bool) {
+func (o *Transaction) GetTransactionRequestDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -198,7 +200,7 @@ func (o *Transaction) GetTransactionRequestDateOk() (*time.Time, bool) {
 
 // SetTransactionRequestDate sets field value
 func (o *Transaction) SetTransactionRequestDate(v time.Time) {
-	o.TransactionRequestDate = v
+	o.TransactionRequestDate = flextime.FlexTime{Time: v}
 }
 
 // GetExpectedCompletionDate returns the ExpectedCompletionDate field value if set, zero value otherwise.
@@ -207,12 +209,12 @@ func (o *Transaction) GetExpectedCompletionDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ExpectedCompletionDate
+	return o.ExpectedCompletionDate.Time
 }
 
 // GetExpectedCompletionDateOk returns a tuple with the ExpectedCompletionDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Transaction) GetExpectedCompletionDateOk() (*time.Time, bool) {
+func (o *Transaction) GetExpectedCompletionDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ExpectedCompletionDate) {
 		return nil, false
 	}
@@ -230,7 +232,7 @@ func (o *Transaction) HasExpectedCompletionDate() bool {
 
 // SetExpectedCompletionDate gets a reference to the given time.Time and assigns it to the ExpectedCompletionDate field.
 func (o *Transaction) SetExpectedCompletionDate(v time.Time) {
-	o.ExpectedCompletionDate = &v
+	o.ExpectedCompletionDate = flextime.PtrFlexTime(v)
 }
 
 // GetTransactionActualCompletionDate returns the TransactionActualCompletionDate field value if set, zero value otherwise.
@@ -239,12 +241,12 @@ func (o *Transaction) GetTransactionActualCompletionDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.TransactionActualCompletionDate
+	return o.TransactionActualCompletionDate.Time
 }
 
 // GetTransactionActualCompletionDateOk returns a tuple with the TransactionActualCompletionDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Transaction) GetTransactionActualCompletionDateOk() (*time.Time, bool) {
+func (o *Transaction) GetTransactionActualCompletionDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.TransactionActualCompletionDate) {
 		return nil, false
 	}
@@ -262,7 +264,7 @@ func (o *Transaction) HasTransactionActualCompletionDate() bool {
 
 // SetTransactionActualCompletionDate gets a reference to the given time.Time and assigns it to the TransactionActualCompletionDate field.
 func (o *Transaction) SetTransactionActualCompletionDate(v time.Time) {
-	o.TransactionActualCompletionDate = &v
+	o.TransactionActualCompletionDate = flextime.PtrFlexTime(v)
 }
 
 // GetLastUpdateDate returns the LastUpdateDate field value
@@ -272,12 +274,12 @@ func (o *Transaction) GetLastUpdateDate() time.Time {
 		return ret
 	}
 
-	return o.LastUpdateDate
+	return o.LastUpdateDate.Time
 }
 
 // GetLastUpdateDateOk returns a tuple with the LastUpdateDate field value
 // and a boolean to check if the value has been set.
-func (o *Transaction) GetLastUpdateDateOk() (*time.Time, bool) {
+func (o *Transaction) GetLastUpdateDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -286,7 +288,7 @@ func (o *Transaction) GetLastUpdateDateOk() (*time.Time, bool) {
 
 // SetLastUpdateDate sets field value
 func (o *Transaction) SetLastUpdateDate(v time.Time) {
-	o.LastUpdateDate = v
+	o.LastUpdateDate = flextime.FlexTime{Time: v}
 }
 
 // GetRequesterName returns the RequesterName field value if set, zero value otherwise.

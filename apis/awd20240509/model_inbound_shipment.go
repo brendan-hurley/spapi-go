@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the InboundShipment type satisfies the MappedNullable interface at compile time
@@ -23,7 +25,7 @@ var _ MappedNullable = &InboundShipment{}
 type InboundShipment struct {
 	CarrierCode *CarrierCode `json:"carrierCode,omitempty"`
 	// Timestamp when the shipment was created. The date is returned in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
-	CreatedAt *time.Time `json:"createdAt,omitempty"`
+	CreatedAt *flextime.FlexTime `json:"createdAt,omitempty"`
 	DestinationAddress Address `json:"destinationAddress"`
 	// Client-provided reference ID that can correlate this shipment to client resources. For example, to map this shipment to an internal bookkeeping order record.
 	ExternalReferenceId *string `json:"externalReferenceId,omitempty"`
@@ -33,7 +35,7 @@ type InboundShipment struct {
 	// Quantity received (at the receiving end) as part of this shipment.
 	ReceivedQuantity []InventoryQuantity `json:"receivedQuantity,omitempty"`
 	// Timestamp when the shipment will be shipped.
-	ShipBy *time.Time `json:"shipBy,omitempty"`
+	ShipBy *flextime.FlexTime `json:"shipBy,omitempty"`
 	// Packages that are part of this shipment.
 	ShipmentContainerQuantities []DistributionPackageQuantity `json:"shipmentContainerQuantities"`
 	// Unique shipment ID.
@@ -46,7 +48,7 @@ type InboundShipment struct {
 	// Carrier-unique tracking ID for this shipment.
 	TrackingId *string `json:"trackingId,omitempty"`
 	// Timestamp when the shipment was updated. The date is returned in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
-	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	UpdatedAt *flextime.FlexTime `json:"updatedAt,omitempty"`
 	// An AWD-provided reference ID that you can use to interact with the warehouse. For example, a carrier appointment booking.
 	WarehouseReferenceId *string `json:"warehouseReferenceId,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -115,12 +117,12 @@ func (o *InboundShipment) GetCreatedAt() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.CreatedAt
+	return o.CreatedAt.Time
 }
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InboundShipment) GetCreatedAtOk() (*time.Time, bool) {
+func (o *InboundShipment) GetCreatedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
@@ -138,7 +140,7 @@ func (o *InboundShipment) HasCreatedAt() bool {
 
 // SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
 func (o *InboundShipment) SetCreatedAt(v time.Time) {
-	o.CreatedAt = &v
+	o.CreatedAt = flextime.PtrFlexTime(v)
 }
 
 // GetDestinationAddress returns the DestinationAddress field value
@@ -283,12 +285,12 @@ func (o *InboundShipment) GetShipBy() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ShipBy
+	return o.ShipBy.Time
 }
 
 // GetShipByOk returns a tuple with the ShipBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InboundShipment) GetShipByOk() (*time.Time, bool) {
+func (o *InboundShipment) GetShipByOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ShipBy) {
 		return nil, false
 	}
@@ -306,7 +308,7 @@ func (o *InboundShipment) HasShipBy() bool {
 
 // SetShipBy gets a reference to the given time.Time and assigns it to the ShipBy field.
 func (o *InboundShipment) SetShipBy(v time.Time) {
-	o.ShipBy = &v
+	o.ShipBy = flextime.PtrFlexTime(v)
 }
 
 // GetShipmentContainerQuantities returns the ShipmentContainerQuantities field value
@@ -483,12 +485,12 @@ func (o *InboundShipment) GetUpdatedAt() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.UpdatedAt
+	return o.UpdatedAt.Time
 }
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *InboundShipment) GetUpdatedAtOk() (*time.Time, bool) {
+func (o *InboundShipment) GetUpdatedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
@@ -506,7 +508,7 @@ func (o *InboundShipment) HasUpdatedAt() bool {
 
 // SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
 func (o *InboundShipment) SetUpdatedAt(v time.Time) {
-	o.UpdatedAt = &v
+	o.UpdatedAt = flextime.PtrFlexTime(v)
 }
 
 // GetWarehouseReferenceId returns the WarehouseReferenceId field value if set, zero value otherwise.

@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Quote type satisfies the MappedNullable interface at compile time
@@ -23,9 +25,9 @@ var _ MappedNullable = &Quote{}
 type Quote struct {
 	Cost Currency `json:"cost"`
 	// The time at which this transportation option quote expires. In [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) datetime with pattern `yyyy-MM-ddTHH:mm:ss.sssZ`.
-	Expiration *time.Time `json:"expiration,omitempty"`
+	Expiration *flextime.FlexTime `json:"expiration,omitempty"`
 	// Voidable until timestamp.
-	VoidableUntil *time.Time `json:"voidableUntil,omitempty"`
+	VoidableUntil *flextime.FlexTime `json:"voidableUntil,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -79,12 +81,12 @@ func (o *Quote) GetExpiration() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.Expiration
+	return o.Expiration.Time
 }
 
 // GetExpirationOk returns a tuple with the Expiration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Quote) GetExpirationOk() (*time.Time, bool) {
+func (o *Quote) GetExpirationOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.Expiration) {
 		return nil, false
 	}
@@ -102,7 +104,7 @@ func (o *Quote) HasExpiration() bool {
 
 // SetExpiration gets a reference to the given time.Time and assigns it to the Expiration field.
 func (o *Quote) SetExpiration(v time.Time) {
-	o.Expiration = &v
+	o.Expiration = flextime.PtrFlexTime(v)
 }
 
 // GetVoidableUntil returns the VoidableUntil field value if set, zero value otherwise.
@@ -111,12 +113,12 @@ func (o *Quote) GetVoidableUntil() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.VoidableUntil
+	return o.VoidableUntil.Time
 }
 
 // GetVoidableUntilOk returns a tuple with the VoidableUntil field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Quote) GetVoidableUntilOk() (*time.Time, bool) {
+func (o *Quote) GetVoidableUntilOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.VoidableUntil) {
 		return nil, false
 	}
@@ -134,7 +136,7 @@ func (o *Quote) HasVoidableUntil() bool {
 
 // SetVoidableUntil gets a reference to the given time.Time and assigns it to the VoidableUntil field.
 func (o *Quote) SetVoidableUntil(v time.Time) {
-	o.VoidableUntil = &v
+	o.VoidableUntil = flextime.PtrFlexTime(v)
 }
 
 func (o Quote) MarshalJSON() ([]byte, error) {

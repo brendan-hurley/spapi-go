@@ -13,6 +13,8 @@ package vendorshipments
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the PurchaseOrders type satisfies the MappedNullable interface at compile time
@@ -23,7 +25,7 @@ type PurchaseOrders struct {
 	// Purchase order numbers involved in this shipment, list all the PO that are involved as part of this shipment.
 	PurchaseOrderNumber *string `json:"purchaseOrderNumber,omitempty"`
 	// Purchase order numbers involved in this shipment, list all the PO that are involved as part of this shipment.
-	PurchaseOrderDate *time.Time `json:"purchaseOrderDate,omitempty"`
+	PurchaseOrderDate *flextime.FlexTime `json:"purchaseOrderDate,omitempty"`
 	// Date range in which shipment is expected for these purchase orders.
 	ShipWindow *string `json:"shipWindow,omitempty"`
 	// A list of the items that are associated to the PO in this transport and their associated details.
@@ -88,12 +90,12 @@ func (o *PurchaseOrders) GetPurchaseOrderDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.PurchaseOrderDate
+	return o.PurchaseOrderDate.Time
 }
 
 // GetPurchaseOrderDateOk returns a tuple with the PurchaseOrderDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PurchaseOrders) GetPurchaseOrderDateOk() (*time.Time, bool) {
+func (o *PurchaseOrders) GetPurchaseOrderDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.PurchaseOrderDate) {
 		return nil, false
 	}
@@ -111,7 +113,7 @@ func (o *PurchaseOrders) HasPurchaseOrderDate() bool {
 
 // SetPurchaseOrderDate gets a reference to the given time.Time and assigns it to the PurchaseOrderDate field.
 func (o *PurchaseOrders) SetPurchaseOrderDate(v time.Time) {
-	o.PurchaseOrderDate = &v
+	o.PurchaseOrderDate = flextime.PtrFlexTime(v)
 }
 
 // GetShipWindow returns the ShipWindow field value if set, zero value otherwise.

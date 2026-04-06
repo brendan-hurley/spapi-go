@@ -15,6 +15,8 @@ import (
 	"time"
 	"fmt"
 
+	"github.com/brendan-hurley/spapi-go/flextime"
+
 	"github.com/brendan-hurley/spapi-go/flexbool"
 )
 
@@ -32,11 +34,11 @@ type ShippingService struct {
 	// An Amazon-defined shipping service offer identifier.
 	ShippingServiceOfferId string `json:"ShippingServiceOfferId"`
 	// Date-time formatted timestamp.
-	ShipDate time.Time `json:"ShipDate"`
+	ShipDate flextime.FlexTime `json:"ShipDate"`
 	// Date-time formatted timestamp.
-	EarliestEstimatedDeliveryDate *time.Time `json:"EarliestEstimatedDeliveryDate,omitempty"`
+	EarliestEstimatedDeliveryDate *flextime.FlexTime `json:"EarliestEstimatedDeliveryDate,omitempty"`
 	// Date-time formatted timestamp.
-	LatestEstimatedDeliveryDate *time.Time `json:"LatestEstimatedDeliveryDate,omitempty"`
+	LatestEstimatedDeliveryDate *flextime.FlexTime `json:"LatestEstimatedDeliveryDate,omitempty"`
 	Rate CurrencyAmount `json:"Rate"`
 	RateWithAdjustments CurrencyAmount `json:"RateWithAdjustments"`
 	// List of adjustments.
@@ -65,7 +67,7 @@ func NewShippingService(shippingServiceName string, carrierName string, shipping
 	this.CarrierName = carrierName
 	this.ShippingServiceId = shippingServiceId
 	this.ShippingServiceOfferId = shippingServiceOfferId
-	this.ShipDate = shipDate
+	this.ShipDate = flextime.FlexTime{Time: shipDate}
 	this.Rate = rate
 	this.RateWithAdjustments = rateWithAdjustments
 	this.ShippingServiceOptions = shippingServiceOptions
@@ -184,12 +186,12 @@ func (o *ShippingService) GetShipDate() time.Time {
 		return ret
 	}
 
-	return o.ShipDate
+	return o.ShipDate.Time
 }
 
 // GetShipDateOk returns a tuple with the ShipDate field value
 // and a boolean to check if the value has been set.
-func (o *ShippingService) GetShipDateOk() (*time.Time, bool) {
+func (o *ShippingService) GetShipDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -198,7 +200,7 @@ func (o *ShippingService) GetShipDateOk() (*time.Time, bool) {
 
 // SetShipDate sets field value
 func (o *ShippingService) SetShipDate(v time.Time) {
-	o.ShipDate = v
+	o.ShipDate = flextime.FlexTime{Time: v}
 }
 
 // GetEarliestEstimatedDeliveryDate returns the EarliestEstimatedDeliveryDate field value if set, zero value otherwise.
@@ -207,12 +209,12 @@ func (o *ShippingService) GetEarliestEstimatedDeliveryDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.EarliestEstimatedDeliveryDate
+	return o.EarliestEstimatedDeliveryDate.Time
 }
 
 // GetEarliestEstimatedDeliveryDateOk returns a tuple with the EarliestEstimatedDeliveryDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ShippingService) GetEarliestEstimatedDeliveryDateOk() (*time.Time, bool) {
+func (o *ShippingService) GetEarliestEstimatedDeliveryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.EarliestEstimatedDeliveryDate) {
 		return nil, false
 	}
@@ -230,7 +232,7 @@ func (o *ShippingService) HasEarliestEstimatedDeliveryDate() bool {
 
 // SetEarliestEstimatedDeliveryDate gets a reference to the given time.Time and assigns it to the EarliestEstimatedDeliveryDate field.
 func (o *ShippingService) SetEarliestEstimatedDeliveryDate(v time.Time) {
-	o.EarliestEstimatedDeliveryDate = &v
+	o.EarliestEstimatedDeliveryDate = flextime.PtrFlexTime(v)
 }
 
 // GetLatestEstimatedDeliveryDate returns the LatestEstimatedDeliveryDate field value if set, zero value otherwise.
@@ -239,12 +241,12 @@ func (o *ShippingService) GetLatestEstimatedDeliveryDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.LatestEstimatedDeliveryDate
+	return o.LatestEstimatedDeliveryDate.Time
 }
 
 // GetLatestEstimatedDeliveryDateOk returns a tuple with the LatestEstimatedDeliveryDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ShippingService) GetLatestEstimatedDeliveryDateOk() (*time.Time, bool) {
+func (o *ShippingService) GetLatestEstimatedDeliveryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.LatestEstimatedDeliveryDate) {
 		return nil, false
 	}
@@ -262,7 +264,7 @@ func (o *ShippingService) HasLatestEstimatedDeliveryDate() bool {
 
 // SetLatestEstimatedDeliveryDate gets a reference to the given time.Time and assigns it to the LatestEstimatedDeliveryDate field.
 func (o *ShippingService) SetLatestEstimatedDeliveryDate(v time.Time) {
-	o.LatestEstimatedDeliveryDate = &v
+	o.LatestEstimatedDeliveryDate = flextime.PtrFlexTime(v)
 }
 
 // GetRate returns the Rate field value

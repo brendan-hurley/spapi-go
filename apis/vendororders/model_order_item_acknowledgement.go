@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the OrderItemAcknowledgement type satisfies the MappedNullable interface at compile time
@@ -25,9 +27,9 @@ type OrderItemAcknowledgement struct {
 	AcknowledgementCode string `json:"acknowledgementCode"`
 	AcknowledgedQuantity ItemQuantity `json:"acknowledgedQuantity"`
 	// Estimated ship date per line item. Must be in ISO-8601 date/time format.
-	ScheduledShipDate *time.Time `json:"scheduledShipDate,omitempty"`
+	ScheduledShipDate *flextime.FlexTime `json:"scheduledShipDate,omitempty"`
 	// Estimated delivery date per line item. Must be in ISO-8601 date/time format.
-	ScheduledDeliveryDate *time.Time `json:"scheduledDeliveryDate,omitempty"`
+	ScheduledDeliveryDate *flextime.FlexTime `json:"scheduledDeliveryDate,omitempty"`
 	// Indicates the reason for rejection.
 	RejectionReason *string `json:"rejectionReason,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -108,12 +110,12 @@ func (o *OrderItemAcknowledgement) GetScheduledShipDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ScheduledShipDate
+	return o.ScheduledShipDate.Time
 }
 
 // GetScheduledShipDateOk returns a tuple with the ScheduledShipDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrderItemAcknowledgement) GetScheduledShipDateOk() (*time.Time, bool) {
+func (o *OrderItemAcknowledgement) GetScheduledShipDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ScheduledShipDate) {
 		return nil, false
 	}
@@ -131,7 +133,7 @@ func (o *OrderItemAcknowledgement) HasScheduledShipDate() bool {
 
 // SetScheduledShipDate gets a reference to the given time.Time and assigns it to the ScheduledShipDate field.
 func (o *OrderItemAcknowledgement) SetScheduledShipDate(v time.Time) {
-	o.ScheduledShipDate = &v
+	o.ScheduledShipDate = flextime.PtrFlexTime(v)
 }
 
 // GetScheduledDeliveryDate returns the ScheduledDeliveryDate field value if set, zero value otherwise.
@@ -140,12 +142,12 @@ func (o *OrderItemAcknowledgement) GetScheduledDeliveryDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ScheduledDeliveryDate
+	return o.ScheduledDeliveryDate.Time
 }
 
 // GetScheduledDeliveryDateOk returns a tuple with the ScheduledDeliveryDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrderItemAcknowledgement) GetScheduledDeliveryDateOk() (*time.Time, bool) {
+func (o *OrderItemAcknowledgement) GetScheduledDeliveryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ScheduledDeliveryDate) {
 		return nil, false
 	}
@@ -163,7 +165,7 @@ func (o *OrderItemAcknowledgement) HasScheduledDeliveryDate() bool {
 
 // SetScheduledDeliveryDate gets a reference to the given time.Time and assigns it to the ScheduledDeliveryDate field.
 func (o *OrderItemAcknowledgement) SetScheduledDeliveryDate(v time.Time) {
-	o.ScheduledDeliveryDate = &v
+	o.ScheduledDeliveryDate = flextime.PtrFlexTime(v)
 }
 
 // GetRejectionReason returns the RejectionReason field value if set, zero value otherwise.

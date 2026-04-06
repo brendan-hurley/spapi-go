@@ -13,6 +13,8 @@ package vendorshipments
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Expiry type satisfies the MappedNullable interface at compile time
@@ -21,9 +23,9 @@ var _ MappedNullable = &Expiry{}
 // Expiry Expiry refers to the collection of dates required  for certain items. These could be either expiryDate or mfgDate and expiryAfterDuration. These are mandatory for perishable items.
 type Expiry struct {
 	// Production, packaging or assembly date determined by the manufacturer. Its meaning is determined based on the trade item context.
-	ManufacturerDate *time.Time `json:"manufacturerDate,omitempty"`
+	ManufacturerDate *flextime.FlexTime `json:"manufacturerDate,omitempty"`
 	// The date that determines the limit of consumption or use of a product. Its meaning is determined based on the trade item context.
-	ExpiryDate *time.Time `json:"expiryDate,omitempty"`
+	ExpiryDate *flextime.FlexTime `json:"expiryDate,omitempty"`
 	ExpiryAfterDuration *Duration `json:"expiryAfterDuration,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -53,12 +55,12 @@ func (o *Expiry) GetManufacturerDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ManufacturerDate
+	return o.ManufacturerDate.Time
 }
 
 // GetManufacturerDateOk returns a tuple with the ManufacturerDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Expiry) GetManufacturerDateOk() (*time.Time, bool) {
+func (o *Expiry) GetManufacturerDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ManufacturerDate) {
 		return nil, false
 	}
@@ -76,7 +78,7 @@ func (o *Expiry) HasManufacturerDate() bool {
 
 // SetManufacturerDate gets a reference to the given time.Time and assigns it to the ManufacturerDate field.
 func (o *Expiry) SetManufacturerDate(v time.Time) {
-	o.ManufacturerDate = &v
+	o.ManufacturerDate = flextime.PtrFlexTime(v)
 }
 
 // GetExpiryDate returns the ExpiryDate field value if set, zero value otherwise.
@@ -85,12 +87,12 @@ func (o *Expiry) GetExpiryDate() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.ExpiryDate
+	return o.ExpiryDate.Time
 }
 
 // GetExpiryDateOk returns a tuple with the ExpiryDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Expiry) GetExpiryDateOk() (*time.Time, bool) {
+func (o *Expiry) GetExpiryDateOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.ExpiryDate) {
 		return nil, false
 	}
@@ -108,7 +110,7 @@ func (o *Expiry) HasExpiryDate() bool {
 
 // SetExpiryDate gets a reference to the given time.Time and assigns it to the ExpiryDate field.
 func (o *Expiry) SetExpiryDate(v time.Time) {
-	o.ExpiryDate = &v
+	o.ExpiryDate = flextime.PtrFlexTime(v)
 }
 
 // GetExpiryAfterDuration returns the ExpiryAfterDuration field value if set, zero value otherwise.

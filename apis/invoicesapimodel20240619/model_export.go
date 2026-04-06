@@ -13,6 +13,8 @@ package invoicesapimodel20240619
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the Export type satisfies the MappedNullable interface at compile time
@@ -25,9 +27,9 @@ type Export struct {
 	// The export identifier.
 	ExportId *string `json:"exportId,omitempty"`
 	// The date and time when the export generation finished. Vales are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	GenerateExportFinishedAt *time.Time `json:"generateExportFinishedAt,omitempty"`
+	GenerateExportFinishedAt *flextime.FlexTime `json:"generateExportFinishedAt,omitempty"`
 	// The date and time when the export generation started. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
-	GenerateExportStartedAt *time.Time `json:"generateExportStartedAt,omitempty"`
+	GenerateExportStartedAt *flextime.FlexTime `json:"generateExportStartedAt,omitempty"`
 	// The identifier for the export documents. To get the information required to retrieve the export document's contents, pass each ID in the `getInvoicesDocument` operation.  This list is empty until the status is `DONE`.
 	InvoicesDocumentIds []string `json:"invoicesDocumentIds,omitempty"`
 	Status *ExportStatus `json:"status,omitempty"`
@@ -123,12 +125,12 @@ func (o *Export) GetGenerateExportFinishedAt() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.GenerateExportFinishedAt
+	return o.GenerateExportFinishedAt.Time
 }
 
 // GetGenerateExportFinishedAtOk returns a tuple with the GenerateExportFinishedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Export) GetGenerateExportFinishedAtOk() (*time.Time, bool) {
+func (o *Export) GetGenerateExportFinishedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.GenerateExportFinishedAt) {
 		return nil, false
 	}
@@ -146,7 +148,7 @@ func (o *Export) HasGenerateExportFinishedAt() bool {
 
 // SetGenerateExportFinishedAt gets a reference to the given time.Time and assigns it to the GenerateExportFinishedAt field.
 func (o *Export) SetGenerateExportFinishedAt(v time.Time) {
-	o.GenerateExportFinishedAt = &v
+	o.GenerateExportFinishedAt = flextime.PtrFlexTime(v)
 }
 
 // GetGenerateExportStartedAt returns the GenerateExportStartedAt field value if set, zero value otherwise.
@@ -155,12 +157,12 @@ func (o *Export) GetGenerateExportStartedAt() time.Time {
 		var ret time.Time
 		return ret
 	}
-	return *o.GenerateExportStartedAt
+	return o.GenerateExportStartedAt.Time
 }
 
 // GetGenerateExportStartedAtOk returns a tuple with the GenerateExportStartedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Export) GetGenerateExportStartedAtOk() (*time.Time, bool) {
+func (o *Export) GetGenerateExportStartedAtOk() (*flextime.FlexTime, bool) {
 	if o == nil || IsNil(o.GenerateExportStartedAt) {
 		return nil, false
 	}
@@ -178,7 +180,7 @@ func (o *Export) HasGenerateExportStartedAt() bool {
 
 // SetGenerateExportStartedAt gets a reference to the given time.Time and assigns it to the GenerateExportStartedAt field.
 func (o *Export) SetGenerateExportStartedAt(v time.Time) {
-	o.GenerateExportStartedAt = &v
+	o.GenerateExportStartedAt = flextime.PtrFlexTime(v)
 }
 
 // GetInvoicesDocumentIds returns the InvoicesDocumentIds field value if set, zero value otherwise.

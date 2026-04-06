@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the StatusUpdateDetails type satisfies the MappedNullable interface at compile time
@@ -28,7 +30,7 @@ type StatusUpdateDetails struct {
 	// Provides a reason code for the status of the package that will provide additional information about the transportation status. For more information, refer to the [Additional Fields Explanation](https://developer-docs.amazon.com/sp-api/docs/vendor-direct-fulfillment-shipping-api-use-case-guide#additional-fields-explanation).
 	ReasonCode string `json:"reasonCode"`
 	// The date and time when the shipment status was updated. This field is expected to be in ISO-8601 date/time format, with UTC time zone or UTC offset. For example, 2020-07-16T23:00:00Z or 2020-07-16T23:00:00+01:00.
-	StatusDateTime time.Time `json:"statusDateTime"`
+	StatusDateTime flextime.FlexTime `json:"statusDateTime"`
 	StatusLocationAddress Address `json:"statusLocationAddress"`
 	ShipmentSchedule *StatusUpdateDetailsShipmentSchedule `json:"shipmentSchedule,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -45,7 +47,7 @@ func NewStatusUpdateDetails(trackingNumber string, statusCode string, reasonCode
 	this.TrackingNumber = trackingNumber
 	this.StatusCode = statusCode
 	this.ReasonCode = reasonCode
-	this.StatusDateTime = statusDateTime
+	this.StatusDateTime = flextime.FlexTime{Time: statusDateTime}
 	this.StatusLocationAddress = statusLocationAddress
 	return &this
 }
@@ -137,12 +139,12 @@ func (o *StatusUpdateDetails) GetStatusDateTime() time.Time {
 		return ret
 	}
 
-	return o.StatusDateTime
+	return o.StatusDateTime.Time
 }
 
 // GetStatusDateTimeOk returns a tuple with the StatusDateTime field value
 // and a boolean to check if the value has been set.
-func (o *StatusUpdateDetails) GetStatusDateTimeOk() (*time.Time, bool) {
+func (o *StatusUpdateDetails) GetStatusDateTimeOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -151,7 +153,7 @@ func (o *StatusUpdateDetails) GetStatusDateTimeOk() (*time.Time, bool) {
 
 // SetStatusDateTime sets field value
 func (o *StatusUpdateDetails) SetStatusDateTime(v time.Time) {
-	o.StatusDateTime = v
+	o.StatusDateTime = flextime.FlexTime{Time: v}
 }
 
 // GetStatusLocationAddress returns the StatusLocationAddress field value

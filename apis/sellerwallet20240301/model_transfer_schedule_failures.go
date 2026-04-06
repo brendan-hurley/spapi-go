@@ -14,6 +14,8 @@ import (
 	"encoding/json"
 	"time"
 	"fmt"
+
+	"github.com/brendan-hurley/spapi-go/flextime"
 )
 
 // checks if the TransferScheduleFailures type satisfies the MappedNullable interface at compile time
@@ -22,7 +24,7 @@ var _ MappedNullable = &TransferScheduleFailures{}
 // TransferScheduleFailures The time of and reason for the transfer schedule failure.
 type TransferScheduleFailures struct {
 	// The transfer schedule failure date.
-	TransferScheduleFailureDate time.Time `json:"transferScheduleFailureDate"`
+	TransferScheduleFailureDate flextime.FlexTime `json:"transferScheduleFailureDate"`
 	// The reason listed for the failure of the transfer schedule.
 	TransferScheduleFailureReason string `json:"transferScheduleFailureReason"`
 	AdditionalProperties map[string]interface{}
@@ -36,7 +38,7 @@ type _TransferScheduleFailures TransferScheduleFailures
 // will change when the set of required properties is changed
 func NewTransferScheduleFailures(transferScheduleFailureDate time.Time, transferScheduleFailureReason string) *TransferScheduleFailures {
 	this := TransferScheduleFailures{}
-	this.TransferScheduleFailureDate = transferScheduleFailureDate
+	this.TransferScheduleFailureDate = flextime.FlexTime{Time: transferScheduleFailureDate}
 	this.TransferScheduleFailureReason = transferScheduleFailureReason
 	return &this
 }
@@ -56,12 +58,12 @@ func (o *TransferScheduleFailures) GetTransferScheduleFailureDate() time.Time {
 		return ret
 	}
 
-	return o.TransferScheduleFailureDate
+	return o.TransferScheduleFailureDate.Time
 }
 
 // GetTransferScheduleFailureDateOk returns a tuple with the TransferScheduleFailureDate field value
 // and a boolean to check if the value has been set.
-func (o *TransferScheduleFailures) GetTransferScheduleFailureDateOk() (*time.Time, bool) {
+func (o *TransferScheduleFailures) GetTransferScheduleFailureDateOk() (*flextime.FlexTime, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,7 +72,7 @@ func (o *TransferScheduleFailures) GetTransferScheduleFailureDateOk() (*time.Tim
 
 // SetTransferScheduleFailureDate sets field value
 func (o *TransferScheduleFailures) SetTransferScheduleFailureDate(v time.Time) {
-	o.TransferScheduleFailureDate = v
+	o.TransferScheduleFailureDate = flextime.FlexTime{Time: v}
 }
 
 // GetTransferScheduleFailureReason returns the TransferScheduleFailureReason field value
